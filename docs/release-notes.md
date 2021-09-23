@@ -1,8 +1,8 @@
 ---
-sidebar_label: 'Release Notes'
+sidebar_label: 'Release notes'
 ---
 
-# z/OS LSAM Release Notes
+# z/OS LSAM Release notes
 
 ## z/OS LSAM 20.01.02
 

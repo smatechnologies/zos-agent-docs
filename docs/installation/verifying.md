@@ -1,60 +1,8 @@
----
-sidebar_label: 'Installation'
----
+# Verifying installation
 
-# z/OS LSAM Installation
+Do not attempt to start XPS390 until all prior Customization Processes are complete. Refer to the [Installation checklist](../checklist), and ensure all procedures are complete.
 
-## Introduction
-
-The z/OS LSAM Installation topic covers the installation of the z/OS LSAM. Complete instructions and detailed descriptions follow.
-
-:::note
-
-SMA supplies the LSAM Started Task OPCON01 for the installation process; however, the task name can be user-defined. If the task name is changed, adapt the installation procedures accordingly.
-
-:::
-
-For information on installing and configuring multiple LSAMs on a single z/OS system, refer to [Customization Process](customization).
-
-## Installation Checklist
-
-Refer to the [Installation Checklist](installation-checklist) for a list of steps to complete during installation.
-
-## Determine Installation Media
-
-In the documentation for running the setup program, replace **<media\>** with the desired method of delivery:
-
-- **USB**: If using a USB drive, plug the USB drive into a machine and copy the installation files to a folder on the hard drive of the machine where the software will be installed. Run the installation from the hard drive.
-- **FTP**: If downloading the files over FTP, the best practice is to download the installation files directly to a folder on the hard drive of the machine where the software will be installed. Run the installation from the hard drive.
-- **DVD-ROM**: Insert the DVD into the drive and execute the installation from the DVD. The files may also be copied to the hard drive.
-- **ISO**: Mount the ISO image as a virtual DVD and execute the installation from that location.
-
-## Installation Process
-
-The z/OS LSAM environment is fairly simple and straightforward. The installation libraries are created and a logging data set is defined. Library creation is carried out by a set of JCL created by an ISPF dialogue.
-
-Once the z/OS libraries are functional, we need to provide security, SMF, and z/OS customization before testing XPS390:
-
-1. Extract the XMIT file from the zip archive.
-2. Upload the XMIT file in binary format to a dataset with 80 byte fixed length records (FB-80).
-3. Enter TSO command RECEIVE INDATASET(your.dataset.name).
-4. When prompted, enter DATASET('OPCON.V140303.INSTLIB') to restore the initial INSTLIB.
-5. You can substitute another name, but the low level qualifier must be INSTLIB.
-6. If you simply hit Enter, the dataset will be created with the current TSO user's ID. Rename it to your desired installation name.
-7. From an ISPF session, enter the TSO command EXEC  'OPCON.V140303.INSTLIB(BUILDJOB)'.
-8. Fill in the panel options and hit enter to create the STAGE1 job and customize the installation members.
-9. Review the job card and allocation parameters in STAGE1. Run the STAGE1 job to create and load the installation datasets.
-10. After STAGE1 runs successfully, run STAGE2 to link edit the agent programs.
-11. Add production JCL and REXX libraries to the LSAM JCL:
-    - For information on adding production libraries to the LSAM JCL, refer to [LSAM Options and JCL Procedures](customization.md#LSAM).
-
-To begin using the LSAM, refer to [Customization Process](customization).
-
-## Verifying Installation
-
-Do not attempt to start XPS390 until all prior Customization Processes are complete. Refer to the [Installation Checklist](installation-checklist), and ensure all procedures are complete.
-
-### LSAM Verification
+## LSAM Verification
 
 Start the OpCon/xps LSAM task with the following command:
 
@@ -67,8 +15,7 @@ System Console Messages of Start of LSAM
 
 ![System Console Messages of Start of LSAM](/img/4_4.jpg "System Console Messages of Start of LSAM")
 
-When SYSPLEX=Y is coded in XPSPRMxx, start messages should also be received for XPSPLEX. If any other results are observed - contact
-OpCon Support.
+When SYSPLEX=Y is coded in XPSPRMxx, start messages should also be received for XPSPLEX. If any other results are observed - contact OpCon Support.
 
 **IMPORTANT**: The "machine" displayed on the *XPS001I* message should be the same "Machine ID" used on the SAM machine definition for this LSAM. If the SAM Machine ID value is not the same value, any job scheduled and sent to this LSAM may be rejected. The XPS028I message should indicate the JES subsystem **JESA, JES2** or **JES3**.
 
@@ -76,7 +23,7 @@ If the *XPS005I* message does not appear or is not formatted with a proper IP ad
 
 If any conflicts occur with reserved assignments in the system, TCPIP should respond with error messages stating the conflict. It is possible to change the port assignment as often as necessary. But once the unused assignment is identified, it should be reserved for OpCon/xps on all systems in the z/OS complex.
 
-### Storage Verification
+## Storage Verification
 
 Next, ensure that storage allocations and XPSPRMxx are properly installed.
 
@@ -170,14 +117,14 @@ At this point, the IVP jobs loaded to the OpCon/xps INSTLIB should be reviewed f
 
 Most of the supplied IVP jobs execute the XPSTIMER utility. This utility is supplied for IVP purposes only. There is no warranty as to the applicability of this program to any given task. The XPSTIMER step has four possible uses, to delay the execution of the next step by a specific time limit (HHMMSSTT), to return a predefined step Cond code, to supply an ABEND at a specific step or to generate an Operator Reply Message (WTOR). All these functions are designed to test the functionality of OpCon.
 
-### Schedule Testing Using the IVP Jobs
+## Schedule Testing Using the IVP Jobs
 
 For the purposes of this exercise, we establish the following assumptions:
 
 1. The installer has experience with the OpCon Schedule Activity Monitor or has a trained OpCon/xps scheduler to assist in setting up the z/OS Installation Verification Procedure (IVP) jobs.
 2. The Setup and Configuration steps in the Installation and Customization topics are complete.
 
-#### Logging in to the Enterprise Manager
+### Logging in to the Enterprise Manager
 
 An administrator (e.g., ocadm) must be logged in to the Enterprise Manager to perform OpCon administrative setup. Setup can be performed from any machine with a Enterprise Manager.
 
@@ -189,15 +136,15 @@ An administrator (e.g., ocadm) must be logged in to the Enterprise Manager to pe
 4. In the **Profile** drop-down list, select the *Database* *Profile*.
 5. Click the **Login** button to login to the Enterprise Manager.
 
-#### Adding a Machine to OpCon/xps
+### Adding a Machine to OpCon/xps
 
 The machine with the z/OS LSAM must be defined in the OpCon database in order for the SAM and supporting services to be able to communicate with the LSAM.
 
-##### Licenses
+#### Licenses
 
 Before testing the installation, verify with the OpCon administrator that there is an available license for the machine with the newly installed LSAM. If a license is unavailable, contact SMA Technical Support.
 
-##### Name Resolution
+#### Name Resolution
 
 For the SAM and supporting services to communicate with the z/OS LSAM, the Machine name in the database (entered in the Enterprise Manager) must resolve to a TCP/IP address. The following list provides different methods for associating a TCP/IP address with the OpCon Machine name.
 
@@ -228,7 +175,7 @@ If the administrator assigns the TCP/IP address to the machine through the Advan
 11. Use menu path: **File \> Save**.
 12. **Close ☒** the text editor.
 
-#### Adding the Machine
+### Adding the Machine
 
 After verifying licensing and name resolution between the OpCon server and the LSAM machine, add the machine definition in the Enterprise Manager.
 
@@ -264,7 +211,7 @@ When a z/OS LSAM is installed, create a machine record with a unique Machine nam
     b.  Selecting **Start Communication** from the menu.
 21. Click on the **x** to the right of the **Machines** tab to close the **Machines** screen.
 
-#### Importing IVP Schedule Job Definitions
+### Importing IVP Schedule Job Definitions
 
 The *<Target Directory\>*\\Opconxps\\Utilities directory created by the SAM install process contains a file named "IVPMVS.mdb". This file is an SQL Export of a predefined IVP Schedules. Import this file to the OpCon/xps master schedule using the Schedule Import Export utility.
 
@@ -330,7 +277,7 @@ EXIT(S) CNZ_WTOMDBEXIT
 You can also use D PROG,EXIT,EXITNAME=CNZ_WTOMDBEXIT to see it from the "other side".
 :::
 
-#### Creating a Notifying Event
+### Creating a Notifying Event
 
 In the upcoming IVP job stream, job IVPJOB12 attempts to send a notify message. This may be a text message, email, beeper call, and so forth. The type of notification depends on the ENS interface tool that is being used. If a personal notification Event Number for receiving automated notifications has not been received, consult the local OpCon/xps Administrator. The MSGIN event that triggers the notification is defined in the LSAM ISPF Event Table Display.
 
@@ -342,7 +289,7 @@ Building a Test Notification Event in the Event Table
 
 For the IVP test, the Event Token must be "TESTEVT1". The event type and action are required (**$NOTIFY** and **ACTION**). The "Element" is the user personal notification ID number (usually 5 digits). This identifies the user to the Event Notification System (ENS) and it identifies the method of notification (phone \#, email address, etc) that is received. The "Set Type" is **1** (Informational message) and the Security Id should be the OpCon ID with permissions for receiving MSGIN events. The "Message" is any 40-character text (used in text messaging or emails, only).
 
-#### Building and Executing the IVP Schedule
+### Building and Executing the IVP Schedule
 
 Enter the "Daily Schedule Maintenance" display on the OpCon/xps User Interface. Build schedule **IVPMVS1**. Go to the Schedule Operations Display to view the IVPMVS1 status. The IVPMVS1 result should look similar to this:
 

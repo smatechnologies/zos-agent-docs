@@ -2,7 +2,17 @@ module.exports = {
   mySidebar: [
     'getting-started',
     'release-notes',
-    'installation',
+    {
+      type: 'category', 
+      label: 'Installation',
+      collapsed: false,
+      items: [
+        'installation/introduction',
+        'installation/checklist',
+        'installation/process',
+        'installation/verifying',
+      ], 
+    },
     'customization',
     'operations',
     {
