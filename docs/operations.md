@@ -1,3 +1,7 @@
+---
+sidebar_label: 'Components and Operation'
+---
+
 # z/OS LSAM Components and Operation
 
 ## LSAM Components

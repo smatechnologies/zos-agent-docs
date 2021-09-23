@@ -1,8 +1,8 @@
 ---
-lang: en-us
-title: z/OS Machine Messages
-viewport: width=device-width, initial-scale=1.0
+sidebar_label: 'Machine Messages'
 ---
+
+# z/OS LSAM Mtchine Messages
 
 Certain conditions on the z/OS LSAM may prevent SAM from completing a task and a message is produced indicating the source or cause of the error. The SAM is designed so that errors or invalid resource conditions do not cause a total halt of schedule processing. After reporting the error, the SAM may retry processing and may again encounter the same error and report it.
 

@@ -1,26 +1,11 @@
 ---
 slug: '/'
 sidebar_position: 1
+sidebar_label: z/OS Agent
 ---
 
-# Tutorial Intro
+# Getting started
 
+The z/OS LSAM is an OpCon agent that allows OpCon to schedule z/OS jobs within a z/OS environment.
 
-Or **try Docusaurus immediately** with **[new.docusaurus.io](https://new.docusaurus.io)**.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**:
-
-```shell
-npx @docusaurus/init@latest init my-website classic
-```
-
-## Start your site
-
-Run the development server:
-
-```shell
-cd my-website
-
-npx docusaurus start
+The current version is 20.01.02.

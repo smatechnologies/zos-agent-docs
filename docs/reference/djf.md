@@ -2,7 +2,7 @@
 
 The Dynamic JCL Facility (DJF) provides run-time tailoring for JCL. It supports variable substitution and conditional inclusion of JCL statements.
 
-DJF statements are identified by hyphens in the first two columns ('\--') of the JCL. For visual organization, DJF statements may be indented by starting the statement with \'\--\' and up to forty spaces before the actual statement. Indentation has no syntactical meaning, e.g., the following forms are completely equivalent:
+DJF statements are identified by hyphens in the first two columns ('\--') of the JCL. For visual organization, DJF statements may be indented by starting the statement with '\--' and up to forty spaces before the actual statement. Indentation has no syntactical meaning, e.g., the following forms are completely equivalent:
 
 - \--IF @%FREQ EQ DAILY
 - \-- \--IF @%FREQ EQ DAILY

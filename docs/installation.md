@@ -82,225 +82,89 @@ Next, ensure that storage allocations and XPSPRMxx are properly installed.
 
 Enter the command: **F** lsamname**,DISP=ALL** on the operations console to view the display on the MVS Console or SYSLOG that resembles the figure below.
 
-DISP=ALL IVP Display
-
-+-------------------------------------+-------------------------------+
-| XPSAUDIT: XPCB Located at           |                               |
-| 11949038:8000 Analyzing LSAM:       |                               |
-| XPS14.03 On SYSID: machine          |                               |
-|                                     |                               |
-| -------                     |                               |
-| ------------------ |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSU83=82344908: Len=000046F8       |                               |
-| Key=11949038                        |                               |
-|                                     |                               |
-| XPSU84=821E3620: Len=000069E0       |                               |
-| Key=11949038                        |                               |
-|                                     |                               |
-| XPSUJV=821C2E58: Len=000041A8       |                               |
-| Key=11949038                        |                               |
-|                                     |                               |
-| XPRUSI=821BA628: Len=00004AE8       |                               |
-| Key=11949038                        |                               |
-|                                     |                               |
-| XPSWTO=821FDD10: Len=000052F0       |                               |
-| Key=11949038                        |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSAUDIT: JOBQ Located at           |                               |
-| 1012AC00;I=11955200                 |                               |
-|                                     |                               |
-| Last Entry: 10148C00 Queue Size:    |                               |
-| 121K                                |                               |
-|                                     |                               |
-| Free=00121, Used=00000, Term=00001, |                               |
-| Total=00121                         |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSAUDIT: MSGQ Located at 100E7200  |                               |
-|                                     |                               |
-| Last Entry: 10122300 Queue Size:    |                               |
-| 267K                                |                               |
-|                                     |                               |
-| Free=01920, Used=00000, Term=00000, |                               |
-| Total=01920                         |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSAUDIT: DSNT Located at 100D8340  |                               |
-|                                     |                               |
-| Last Entry: 100E6F80 Queue Size:    |                               |
-| 59K                                 |                               |
-|                                     |                               |
-| Free=00480, Used=00001, Term=00002, |                               |
-| Total=00481                         |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSAUDIT: WTOT Located at 100C6DA8  |                               |
-|                                     |                               |
-| Last Entry: 100D7F68 Queue Size:    |                               |
-| 68K                                 |                               |
-|                                     |                               |
-| Free=00480, Used=00001, Term=00002, |                               |
-| Total=00481                         |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSAUDIT: EVTQ Located at 100C1870  |                               |
-|                                     |                               |
-| Last Entry: 100C5FB0 Queue Size:    |                               |
-| 17K                                 |                               |
-|                                     |                               |
-| Free=00241, Used=00000, Term=00001, |                               |
-| Total=00241                         |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSAUDIT: DSNF Located at 11841140  |                               |
-|                                     |                               |
-| Last Entry: 11841350 Queue Size:    |                               |
-| 592B                                |                               |
-|                                     |                               |
-| Free=00010, Used=00002, Term=00003, |                               |
-| Total=00012                         |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPSAUDIT: PARMS Located at 11949B58 |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| XPS021I - CURRENT STORED PARMS FOR  |                               |
-| ADCD113 882                         |                               |
-+-------------------------------------+-------------------------------+
-| MACHINEID=machine                   | OPCON/XPS MACHINE NAME        |
-+-------------------------------------+-------------------------------+
-| PROCESS=30                          | PROCESS COUNT                 |
-+-------------------------------------+-------------------------------+
-| INTV=00.00.10                       | WAKE UP INTERVAL              |
-+-------------------------------------+-------------------------------+
-| JCLDD=XPSJCL                        | DEFAULT JCL LIBRARY           |
-+-------------------------------------+-------------------------------+
-| OVERRIDE_DD=                        | DEFAULT OVERRIDE LIBRARY      |
-+-------------------------------------+-------------------------------+
-| XPSDYNAM=IEESYSAS                   | Dynamic task proc             |
-+-------------------------------------+-------------------------------+
-| LSAM=ADCD113                        | PRIMARY LSAM?                 |
-+-------------------------------------+-------------------------------+
-| ADOPT=N                             | LSAM Adoption?                |
-+-------------------------------------+-------------------------------+
-| SYSPLEX=N                           | Exploit SYSPLEX?              |
-+-------------------------------------+-------------------------------+
-| PLEXGRP=                            | SYSPLEX Group Name            |
-+-------------------------------------+-------------------------------+
-| TCPIP=                              | TCP/IP Task Name              |
-+-------------------------------------+-------------------------------+
-| PORT=3100                           | LSAM PORT                     |
-+-------------------------------------+-------------------------------+
-| JORSPORT=+1 (3101)                  | JORS PORT                     |
-+-------------------------------------+-------------------------------+
-| RECOVERY=PROMPT                     | Recovery Option               |
-+-------------------------------------+-------------------------------+
-| SMF15=DELETE                        | SMF Type 15 Disposition       |
-+-------------------------------------+-------------------------------+
-| SMF64=DELETE                        | SMF Type 64 Disposition       |
-+-------------------------------------+-------------------------------+
-| SPFAUDIT=N                          | Log ISPF User Chgs            |
-+-------------------------------------+-------------------------------+
-| JOBRC=MAXRC                         | RC for failure check          |
-+-------------------------------------+-------------------------------+
-| SPINOFF=Y                           | Spin Log Each Night           |
-+-------------------------------------+-------------------------------+
-| SUBSYS=JES2                         | JES Subsystem                 |
-+-------------------------------------+-------------------------------+
-| TRACLASS=TQ                         | Dynamic Tracking Classes      |
-+-------------------------------------+-------------------------------+
-| TRACMASK=                           | Dynamic Tracking Mask         |
-+-------------------------------------+-------------------------------+
-| TRACSCHD=                           | Dynamic Tracking Schedule     |
-+-------------------------------------+-------------------------------+
-| USERID=                             | Default USER                  |
-+-------------------------------------+-------------------------------+
-| MSGCLASS=A                          | REXX SYSOUT CLASS             |
-+-------------------------------------+-------------------------------+
-| USEJMR=YES                          | JMR USER FIELD                |
-+-------------------------------------+-------------------------------+
-| MLWTO=Y                             | Multi-line WTO Triggers       |
-+-------------------------------------+-------------------------------+
-| RESTART=Y                           | Step restart active?          |
-+-------------------------------------+-------------------------------+
-| GDGOPT=A                            | GDG option                    |
-+-------------------------------------+-------------------------------+
-| DUPDSNACT=S                         | Dup Dataset Action            |
-+-------------------------------------+-------------------------------+
-| RESDSNACT=S                         | Dup Dataset Action on restart |
-+-------------------------------------+-------------------------------+
-| XPRLIST=DV                          | Dataset exclude list          |
-+-------------------------------------+-------------------------------+
-| AUTOSTEP=Y                          | Automatic step selection      |
-+-------------------------------------+-------------------------------+
-| JOB_CARD_RESTART=Y                  | Restart from job card?        |
-+-------------------------------------+-------------------------------+
-| TRACE=N                             | Trace Status                  |
-+-------------------------------------+-------------------------------+
-| FORCE_SYS_AFF=N                     | Force System affinity         |
-+-------------------------------------+-------------------------------+
-| SETQUES=(JOB=12                     |                               |
-| 0;MSG=1920;DSN=480;WTO=480;EVT=240) |                               |
-+-------------------------------------+-------------------------------+
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| Current JOBQ: JOBQ - All Entries    |                               |
-| Displayed(0000)                     |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| DSN Trigger Table Entries:          |                               |
-|                                     |                               |
-| \-\-\-\-\-\-                        |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-| \-\-\-\-\-\-\-\-\                   |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| DSNT - All Entries Displayed(0000)  |                               |
-|                                     |                               |
-| \-\-\-\-\-\-\-\                     |                               |
-| -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| WTO Trigger Table                   |                               |
-| Entries:\-\-\-\-\-\-                |                               |
-| \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-- |                               |
-|                                     |                               |
-| WTOT - All Entries                  |                               |
-| Displayed(0000)Prepare IVP Jobs     |                               |
-+-------------------------------------+-------------------------------+
+```
+XPSAUDIT: XPCB Located at 11949038:8000 Analyzing LSAM: XPS14.03 On SYSID: machine
+-------------------------------------------
+XPSU83=82344908: Len=000046F8 Key=11949038
+XPSU84=821E3620: Len=000069E0 Key=11949038
+XPSUJV=821C2E58: Len=000041A8 Key=11949038
+XPRUSI=821BA628: Len=00004AE8 Key=11949038
+XPSWTO=821FDD10: Len=000052F0 Key=11949038
+-------------------------------------------
+XPSAUDIT: JOBQ Located at 1012AC00;I=11955200
+Last Entry: 10148C00 Queue Size: 121K
+Free=00121, Used=00000, Term=00001, Total=00121
+-------------------------------------------
+XPSAUDIT: MSGQ Located at 100E7200
+Last Entry: 10122300 Queue Size: 267K
+Free=01920, Used=00000, Term=00000, Total=01920
+-------------------------------------------
+XPSAUDIT: DSNT Located at 100D8340
+Last Entry: 100E6F80 Queue Size: 59K
+Free=00480, Used=00001, Term=00002, Total=00481
+-------------------------------------------
+XPSAUDIT: WTOT Located at 100C6DA8
+Last Entry: 100D7F68 Queue Size: 68K
+Free=00480, Used=00001, Term=00002, Total=00481
+-------------------------------------------
+XPSAUDIT: EVTQ Located at 100C1870
+Last Entry: 100C5FB0 Queue Size: 17K
+Free=00241, Used=00000, Term=00001, Total=00241
+-------------------------------------------
+XPSAUDIT: DSNF Located at 11841140
+Last Entry: 11841350 Queue Size: 592B
+Free=00010, Used=00002, Term=00003, Total=00012
+-------------------------------------------
+XPSAUDIT: PARMS Located at 11949B58
+-------------------------------------------
+XPS021I - CURRENT STORED PARMS FOR ADCD113 882
+MACHINEID=machine	OPCON/XPS MACHINE NAME
+PROCESS=30	PROCESS COUNT
+INTV=00.00.10	WAKE UP INTERVAL
+JCLDD=XPSJCL	DEFAULT JCL LIBRARY
+OVERRIDE_DD=	DEFAULT OVERRIDE LIBRARY
+XPSDYNAM=IEESYSAS	Dynamic task proc
+LSAM=ADCD113	PRIMARY LSAM?
+ADOPT=N	LSAM Adoption?
+SYSPLEX=N	Exploit SYSPLEX?
+PLEXGRP=	SYSPLEX Group Name
+TCPIP=	TCP/IP Task Name
+PORT=3100	LSAM PORT
+JORSPORT=+1 (3101)	JORS PORT
+RECOVERY=PROMPT	Recovery Option
+SMF15=DELETE	SMF Type 15 Disposition
+SMF64=DELETE	SMF Type 64 Disposition
+SPFAUDIT=N	Log ISPF User Chgs
+JOBRC=MAXRC	RC for failure check
+SPINOFF=Y	Spin Log Each Night
+SUBSYS=JES2	JES Subsystem
+TRACLASS=TQ	Dynamic Tracking Classes
+TRACMASK=	Dynamic Tracking Mask
+TRACSCHD=	Dynamic Tracking Schedule
+USERID=	Default USER
+MSGCLASS=A	REXX SYSOUT CLASS
+USEJMR=YES	JMR USER FIELD
+MLWTO=Y	Multi-line WTO Triggers
+RESTART=Y	Step restart active?
+GDGOPT=A	GDG option
+DUPDSNACT=S	Dup Dataset Action
+RESDSNACT=S	Dup Dataset Action on restart
+XPRLIST=DV	Dataset exclude list
+AUTOSTEP=Y	Automatic step selection
+JOB_CARD_RESTART=Y	Restart from job card?
+TRACE=N	Trace Status
+FORCE_SYS_AFF=N	Force System affinity
+SETQUES=(JOB=120;MSG=1920;DSN=480;WTO=480;EVT=240)
+-------------------------------------------
+Current JOBQ: JOBQ - All Entries Displayed(0000)
+-------------------------------------------
+DSN Trigger Table Entries:
+------------------------ --------------------------------------------
+DSNT - All Entries Displayed(0000)
+-------------------------------------------
+WTO Trigger Table Entries:------------------------
+WTOT - All Entries Displayed(0000)Prepare IVP Jobs
+```
 
 At this point, the IVP jobs loaded to the OpCon/xps INSTLIB should be reviewed for JCL syntax and standards conformity. Each of the examples in this topic uses the IVP jobs and their characteristics as training aids.
 
@@ -338,7 +202,7 @@ Before testing the installation, verify with the OpCon administrator that there 
 For the SAM and supporting services to communicate with the z/OS LSAM, the Machine name in the database (entered in the Enterprise Manager) must resolve to a TCP/IP address. The following list provides different methods for associating a TCP/IP address with the OpCon Machine name.
 
 - For any release of OpCon, the administrator can associate an alias with the TCP/IP address of the machine in one of two places:
-  - Refer to [Configure the Hosts File on the SAM Application Server](#Configure_the_Hosts_File_on_the_SAM_Application_Server).
+  - Refer to <ins>Configure the Hosts File on the SAM Application Server</ins>.
   - For information on configuring a DNS server, contact the network administrator.
 - To confirm name resolution for DNS or hosts file configuration, ping the machine by name from the SAM application server.
 - In OpCon release 3.30 and above, the administrator can assign the TCP/IP address to the machine in the *Communication Settings* tab located in the *Advanced Settings Panel* in the *Enterprise Manager\>Operation\> Machines* screen.
@@ -368,7 +232,7 @@ If the administrator assigns the TCP/IP address to the machine through the Advan
 
 After verifying licensing and name resolution between the OpCon server and the LSAM machine, add the machine definition in the Enterprise Manager.
 
-<ins>reate_the_Machine_in_OpCon/xps}Create the Machine in OpCon/xps</ins>
+<ins>Create the Machine in OpCon/xps</ins>
 
 When a z/OS LSAM is installed, create a machine record with a unique Machine name and Socket number in OpCon:
 
@@ -402,52 +266,35 @@ When a z/OS LSAM is installed, create a machine record with a unique Machine nam
 
 #### Importing IVP Schedule Job Definitions
 
-The *<Target Directory\>*\\Opconxps\\Utilities directory created by the
-SAM install process contains a file named \"IVPMVS.mdb\". This file is
-an SQL Export of a predefined IVP Schedules. Import this file to the
-OpCon/xps master schedule using the Schedule Import Export utility.
+The *<Target Directory\>*\\Opconxps\\Utilities directory created by the SAM install process contains a file named "IVPMVS.mdb". This file is an SQL Export of a predefined IVP Schedules. Import this file to the OpCon/xps master schedule using the Schedule Import Export utility.
 
-[Import the IVP Schedules]{.ul} 
+<ins>Import the IVP Schedules</ins>
 
-1. Double-click **Import Export** in the EM Navigation Panel under
-    External Tools.
-2. Click the **ODBC** button if the Login to Schedule Import Export
-    screen or the Access Database DSN screen appears.
-3. Click the **System DSN** tab in the ODBC Data Source Administrator
-    window.
+1. Double-click **Import Export** in the EM Navigation Panel under External Tools.
+2. Click the **ODBC** button if the Login to Schedule Import Export screen or the Access Database DSN screen appears.
+3. Click the **System DSN** tab in the ODBC Data Source Administrator window.
 4. Click the **Add** button.
-5. In the drop-down list in the Create New Data Source window, select
-    **Microsoft Access Driver (\*.mdb)**.
+5. In the drop-down list in the Create New Data Source window, select **Microsoft Access Driver (\*.mdb)**.
 6. Click the **Finish** button.
-7. In the Data Source Name text box, enter **IVPMVS** in the ODBC
-    Microsoft Access Setup window.
-8. *(Optional)* In the **Description** text box, enter
-    a *description*.
+7. In the Data Source Name text box, enter **IVPMVS** in the ODBC Microsoft Access Setup window.
+8. *(Optional)* In the **Description** text box, enter a *description*.
 9. Click the **Select** button.
-10. Go to the **Directories** frame in the Select Database window.
-    Browse to the **IVPMVS.MDB** file (e.g., C:\\Program
-    Files\\OpConxps\\Utilities\\IVPMVS.MDB).
+10. Go to the **Directories** frame in the Select Database window. Browse to the **IVPMVS.MDB** file (e.g., C:\\Program Files\\OpConxps\\Utilities\\IVPMVS.MDB).
 11. Click the.*mdb* file and then click the **OK** button.
 12. Click the **OK** button.
 13. Click the **OK** button in the ODBC Microsoft Access Setup window.
-14. Click the **OK** button in the ODBC Data Source Administrator
-    window.
-15. In the **User Login ID** field, enter **ocadm** in the Login to
-    Schedule Import/Export screen.
+14. Click the **OK** button in the ODBC Data Source Administrator window.
+15. In the **User Login ID** field, enter **ocadm** in the Login to Schedule Import/Export screen.
 16. In the **Password** field, enter the valid *password for ocadm*.
 17. In the **Data Source** field, select the *OpCon/xps database*.
 18. Click the **OK** button.
 19. Click the IVPMVS1 and IVPMVS2 in the **IVPMVS** list.
-20. Drag the schedules from the top pane to the bottom pane of the
-    screen to import the schedules to the *OpCon/xps* database.
+20. Drag the schedules from the top pane to the bottom pane of the screen to import the schedules to the *OpCon/xps* database.
 21. Click the **OK** button on the warning message about Batch User IDs.
 22. Click the **OK** button on the termination message.
 23. Close the Schedule Import Export utility.
 
-In the EM Navigation under Administration, click **Job Master**. Select
-the IVPMVS1schedule, select IVPJOB13, then choose the Task/Resource tab
-and change the Task/Job name **TSOUSER** to the TSO USERID on the test
-machine. Also, do this for IVPMVS2 job - IVPJOB23.
+In the EM Navigation under Administration, click **Job Master**. Select the IVPMVS1schedule, select IVPJOB13, then choose the Task/Resource tab and change the Task/Job name **TSOUSER** to the TSO USERID on the test machine. Also, do this for IVPMVS2 job - IVPJOB23.
 
 Job dependencies are set as follows:
 
@@ -464,235 +311,103 @@ Job dependencies are set as follows:
 - IVPJOB18 runs After IVPJOB16.
 - IVPJOB19 runs After IVPJOB18.
 
-At this point, ensure that the USERID used on IVPJOB16 has authority to
-schedule jobs. In the Enterprise Manager \'s (EM) Administration screen,
-give batch User ID \"TSOUSER\" permission to update IVPMVS1 and IVPMVS2.
+At this point, ensure that the USERID used on IVPJOB16 has authority to schedule jobs. In the Enterprise Manager \'s (EM) Administration screen, give batch User ID "TSOUSER" permission to update IVPMVS1 and IVPMVS2.
 
- 
+:::note
+The D,EXITS command is no longer valid. Also, since we no longer use the IEAVMXIT exit, the K M,UEXIT command does not effect the z/OS LSAM.
 
-+----------------------------------+----------------------------------+
-| ![White pencil/paper icon on     | **NOTE:**[ The D,EXITS command   | | gray circular                    | is no longer valid. Also, since  |
-| background](../../.              | we no longer use the IEAVMXIT    |
-| ./Resources/Images/note-icon(48x | exit, the K M,UEXIT command does |
-| 48).png "Note icon") | not effect the z/OS              |
-|                                  | LSAM.]               |
-|                                  |                                  |
-|                                  |                                  |
-|                                  |                                  |
-|                                  | WTO exit processing now uses a   |
-|                                  | dynamic exit, which should       |
-|                                  | always work, but you can verify  |
-|                                  | it by entering:                  |
-|                                  |                                  |
-|                                  | **D PROG,EXIT,MODNAME=XPSWTOEX** |
-|                                  |                                  |
-|                                  |                                  |
-|                                  |                                  |
-|                                  | [[It should be active on         | |                                  | CNZ_WTOMDBEXIT:]{style="font-f   |
-|                                  | amily: 'Century Gothic';"}]{styl |
-|                                  | e="font-family: 'Courier New';"} |
-|                                  |                                  |
-|                                  |                                  |
-|                                  |                                  |
-|                                  | CSV462I 12.16.07 PROG,EXIT       |
-|                                  | DISPLAY                          |
-|                                  |                                  |
-|                                  | MODULE XPSWTOEX                  |
-|                                  |                                  |
-|                                  | EXIT(S) CNZ_WTOMDBEXIT           |
-|                                  |                                  |
-|                                  |                                  |
-|                                  |                                  |
-|                                  | [You can also use                | |                                  | ]**D                 |
-|                                  | PRO                              |
-|                                  | G,EXIT,EXITNAME=CNZ_WTOMDBEXIT** |
-|                                  | to see it from the \"other       |
-|                                  | side\".                          |
-+----------------------------------+----------------------------------+
+WTO exit processing now uses a dynamic exit, which should always work, but you can verify it by entering:
+D PROG,EXIT,MODNAME=XPSWTOEX
+
+It should be active on CNZ_WTOMDBEXIT:
+
+```
+CSV462I 12.16.07 PROG,EXIT DISPLAY
+MODULE XPSWTOEX
+EXIT(S) CNZ_WTOMDBEXIT
+```
+
+You can also use D PROG,EXIT,EXITNAME=CNZ_WTOMDBEXIT to see it from the "other side".
+:::
 
 #### Creating a Notifying Event
 
-In the upcoming IVP job stream, job IVPJOB12 attempts to send a notify
-message. This may be a text message, email, beeper call, and so forth.
-The type of notification depends on the ENS interface tool that is being
-used. If a personal notification Event Number for receiving automated
-notifications has not been received, consult the local OpCon/xps
-Administrator. The MSGIN event that triggers the notification is defined
-in the LSAM ISPF Event Table Display.
+In the upcoming IVP job stream, job IVPJOB12 attempts to send a notify message. This may be a text message, email, beeper call, and so forth. The type of notification depends on the ENS interface tool that is being used. If a personal notification Event Number for receiving automated notifications has not been received, consult the local OpCon/xps Administrator. The MSGIN event that triggers the notification is defined in the LSAM ISPF Event Table Display.
 
-In any ISPF screen, enter the command \"TSO XPSPF001\". If the OpCon/xps
-Automation Table Admin display is not received, there is something
-missing from the TSO setup. More information on the ISPF Table Admin
-feature can be found in the LSAM online help. Set up a notification
-MSGIN event in the Event Table by selecting the table with an
-\'**A**)dd\' command.
+In any ISPF screen, enter the command "TSO XPSPF001". If the OpCon/xps Automation Table Admin display is not received, there is something missing from the TSO setup. More information on the ISPF Table Admin feature can be found in the LSAM online help. Set up a notification MSGIN event in the Event Table by selecting the table with an '**A**)dd' command.
 
 Building a Test Notification Event in the Event Table
 
 ![Building a Test Notification Event in the Event Table](/img/Building-a-Test-Notification-Event-in-the-Event-Table.png "Building a Test Notification Event in the Event Table")
 
-For the IVP test, the Event Token must be \"TESTEVT1\". The event type
-and action are required (**\$NOTIFY** and **ACTION**). The \"Element\"
-is the user personal notification ID number (usually 5 digits). This
-identifies the user to the Event Notification System (ENS) and it
-identifies the method of notification (phone \#, email address, etc)
-that is received. The \"Set Type\" is **1** (Informational message) and
-the Security Id should be the OpCon ID with permissions for receiving
-MSGIN events. The \"Message\" is any 40-character text (used in text
-messaging or emails, only).
+For the IVP test, the Event Token must be "TESTEVT1". The event type and action are required (**$NOTIFY** and **ACTION**). The "Element" is the user personal notification ID number (usually 5 digits). This identifies the user to the Event Notification System (ENS) and it identifies the method of notification (phone \#, email address, etc) that is received. The "Set Type" is **1** (Informational message) and the Security Id should be the OpCon ID with permissions for receiving MSGIN events. The "Message" is any 40-character text (used in text messaging or emails, only).
 
 #### Building and Executing the IVP Schedule
 
-Enter the \"Daily Schedule Maintenance\" display on the OpCon/xps User
-Interface. Build schedule **IVPMVS1**. Go to the Schedule Operations
-Display to view the IVPMVS1 status. The IVPMVS1 result should look
-similar to this:
+Enter the "Daily Schedule Maintenance" display on the OpCon/xps User Interface. Build schedule **IVPMVS1**. Go to the Schedule Operations Display to view the IVPMVS1 status. The IVPMVS1 result should look similar to this:
 
 Example of IVPMVS1
 
 ![Example of IVPMVS1](/img/Example-of-IVPMVS1.png "Example of IVPMVS1")
 
-Before releasing the schedule, become familiar with exactly *what* an
-IVP process is designed to do. It is designed to ensure all features and
-functions are operating as designed. Thus, most of the jobs on the IVP
-schedule are designed to capture failures and exceptions to processing.
-Most jobs end in error or display exceptional conditions. This is by
-design. Once the IVP schedule is completed, 90% of all commonly used
-functions in the z/OS environment have been tested for accuracy and
-function. It is strongly suggested that the IVP Schedule(s) be retained
-for use as functional verification after any future upgrade or major
-maintenance release installation.
+Before releasing the schedule, become familiar with exactly *what* an IVP process is designed to do. It is designed to ensure all features and functions are operating as designed. Thus, most of the jobs on the IVP schedule are designed to capture failures and exceptions to processing. Most jobs end in error or display exceptional conditions. This is by design. Once the IVP schedule is completed, 90% of all commonly used functions in the z/OS environment have been tested for accuracy and function. It is strongly suggested that the IVP Schedule(s) be retained for use as functional verification after any future upgrade or major maintenance release installation.
 
-Release IVPMVS1 (right-click and \"Release Schedule\") and execute the
-IVP jobs at any time. A 3270 TSO session on the z/OS system designated
-as IVP1 is needed to confirm several messages and activate a DSN
-trigger. Once the IVP schedule begins, the following flow of activities
-should take place:
+Release IVPMVS1 (right-click and "Release Schedule") and execute the IVP jobs at any time. A 3270 TSO session on the z/OS system designated as IVP1 is needed to confirm several messages and activate a DSN trigger. Once the IVP schedule begins, the following flow of activities should take place:
 
-IVPJOB11 executes three XPSTIMER steps each 15 seconds long. The first
-step shows a \"Mount Pending\" message for about 15 seconds. The job
-should complete normally.
+IVPJOB11 executes three XPSTIMER steps each 15 seconds long. The first step shows a "Mount Pending" message for about 15 seconds. The job should complete normally.
 
-IVPJOB12 executes three XPSTIMER steps each 15 seconds long and
-completes after the operator answers a test WTOR (\"Wait Opr Reply\"
-status). The job should complete with a message that Step 2 had a
-condition code of four. Since our MAXCC for the job was set at Zero,
-this condition should cause the schedule to pause (\"Failed -- J9999
-CC=0004\"). This expected result indicates that step condition code
-controls are working.
+IVPJOB12 executes three XPSTIMER steps each 15 seconds long and completes after the operator answers a test WTOR ("Wait Opr Reply" status). The job should complete with a message that Step 2 had a condition code of four. Since our MAXCC for the job was set at Zero, this condition should cause the schedule to pause ("Failed -- J9999 CC=0004"). This expected result indicates that step condition code controls are working.
 
-To continue with the next job (IVPJOB13), right-click IVPJOB12 and
-select \"Mark Good\". The rest of the jobs in the IVP, use Post Process
-actions to mark their self \"Good\" if they fail.
+To continue with the next job (IVPJOB13), right-click IVPJOB12 and select "Mark Good". The rest of the jobs in the IVP, use Post Process actions to mark their self "Good" if they fail.
 
-IVPJOB13 executes under the job name of \"TESTJOB3\" -- IF -- the
-STARTED TASK defined in the Job/Task Resource tab is active. Three
-XPSTIMER steps run, each 15 seconds long. Take this opportunity to check
-the MVS console log and see the operator messages displayed. The
-IVPJOB13 submitted TESTJOB3 and the two condition code tests executed.
-This tests the ability of OpCon/xps to submit and track MVS job names
-other than scheduled job names.
+IVPJOB13 executes under the job name of "TESTJOB3" -- IF -- the STARTED TASK defined in the Job/Task Resource tab is active. Three XPSTIMER steps run, each 15 seconds long. Take this opportunity to check the MVS console log and see the operator messages displayed. The IVPJOB13 submitted TESTJOB3 and the two condition code tests executed. This tests the ability of OpCon/xps to submit and track MVS job names other than scheduled job names.
 
-As soon as IVPJOB13 is marked \"Good\" by the automatic Post Process
-\$Event, the IVPCommand job starts and the IVPPROC1 started task has its
-\"Pre-run\" condition checked.
+As soon as IVPJOB13 is marked "Good" by the automatic Post Process $Event, the IVPCommand job starts and the IVPPROC1 started task has its "Pre-run" condition checked.
 
-IVPPROC1 waits for a WTO trigger message (from IVPJOB15). IVPCommand
-executes an MVS Display All (D A,L) command.
+IVPPROC1 waits for a WTO trigger message (from IVPJOB15). IVPCommand executes an MVS Display All (D A,L) command.
 
-IVPJOB14 should start after IVPCommand completes. IVPJOB14 should fail
-with the message \"Failed - Terminated IVPSTEP2\". This message will
-also be received on the MVS operator console: \"XPS104I - Job TERMINATED
-Due to Step Cond Code\". This job was forcibly terminated and flushed
-after step 2. Step 3 did not run.
+IVPJOB14 should start after IVPCommand completes. IVPJOB14 should fail with the message "Failed - Terminated IVPSTEP2". This message will also be received on the MVS operator console: "XPS104I - Job TERMINATED Due to Step Cond Code". This job was forcibly terminated and flushed after step 2. Step 3 did not run.
 
-Check the console log. Notice that a REXX procedure \[IVPREXX\] ran as a \"pre-run\" to IVPJOB14. A message should be seen on the MVS console
-indicating the pre-run REXX had a completion code of \"0000\" so the
-associated job was submitted: \"XPS089I - REXX:IVPJOB14 RCD=0000,
-ID=IVPJOB14\". The post process \$Event \"Mark(s) Good\" IVPJOB14.
+Check the console log. Notice that a REXX procedure \[IVPREXX\] ran as a "pre-run" to IVPJOB14. A message should be seen on the MVS console indicating the pre-run REXX had a completion code of "0000" so the associated job was submitted: "XPS089I - REXX:IVPJOB14 RCD=0000, ID=IVPJOB14". The post process $Event "Mark(s) Good" IVPJOB14.
 
-IVPJOB15 is now released. The DSN table entry for the File pre-run is
-set up immediately. When the status of IVPJOB15 becomes \"Wait Start
-Time -- File(s) Not Avail\", edit and SAVE any member in the OpCon/xps
-INSTLIB using the TSO USERID. It may take a minute but IVPJOB15 is
-submitted shortly. It should ABEND with a User 101 \[\"Failed -- J9999 Abended-U0101\]. The ABEND is an expected condition meant to test
-trapping of system abends in scheduled jobs. The message issued by the
-DSN trigger of IVPJOB15 releases IVPPROC1.
+IVPJOB15 is now released. The DSN table entry for the File pre-run is set up immediately. When the status of IVPJOB15 becomes "Wait Start Time -- File(s) Not Avail", edit and SAVE any member in the OpCon/xps INSTLIB using the TSO USERID. It may take a minute but IVPJOB15 is submitted shortly. It should ABEND with a User 101 \["Failed -- J9999 Abended-U0101"\]. The ABEND is an expected condition meant to test trapping of system abends in scheduled jobs. The message issued by the DSN trigger of IVPJOB15 releases IVPPROC1.
 
-When IVPJOB15 is marked \"Good\", IVPJOB16 and IVPREXX1 execute.
-IVPJOB17 is dynamically added by an XPSCOMM step in IVPJOB16. The step
-is a forced DSN ENQ lock in IVPJOB16 that is intended to hold the
-OpCon/xps OBJLIB until IVPJOB17 starts.
+When IVPJOB15 is marked "Good", IVPJOB16 and IVPREXX1 execute. IVPJOB17 is dynamically added by an XPSCOMM step in IVPJOB16. The step is a forced DSN ENQ lock in IVPJOB16 that is intended to hold the OpCon/xps OBJLIB until IVPJOB17 starts.
 
-When IVPJOB17 attempts to start, a \"DSN ENQ Wait\" condition should be
-discovered due to the DISP=OLD use of OpCon/xps OBJLIB by IVPJOB16. As
-soon as IVPJOB16 releases this dataset (about 25 seconds), IVPJOB17
-continues. Subsequently, IVPJOB17 should detect a catalog error in step
-one. Even though the job runs to completion, the job is marked
-\"failed\" to prevent dependent job submission until the catalog error
-is researched.
+When IVPJOB17 attempts to start, a "DSN ENQ Wait" condition should be discovered due to the DISP=OLD use of OpCon/xps OBJLIB by IVPJOB16. As soon as IVPJOB16 releases this dataset (about 25 seconds), IVPJOB17 continues. Subsequently, IVPJOB17 should detect a catalog error in step one. Even though the job runs to completion, the job is marked "failed" to prevent dependent job submission until the catalog error is researched.
 
 :::note
 In order to create the NOT CATLG 2 condition, IVPJOB17 allocates a new dataset with the same name as an existing dataset. If the dataset is directed to SMS storage, the allocation fails and the job ends with a JCL error.
 :::
 
-IVPJOB18: This job has four steps and creates datasets to be used for
-restart testing in IVPJOB19. The test record for each dataset contains
-the override variable \@DATE. This override variable is set by OpCon/xps
-with the token value of \[\[\$NOW\]\], which resolves to the current date and time when the job is started. It is not necessary to verify the
-test record contents; IVPJOB19 creates the same datasets with different
-text.
+IVPJOB18: This job has four steps and creates datasets to be used for restart testing in IVPJOB19. The test record for each dataset contains the override variable \@DATE. This override variable is set by OpCon/xps with the token value of \[\[\$NOW\]\], which resolves to the current date and time when the job is started. It is not necessary to verify the test record contents; IVPJOB19 creates the same datasets with different text.
 
-The first time this job is run, all steps should end with CC=0000. If
-the GDG base has not been deleted, subsequent executions produce a
-CC=0012 in the first step. This is acceptable:
+The first time this job is run, all steps should end with CC=0000. If the GDG base has not been deleted, subsequent executions produce a CC=0012 in the first step. This is acceptable:
 
-a.  BUILDGDG defines a GDG base.
-b.  STEP1 creates the next dataset in the GDG defined in the previous
-    step. It contains the following record:\
-    THIS IS A TEST RECORD CREATED BY IVPJOB18 AT \@DATE
-c.  STEP2 creates a PDS, with a member containing the following record:\
-    THIS IS A TEST RECORD CREATED BY IVPJOB18 AT \@DATE
-d.  STEP3 creates the sequential dataset, containing the following
-    record:\
-    THIS IS A TEST RECORD CREATED BY IVPJOB18 AT \@DATE
+1. BUILDGDG defines a GDG base.
+2. STEP1 creates the next dataset in the GDG defined in the previous step. It contains the following record:
+
+    THIS IS A TEST RECORD CREATED BY IVPJOB18 AT @DATE
+
+3. STEP2 creates a PDS, with a member containing the following record:
+
+    THIS IS A TEST RECORD CREATED BY IVPJOB18 AT @DATE
+
+4. STEP3 creates the sequential dataset, containing the following record:
+
+    THIS IS A TEST RECORD CREATED BY IVPJOB18 AT @DATE
 
 :::note
 IVPJOB19 relies on the OpCon restart functions for all tests. If the restart function is not enabled, this job ends with Catalog Errors.
 :::
 
-IVPJOB19: This job has five steps. The first three steps create the same
-datasets as IVPJOB18; the last two are XPSTIMER steps. All steps should
-complete with CC=0000. The restart settings for this job are set to
-scratch duplicate datasets on a normal run, to scratch duplicate
-datasets on a restart, and to use Absolute generations for GDG
-regression.
+IVPJOB19: This job has five steps. The first three steps create the same datasets as IVPJOB18; the last two are XPSTIMER steps. All steps should complete with CC=0000. The restart settings for this job are set to scratch duplicate datasets on a normal run, to scratch duplicate datasets on a restart, and to use Absolute generations for GDG regression.
 
-The job is designed test all restart capabilities. The first run tests
-the clean up of the duplicate datasets in step2 and step3. After the job
-completes, the JESMSGLG should be checked to verify that the duplicate
-data sets encountered in step2 and step3 have been deleted and replaced.
-This also can be further verified by checking the contents of the
-datasets. The test records contains the job name IVPJOB19 and the date
-and time when IVPJOB19 was started. To test GDG regression, first note
-the date and time from the test record in the dataset from step1, then
-restart the job from the first step. For information on restarting a job
-from a step, refer to [z/OS Job Details](https://help.smatechnologies.com/opcon/core/latest/Concepts/zOS-Job-Details.md#top){.MCXref
-.xref} in the **Concepts** online help.
+The job is designed test all restart capabilities. The first run tests the clean up of the duplicate datasets in step2 and step3. After the job completes, the JESMSGLG should be checked to verify that the duplicate data sets encountered in step2 and step3 have been deleted and replaced. This also can be further verified by checking the contents of the datasets. The test records contains the job name IVPJOB19 and the date and time when IVPJOB19 was started. To test GDG regression, first note the date and time from the test record in the dataset from step1, then restart the job from the first step. For information on restarting a job from a step, refer to [z/OS Job Details](https://help.smatechnologies.com/opcon/core/latest/Concepts/zOS-Job-Details.md#top) in the **Concepts** online help.
 
-Verify that the generation was not incremented and the test record has a
-new date and time. For additional testing, submit this job outside of
-OpCon/xps 2 times, and then restart the job. The original generation
-should be replaced, but the new generations remains intact.
+Verify that the generation was not incremented and the test record has a new date and time. For additional testing, submit this job outside of OpCon/xps 2 times, and then restart the job. The original generation should be replaced, but the new generations remains intact.
 
-Next, verify that step4 is flagged as non-restartable. In Job
-Configuration, under the General Category, the Step field for STEP4
-should display \"004\*STEP4 0000\". Now try to select this step for
-restart. An informational popup window should display the message,
-"This is a non-restartable step. Confirm selection". This warns the
-user that changes may be necessary to the job in order to start in this
-step. In most cases, it indicates that temporary datasets, created in a
-previous step, are not available during the restart.
+Next, verify that step4 is flagged as non-restartable. In Job Configuration, under the General Category, the Step field for STEP4 should display "004\*STEP4 0000". Now try to select this step for restart. An informational popup window should display the message, "This is a non-restartable step. Confirm selection". This warns the user that changes may be necessary to the job in order to start in this step. In most cases, it indicates that temporary datasets, created in a previous step, are not available during the restart.
 
 :::note
 OpCon allows the restart, after user confirmation, but problems may occur if the reasons that the step is not restartable are ignored.

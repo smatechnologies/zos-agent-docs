@@ -1,4 +1,4 @@
-# Customization Process 
+# Customization Process
 
 Prior to attempting to start and test the z/OS LSAM, various system, security, JES and LSAM configuration requirements must be fulfilled for your installation.
 
@@ -22,87 +22,84 @@ If you are planning to use the step restart capability of OpCon/xps, you should 
 
 XPS021I - Current Stored Parms for ZOS1IBM
 
-+------------------------------------+--------------------------------+
-| MACHINEID=ZOS1                     | OPCON/XPS MACHINE NAME         |
-|                                    |                                |
-| PORT=3100                          | LSAM PORT                      |
-|                                    |                                |
-| JORSPORT=+1 (3100)                 | JORS PORT                      |
-|                                    |                                |
-| PROCESS=30                         | PROCESS COUNT                  |
-|                                    |                                |
-| USEJMR=NO                          | JMR USER FIELD                 |
-|                                    |                                |
-| INTV=00.00.20                      | WAKE UP INTERVAL               |
-|                                    |                                |
-| SPINOFF=Y                          | Spin Log Each Night            |
-|                                    |                                |
-| JCLDD=XPSJCL                       | DEFAULT JCL LIBRARY            |
-|                                    |                                |
-| OVERRIDE-DD=TEMPJCL                | DEFAULT OVERRIDE LIBRARY       |
-|                                    |                                |
-| JOBRC=MAXRC                        | RC for failure check           |
-|                                    |                                |
-| QUEUED-IS-RUNNING=N                | Show queued jobs as running    |
-|                                    |                                |
-| FORCE-SYS-AFF=N                    | Force System affinity          |
-|                                    |                                |
-| RESTART=Y                          | Step Restart Active?           |
-|                                    |                                |
-| RESTORE-COND-CODES=Y               | Return codes for skipped steps |
-|                                    |                                |
-| GDGOPT=A                           | GDG option                     |
-|                                    |                                |
-| DUPDSNACT=S                        | Dup Dataset Action             |
-|                                    |                                |
-| RESDSNACT=S                        | Dup Dataset Action on restart  |
-|                                    |                                |
-| XPRLIST=01                         | Dataset exclude list           |
-|                                    |                                |
-| AUTOSTEP=Y                         | Automatic step selection       |
-|                                    |                                |
-| SYSPLEX=N                          | LSAM on SYSPLEX?               |
-|                                    |                                |
-| TCPIP                              | TCP/IP Task Name               |
-|                                    |                                |
-| SMF15=D                            | SMF Type 15 Disposition        |
-|                                    |                                |
-| SMF64=D                            | SMF Type 64 Disposition        |
-|                                    |                                |
-| TRACLASS=TQ                        | Dynamic Tracking Classes       |
-|                                    |                                |
-| TRACLAS8=                          | Dynamic Tracking Class Mask    |
-|                                    |                                |
-| TRACMASK=                          | Dynamic Tracking Mask          |
-|                                    |                                |
-| TRACSCHD=                          | Dynamic Tracking Schedule      |
-|                                    |                                |
-| USERID=                            | Default USER                   |
-|                                    |                                |
-| XPSDYNAM=IEESYSAS                  | Dynamic task proc              |
-|                                    |                                |
-| MSGCLASS=A                         | REXX SYSOUT CLASS              |
-|                                    |                                |
-| MLWTO=Y                            | Multi-line WTO Triggers        |
-|                                    |                                |
-| SPFAUDIT=N                         | Print Step Msgs                |
-|                                    |                                |
-| LOG-UNIT                           | Log ISPF User Chgs             |
-|                                    |                                |
-| LOG-VOLUME                         | LSAMLOG allocation unit        |
-|                                    |                                |
-| RECOVERY=PROMPT                    | LSAMLOG allocation volume      |
-|                                    |                                |
-| SUBSYS=JES2                        | Recovery Option                |
-|                                    |                                |
-| TRACE=N                            | JES Subsystem                  |
-|                                    |                                |
-|                                    | Trace Status                   |
-+------------------------------------+--------------------------------+
-| \*                                 |                                |
-| SETQUES=(JOB=120                   |                                |
-| ;MSG=3840;DSN=480;WTO=480;EVT=240) |                                |
-+------------------------------------+--------------------------------+
+```
+MACHINEID=ZOS1
+PORT=3100
+JORSPORT=+1 (3100)
+PROCESS=30
+USEJMR=NO
+INTV=00.00.20
+SPINOFF=Y
+JCLDD=XPSJCL
+OVERRIDE-DD=TEMPJCL
+JOBRC=MAXRC
+QUEUED-IS-RUNNING=N
+FORCE-SYS-AFF=N
+RESTART=Y
+RESTORE-COND-CODES=Y
+GDGOPT=A
+DUPDSNACT=S
+RESDSNACT=S
+XPRLIST=01
+AUTOSTEP=Y
+SYSPLEX=N
+TCPIP
+SMF15=D
+SMF64=D
+TRACLASS=TQ
+TRACLAS8=
+TRACMASK=
+TRACSCHD=
+USERID=
+XPSDYNAM=IEESYSAS
+MSGCLASS=A
+MLWTO=Y
+SPFAUDIT=N
+LOG-UNIT
+LOG-VOLUME
+RECOVERY=PROMPT
+SUBSYS=JES2
+TRACE=N
+OPCON/XPS MACHINE NAME
+LSAM PORT
+JORS PORT
+PROCESS COUNT
+JMR USER FIELD
+WAKE UP INTERVAL
+Spin Log Each Night
+DEFAULT JCL LIBRARY
+DEFAULT OVERRIDE LIBRARY
+RC for failure check
+Show queued jobs as running
+Force System affinity
+Step Restart Active?
+Return codes for skipped steps
+GDG option
+Dup Dataset Action
+Dup Dataset Action on restart
+Dataset exclude list
+Automatic step selection
+LSAM on SYSPLEX?
+TCP/IP Task Name
+SMF Type 15 Disposition
+SMF Type 64 Disposition
+Dynamic Tracking Classes
+Dynamic Tracking Class Mask
+Dynamic Tracking Mask
+Dynamic Tracking Schedule
+Default USER
+Dynamic task proc
+REXX SYSOUT CLASS
+Multi-line WTO Triggers
+Print Step Msgs
+Log ISPF User Chgs
+LSAMLOG allocation unit
+LSAMLOG allocation volume
+Recovery Option
+JES Subsystem
+Trace Status
+* SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)
+```
 
 :::note
 All characters after the first space on the line and all lines that begin with an asterisk ('\*') are considered comments. For backward compatibility, commas may be used for continuation, but, beginning with V4.01, they are optional between lines. As before, multiple parameters on a single line must be separated by commas.
@@ -115,845 +112,116 @@ The optional *\@systemname* prefix can be used to filter the input records. Any 
 
 ### Run-time Parameters
 
-+----------------------+----------------------+----------------------+
-| Parameter            | Default Value        | Description          |
-+======================+:====================:+======================+
-| ADOPT                | \<Blank\>            | -   Determines if    |
-|                      |                      |     the LSAM can     |
-|                      |                      |     become the       |
-|                      |                      |     primary LSAM     |
-|                      |                      |     authority during |
-|                      |                      |     failover.        |
-|                      |                      | -   Valid values are |
-|                      |                      |     Y (yes) and N    |
-|                      |                      |     (no) or a system |
-|                      |                      |     name.            |
-|                      |                      | -   The named system |
-|                      |                      |     will be eligible |
-|                      |                      |     to become the    |
-|                      |                      |     primary LSAM.    |
-+----------------------+----------------------+----------------------+
-| EVENTPASS            | 20 asterisks         | Sets the event       |
-|                      | \*\*\*\*\*\*\*\*\*\* | control password to  |
-|                      | \*\*\*\*\*\*\*\*\*\* | be used for all      |
-|                      |                      | external messages to |
-|                      |                      | the SAM, regardless  |
-|                      |                      | of Userid.           |
-+----------------------+----------------------+----------------------+
-| Force-SYS-AFF        | No                   | -   If selected, the |
-|                      |                      |     jobs will be     |
-|                      |                      |     submitted with   |
-|                      |                      |     affinity for     |
-|                      |                      |     submitting       |
-|                      |                      |     system.          |
-|                      |                      | -   This is useful   |
-|                      |                      |     in a test        |
-|                      |                      |     environment with |
-|                      |                      |     a MAS, but with  |
-|                      |                      |     OpCon on only    |
-|                      |                      |     one system.      |
-+----------------------+----------------------+----------------------+
-| INTV                 | 00.00.20             | -   This value       |
-|                      |                      |     determines the   |
-|                      |                      |     maximum delay    |
-|                      |                      |     for external     |
-|                      |                      |     resource         |
-|                      |                      |     recognition      |
-|                      |                      |     (batch triggers, |
-|                      |                      |     Pre-run Data     |
-|                      |                      |     Triggers, and so |
-|                      |                      |     forth).          |
-|                      |                      | -   A valid value    |
-|                      |                      |     must use the     |
-|                      |                      |     following        |
-|                      |                      |     syntax:          |
-|                      |                      |     hh.mm.ss.        |
-+----------------------+----------------------+----------------------+
-| JCLDD                | XPSJCL               | Sets the default     |
-|                      |                      | DDNAME in the LSAM   |
-|                      |                      | JCL Proc. It is used |
-|                      |                      | to locate JCL for    |
-|                      |                      | any batch Job Start  |
-|                      |                      | request from the SAM |
-|                      |                      | that does NOT have a |
-|                      |                      | DDNAME assigned.     |
-|                      |                      |                      |
-|                      |                      |                      |
-|                      |                      |                      |
-|                      |                      | **Note**: This       |
-|                      |                      | parameter is user    |
-|                      |                      | configurable. For    |
-|                      |                      | more information on  |
-|                      |                      | configuring this     |
-|                      |                      | parameter, refer to  |
-|                      |                      | [LSAM Options and    | |                      |                      | JCL                  |
-|                      |                      | Proced               |
-|                      |                      | ures](#LSAM){.MCXref |
-|                      |                      | .xref}.              |
-+----------------------+----------------------+----------------------+
-| LSAM                 | N                    | -   Determines if    |
-|                      |                      |     this LSAM is     |
-|                      |                      |     running as a     |
-|                      |                      |     secondary        |
-|                      |                      |     PlexSAM (PSAM)   |
-|                      |                      |     or as the        |
-|                      |                      |     primary LSAM for |
-|                      |                      |     a Sysplex.       |
-|                      |                      | -   This parameter   |
-|                      |                      |     has no affect if |
-|                      |                      |     SYSPLEX=N is     |
-|                      |                      |     coded. For       |
-|                      |                      |     information on   |
-|                      |                      |     the SYSPLEX      |
-|                      |                      |     parameter, refer |
-|                      |                      |     to               |
-|                      |                      |     [SYSPLE          | |                      |                      | X](#SYSPLEX){.MCXref |
-|                      |                      |     .xref}.          |
-|                      |                      | -   Valid values are |
-|                      |                      |     Y (yes), N (no)  |
-|                      |                      |     or a system      |
-|                      |                      |     name.            |
-+----------------------+----------------------+----------------------+
-| LOG-UNIT             | \<Blank\>            | Specifies a generic  |
-|                      |                      | or esoteric name for |
-|                      |                      | a group of DASD      |
-|                      |                      | devices for LSAMLOG  |
-|                      |                      | allocation.          |
-|                      |                      |                      |
-|                      |                      | -   1 - 8 character  |
-|                      |                      |     name or blank.   |
-+----------------------+----------------------+----------------------+
-| LOG-VOLUME           | \<Blank\>            | Specifies a specific |
-|                      |                      | volume serial for    |
-|                      |                      | LSAMLOG allocation.  |
-|                      |                      |                      |
-|                      |                      | -   1 - 6 character  |
-|                      |                      |     name or blank.   |
-+----------------------+----------------------+----------------------+
-| MACHINEID            | \*                   | -   Defines the name |
-|                      |                      |     of the LSAM.     |
-|                      |                      | -   If set to an     |
-|                      |                      |     asterisk (\*),   |
-|                      |                      |     the LSAM uses    |
-|                      |                      |     the system name  |
-|                      |                      |     from SYSNAME.    |
-|                      |                      | -   The name may be  |
-|                      |                      |     up to 8          |
-|                      |                      |     characters long  |
-|                      |                      |     and must match   |
-|                      |                      |     the name entered |
-|                      |                      |     for the Machine  |
-|                      |                      |     in the OpCon/xps |
-|                      |                      |     Enterprise       |
-|                      |                      |     Manager.         |
-|                      |                      | -   SMANetCom must   |
-|                      |                      |     be able to       |
-|                      |                      |     resolve this     |
-|                      |                      |     machine name to  |
-|                      |                      |     a TCP/IP         |
-|                      |                      |     address. For     |
-|                      |                      |     more             |
-|                      |                      |     information,     |
-|                      |                      |     refer to         |
-|                      |                      |     [Machine Name    | |                      |                      |     R                |
-|                      |                      | esolution](https://h |
-|                      |                      | elp.smatechnologies. |
-|                      |                      | com/opcon/core/lates |
-|                      |                      | t/Concepts/Machines. |
-|                      |                      | htm#Machine){.MCXref |
-|                      |                      |     .xref} in the    |
-|                      |                      |     **Concepts**     |
-|                      |                      |     online help.     |
-+----------------------+----------------------+----------------------+
-| MSGCLASS             | A                    | -   Defines the      |
-|                      |                      |     MSGCLASS         |
-|                      |                      |     allocated to     |
-|                      |                      |     dynamic REXX     |
-|                      |                      |     tasks.           |
-|                      |                      | -   The class is one |
-|                      |                      |     character, A     |
-|                      |                      |     through Z or 0   |
-|                      |                      |     through 9, and   |
-|                      |                      |     must be a valid  |
-|                      |                      |     output class     |
-|                      |                      |     specified at JES |
-|                      |                      |     initialization.  |
-+----------------------+----------------------+----------------------+
-| MLWTO                | YES                  | -   Determines if    |
-|                      |                      |     the LSAM should  |
-|                      |                      |     process minor    |
-|                      |                      |     lines of         |
-|                      |                      |     multi-line       |
-|                      |                      |     console          |
-|                      |                      |     messages.        |
-|                      |                      | -   Valid values are |
-|                      |                      |     YES and NO.      |
-+----------------------+----------------------+----------------------+
-| Override-DD          | \<Blank\>            | -   The name of a DD |
-|                      |                      |     statement in the |
-|                      |                      |     LSAM JCL to use  |
-|                      |                      |     as the default   |
-|                      |                      |     override DD, if  |
-|                      |                      |     one is not       |
-|                      |                      |     specified in the |
-|                      |                      |     job definition.  |
-|                      |                      | -   A blank value    |
-|                      |                      |     means that there |
-|                      |                      |     will be no       |
-|                      |                      |     default.         |
-+----------------------+----------------------+----------------------+
-| XPSDYNAM             | IEESYSAS             | Identifies the       |
-|                      |                      | cataloged procedure  |
-|                      |                      | to use for dynamic   |
-|                      |                      | tasks (Rexx and      |
-|                      |                      | command).            |
-+----------------------+----------------------+----------------------+
-| PLEXGRP              | \'XPSV4.01 \'        | Included for         |
-|                      |                      | backward             |
-|                      |                      | compatibility. The   |
-|                      |                      | Sysplex group name   |
-|                      |                      | is now determined by |
-|                      |                      | the XPSID defined    |
-|                      |                      | for the LSAM.        |
-+----------------------+----------------------+----------------------+
-| []{#PORT}PORT        | 3100                 | -   The first port   | |                      |                      |     in a range of    |
-|                      |                      |     FIVE port        |
-|                      |                      |     assignments for  |
-|                      |                      |     the TCPIP HOST   |
-|                      |                      |     IP address.      |
-|                      |                      | -   This value must  |
-|                      |                      |     be a valid       |
-|                      |                      |     TCP/IP port      |
-|                      |                      |     number and       |
-|                      |                      |     cannot be used   |
-|                      |                      |     by any other     |
-|                      |                      |     process.         |
-|                      |                      | -   This first value |
-|                      |                      |     must also be     |
-|                      |                      |     defined to the   |
-|                      |                      |     SAM              |
-|                      |                      |     implementation.  |
-|                      |                      |     For information  |
-|                      |                      |     on defining a    |
-|                      |                      |     machine in       |
-|                      |                      |     OpCon/xps, refer |
-|                      |                      |     to [Create the   | |                      |                      |     Machine in       |
-|                      |                      |     OpCon/xp         |
-|                      |                      | s](Installation.md# |
-|                      |                      | Create_the_Machine_i |
-|                      |                      | n_OpCon/xps){.MCXref |
-|                      |                      |     .xref}.          |
-+----------------------+----------------------+----------------------+
-| JORSPORT             | +1                   | -   Port number for  |
-|                      |                      |     JORS, expressed  |
-|                      |                      |     as an offset     |
-|                      |                      |     from PORT or as  |
-|                      |                      |     an absolute port |
-|                      |                      |     number.          |
-|                      |                      | -   This is always   |
-|                      |                      |     stored as a      |
-|                      |                      |     relative offset, |
-|                      |                      |     so it will       |
-|                      |                      |     change when PORT |
-|                      |                      |     changes.         |
-|                      |                      | -   JORSPORT=0 or +0 |
-|                      |                      |     will disable the |
-|                      |                      |     JORS server.     |
-+----------------------+----------------------+----------------------+
-| PROCESS              | 030                  | -   A number         |
-|                      |                      |     defining the     |
-|                      |                      |     maximum number   |
-|                      |                      |     of jobs the LSAM |
-|                      |                      |     can              |
-|                      |                      |     simultaneously   |
-|                      |                      |     manage (1 --     |
-|                      |                      |     512).            |
-|                      |                      | -   This value is    |
-|                      |                      |     used during the  |
-|                      |                      |     LSAM\'s first    |
-|                      |                      |     initialization   |
-|                      |                      |     after an IPL to  |
-|                      |                      |     determine CSA    |
-|                      |                      |     usage. Refer to  |
-|                      |                      |     CSA Storage      |
-|                      |                      |     Allocation on    |
-|                      |                      |     [CSA Storage     | |                      |                      |     Allocati         |
-|                      |                      | on](Advanced-Featu |
-|                      |                      | res.md#CSA){.MCXref |
-|                      |                      |     .xref} to        |
-|                      |                      |     determine the    |
-|                      |                      |     impact of this   |
-|                      |                      |     parameter.       |
-|                      |                      |     -   After        |
-|                      |                      |                      |
-|                      |                      |      initialization, |
-|                      |                      |         the maximum  |
-|                      |                      |         process      |
-|                      |                      |         count        |
-|                      |                      |         allowed will |
-|                      |                      |         be limited   |
-|                      |                      |         by the       |
-|                      |                      |         initial      |
-|                      |                      |         allocation.  |
-|                      |                      | -   PROCESS=0 can be |
-|                      |                      |     used to prevent  |
-|                      |                      |     jobs from        |
-|                      |                      |     starting,        |
-|                      |                      |     similar to       |
-|                      |                      |     setting the      |
-|                      |                      |     machine to       |
-|                      |                      |     LIMITED.         |
-|                      |                      | -   PROCESS=RESET    |
-|                      |                      |     will cause the   |
-|                      |                      |     LSAM to reset    |
-|                      |                      |     the process      |
-|                      |                      |     count to the     |
-|                      |                      |     value it had     |
-|                      |                      |     before PROCESS=0 |
-|                      |                      |     was used.        |
-+----------------------+----------------------+----------------------+
-| RECOVERY             | PROMPT               | -   Determines the   |
-|                      |                      |     LSAM\'s behavior |
-|                      |                      |     during recovery  |
-|                      |                      |     from a system    |
-|                      |                      |     failure.         |
-|                      |                      | -   Upon             |
-|                      |                      |     reactivation,    |
-|                      |                      |     the LSAM         |
-|                      |                      |     searches the     |
-|                      |                      |     RECLOG for jobs  |
-|                      |                      |     that were        |
-|                      |                      |     executing at the |
-|                      |                      |     time the system  |
-|                      |                      |     went down.       |
-|                      |                      | -   If any are       |
-|                      |                      |     found, the       |
-|                      |                      |     operator may be  |
-|                      |                      |     prompted or the  |
-|                      |                      |     LSAM             |
-|                      |                      |     automatically    |
-|                      |                      |     sends            |
-|                      |                      |     termination      |
-|                      |                      |     messages to the  |
-|                      |                      |     SMANetCom.       |
-|                      |                      | -   If prompted, the |
-|                      |                      |     operator may     |
-|                      |                      |     select to ignore |
-|                      |                      |     executing job    |
-|                      |                      |     terminations     |
-|                      |                      |     (for instance,   |
-|                      |                      |     if they were     |
-|                      |                      |     already          |
-|                      |                      |     terminated by    |
-|                      |                      |     the Scheduler    |
-|                      |                      |     and restarts are |
-|                      |                      |     waiting).        |
-|                      |                      | -   Valid values are |
-|                      |                      |     PROMPT and AUTO. |
-+----------------------+----------------------+----------------------+
-| RESTORE-COND-CODES   | YES                  | -   The z/OS LSAM    |
-|                      |                      |     restores the     |
-|                      |                      |     return codes for |
-|                      |                      |     skipped steps so |
-|                      |                      |     that conditional |
-|                      |                      |     processing in    |
-|                      |                      |     restarted jobs   |
-|                      |                      |     will proceed as  |
-|                      |                      |     if the full job  |
-|                      |                      |     was run.         |
-|                      |                      | -   Setting this     |
-|                      |                      |     parameter to     |
-|                      |                      |     \"NO\" will      |
-|                      |                      |     leave the        |
-|                      |                      |     skipped steps in |
-|                      |                      |     \"not run\"      |
-|                      |                      |     status.          |
-+----------------------+----------------------+----------------------+
-| SETQUES              | Automatic            | -   Overrides        |
-|                      | calculations using   |     default queue    |
-|                      | PROCESS=             |     limits. Refer to |
-|                      |                      |     [CSA Storage     | |                      |                      |     Allocati         |
-|                      |                      | on](Advanced-Featu |
-|                      |                      | res.md#CSA){.MCXref |
-|                      |                      |     .xref} prior to  |
-|                      |                      |     setting these    |
-|                      |                      |     values.          |
-|                      |                      | -   Extended CSA     |
-|                      |                      |     (ECSA) is        |
-|                      |                      |     consumed in      |
-|                      |                      |     proportion to    |
-|                      |                      |     these values.    |
-|                      |                      | -   Valid queues     |
-|                      |                      |     include:         |
-|                      |                      |     (JOB=nnn         |
-|                      |                      |     \[;MSG=nnn\]     | |                      |                      |     \[;DSN=nnn\]     |
-|                      |                      |     \[;WTO=nnn\]     | |                      |                      |     \[;EVT=nnn\])    |
-|                      |                      |                      |
-|                      |                      | **Note**: These must |
-|                      |                      | be defined in the    |
-|                      |                      | XPSPARMxx since they |
-|                      |                      | are not dynamic.     |
-|                      |                      | Using the MODIFY     |
-|                      |                      | command to change    |
-|                      |                      | these values has no  |
-|                      |                      | effect on the        |
-|                      |                      | [                    | |                      |                      | LSAM]{.GeneralLSAM}. |
-+----------------------+----------------------+----------------------+
-| SPINOFF              | Y                    | -   Determines if    |
-|                      |                      |     the LSAM         |
-|                      |                      |     automatically    |
-|                      |                      |     spins off a new  |
-|                      |                      |     LSAM LOG dataset |
-|                      |                      |     each day at      |
-|                      |                      |     midnight.        |
-|                      |                      | -   If set to N, a   |
-|                      |                      |     SPINLOG command  |
-|                      |                      |     (F               |
-|                      |                      |                      |
-|                      |                      |    lsamname,SPINLOG) |
-|                      |                      |     should be        |
-|                      |                      |     scheduled each   |
-|                      |                      |     day to ensure    |
-|                      |                      |     the log does not |
-|                      |                      |     exceed allocated |
-|                      |                      |     space.           |
-|                      |                      | -   If set to Y, the |
-|                      |                      |     LSAM             |
-|                      |                      |     automatically    |
-|                      |                      |     manages the log. |
-|                      |                      | -   Valid values are |
-|                      |                      |     Y (yes) and N    |
-|                      |                      |     (no).            |
-+----------------------+----------------------+----------------------+
-| []{#SYSPLEX}SYSPLEX  | N                    | -   Determines if    | |                      |                      |     the LSAM is      |
-|                      |                      |     running in a     |
-|                      |                      |     SYSPLEX          |
-|                      |                      |     environment.     |
-|                      |                      | -   If Y, the        |
-|                      |                      |     XPSPLEX task is  |
-|                      |                      |     automatically    |
-|                      |                      |     started when the |
-|                      |                      |     LSAM is started. |
-|                      |                      | -   Valid values are |
-|                      |                      |     Y (yes) and N    |
-|                      |                      |     (no).            |
-+----------------------+----------------------+----------------------+
-| SMF64                | K                    | -   Determines if    |
-|                      |                      |     the VSAM trigger |
-|                      |                      |     records are      |
-|                      |                      |     deleted or left  |
-|                      |                      |     in the SMA Data  |
-|                      |                      |     Sets.            |
-|                      |                      | -   SMF must be      |
-|                      |                      |     recording record |
-|                      |                      |     type 64 for JOB, |
-|                      |                      |     STC and TSU      |
-|                      |                      |     SUSBSYS for all  |
-|                      |                      |     VSAM triggers.   |
-|                      |                      | -   If D, the XPS390 |
-|                      |                      |     SMF exit XPSU83  |
-|                      |                      |     deletes the      |
-|                      |                      |     records after    |
-|                      |                      |     DSN trigger      |
-|                      |                      |     filtering.       |
-+----------------------+----------------------+----------------------+
-| SPFAUDIT             | N                    | -   Determines if    |
-|                      |                      |     the LSAM issues  |
-|                      |                      |     XPS083I messages |
-|                      |                      |     for ISPF Users   |
-|                      |                      |     that update or   |
-|                      |                      |     delete DSN Table |
-|                      |                      |     entries.         |
-|                      |                      | -   Valid values are |
-|                      |                      |     Y (yes) and N    |
-|                      |                      |     (no).            |
-+----------------------+----------------------+----------------------+
-| TCPIP                | \<Blank\>            | Identifies the Host  |
-|                      |                      | TCPIP application    |
-|                      |                      | name on the z/OS     |
-|                      |                      | machine.             |
-+----------------------+----------------------+----------------------+
-| TRACLASS             | \<Blank\>            | Defines an optional  |
-|                      |                      | list of one to eight |
-|                      |                      | JES single character |
-|                      |                      | execution classes to |
-|                      |                      | monitor for external |
-|                      |                      | job tracking (e.g.,  |
-|                      |                      | TRACLASS=PR places   |
-|                      |                      | all jobs in JES      |
-|                      |                      | execution classes    |
-|                      |                      | \'P\' and \'R\' in   |
-|                      |                      | the current SAM      |
-|                      |                      | schedule and will    |
-|                      |                      | track them to        |
-|                      |                      | completion).         |
-|                      |                      |                      |
-|                      |                      |                      |
-|                      |                      |                      |
-|                      |                      | **Note**: The        |
-|                      |                      | continuation         |
-|                      |                      | character C, in      |
-|                      |                      | column 72 of the job |
-|                      |                      | card, bypasses this  |
-|                      |                      | option.              |
-+----------------------+----------------------+----------------------+
-| TRACLAS8             | \<Blank\>            | When using 2-8       |
-|                      |                      | character job        |
-|                      |                      | classes, this        |
-|                      |                      | parameter will be    |
-|                      |                      | used as a mask to    |
-|                      |                      | match the class. The |
-|                      |                      | syntax is the same   |
-|                      |                      | as used with         |
-|                      |                      | TRACMASK.            |
-+----------------------+----------------------+----------------------+
-| TRACMASK             | \<Blank\>            | Defines a job name   |
-|                      |                      | mask of eight        |
-|                      |                      | characters (e.g.,    |
-|                      |                      | \*\*PROD\*\*) for    |
-|                      |                      | OpCon/xps external   |
-|                      |                      | job tracking.        |
-|                      |                      |                      |
-|                      |                      |                      |
-|                      |                      |                      |
-|                      |                      | **Note**: The        |
-|                      |                      | continuation         |
-|                      |                      | character C, in      |
-|                      |                      | column 72 of the job |
-|                      |                      | card, bypasses this  |
-|                      |                      | option.              |
-+----------------------+----------------------+----------------------+
-| TRACSCHD             | \<Blank\>            | Defines the default  |
-|                      |                      | schedule name for    |
-|                      |                      | external job         |
-|                      |                      | tracking. The        |
-|                      |                      | default is AdHoc.    |
-+----------------------+----------------------+----------------------+
-| TRACE                | N                    | -   Defines the      |
-|                      |                      |     trace level for  |
-|                      |                      |     the LSAM.        |
-|                      |                      | -   Valid values     |
-|                      |                      |     include:         |
-|                      |                      |     -   Up to eight  |
-|                      |                      |         digits 1     |
-|                      |                      |         -- 8.        |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   Y or 9 sets  |
-|                      |                      |         tracing for  |
-|                      |                      |         all levels.  |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   N or 0       |
-|                      |                      |         disables     |
-|                      |                      |         tracing.     |
-|                      |                      |                      |
-|                      |                      | **Note**: This       |
-|                      |                      | parameter is used    |
-|                      |                      | for debugging        |
-|                      |                      | purposes only.       |
-+----------------------+----------------------+----------------------+
-| USEJMR               | NO                   | -   Controls the use |
-|                      |                      |     of the JMRUSEID  |
-|                      |                      |     field by the     |
-|                      |                      |     LSAM tracking    |
-|                      |                      |     exits.           |
-|                      |                      | -   If YES, the LSAM |
-|                      |                      |     uses the entire  |
-|                      |                      |     field.           |
-|                      |                      | -   If NO, the LSAM  |
-|                      |                      |     does not use the |
-|                      |                      |     field at all.    |
-|                      |                      | -   A number from 0  |
-|                      |                      |     -- 63 can be     |
-|                      |                      |     used to specify  |
-|                      |                      |     the offset       |
-|                      |                      |     within the field |
-|                      |                      |     that is used for |
-|                      |                      |     a single bit     |
-|                      |                      |     flag.            |
-|                      |                      |                      |
-|                      |                      | **Note**: USEJMR=NO  |
-|                      |                      | is normally required |
-|                      |                      | to coexist with TWS. |
-|                      |                      | Enabling USEJMR      |
-|                      |                      | *may* improve        |
-|                      |                      | performance in some  |
-|                      |                      | cases.               |
-+----------------------+----------------------+----------------------+
-| USERID=              | \<Blank\>            | -   Defines the      |
-|                      |                      |     installation     |
-| \[u                  |                      |     default RACF     | | serid\|[NONE]{.ul}\] |                      |     USER= to be used |
-|                      |                      |     on any batch Job |
-|                      |                      |     Start request    |
-|                      |                      |     from the SAM     |
-|                      |                      |     that does NOT    |
-|                      |                      |     already have an  |
-|                      |                      |     owning User      |
-|                      |                      |     assigned.        |
-|                      |                      | -   This value is    |
-|                      |                      |     inserted in the  |
-|                      |                      |     USER= parameter  |
-|                      |                      |     of the JOB Card  |
-|                      |                      |     at submission.   |
-+----------------------+----------------------+----------------------+
-| RUNMODE              | Prod                 | When set to          |
-|                      |                      | RUNMODE=TEST, batch  |
-|                      |                      | jobs will be         |
-|                      |                      | submitted with       |
-|                      |                      | TYPRUN=SCAN and      |
-|                      |                      | success or failure   |
-|                      |                      | will be determined   |
-|                      |                      | by the JCL scanner.  |
-+----------------------+----------------------+----------------------+
-| JOBRC                | MAXRC                | -   Determines how   |
-|                      |                      |     the job failure  |
-|                      |                      |     criteria are     |
-|                      |                      |     applied.         |
-|                      |                      | -   Valid values are |
-|                      |                      |     MAXRC, LASTRC,   |
-|                      |                      |     or JCL.          |
-|                      |                      | -   MAXRC - The      |
-|                      |                      |     highest return   |
-|                      |                      |     code in the job  |
-|                      |                      |     is tested.       |
-|                      |                      | -   LASTRC - The     |
-|                      |                      |     return code from |
-|                      |                      |     the last         |
-|                      |                      |     executed step is |
-|                      |                      |     tested.          |
-|                      |                      | -   JCL - On z/OS    |
-|                      |                      |     1.13 or higher,  |
-|                      |                      |     uses the test    |
-|                      |                      |     specified by JES |
-|                      |                      |     defaults or the  |
-|                      |                      |     jobcard JOBRC    |
-|                      |                      |     parameter.       |
-+----------------------+----------------------+----------------------+
-| QUEUED-IS-RUNNING    | NO                   | -   By default, z/OS |
-|                      |                      |     batch jobs show  |
-|                      |                      |     \"Pre-run\"      |
-|                      |                      |     status after     |
-|                      |                      |     submission to    |
-|                      |                      |     JES, then switch |
-|                      |                      |     to \"Running\"   |
-|                      |                      |     when they start  |
-|                      |                      |     execution.       |
-|                      |                      |     Setting this     |
-|                      |                      |     parameter to     |
-|                      |                      |     \"Yes\" will     |
-|                      |                      |     make the job     |
-|                      |                      |     show that it is  |
-|                      |                      |     running as soon  |
-|                      |                      |     as it is         |
-|                      |                      |     submitted.       |
-|                      |                      | -   This may effect  |
-|                      |                      |     automation       |
-|                      |                      |     triggers based   |
-|                      |                      |     on job status    |
-|                      |                      |     changes.         |
-+----------------------+----------------------+----------------------+
-| RESTART              | NO                   | -   If YES, Restart  |
-|                      |                      |     support is       |
-|                      |                      |     active.          |
-|                      |                      |                      |
-|                      |                      | **Note**: If this    |
-|                      |                      | option is turned on  |
-|                      |                      | after the LSAM is    |
-|                      |                      | intialized, the \'F  |
-|                      |                      | lsamname,REPEXIT\'   |
-|                      |                      | command should be    |
-|                      |                      | issued to load the   |
-|                      |                      | XPRUSI exit if it    |
-|                      |                      | has not already been |
-|                      |                      | loaded.              |
-|                      |                      |                      |
-|                      |                      | -   If **NO**, the   |
-|                      |                      |     Restart support  |
-|                      |                      |     is not active.   |
-|                      |                      |                      |
-|                      |                      | **Note**: If a user  |
-|                      |                      | requests a Step      |
-|                      |                      | restart when this    |
-|                      |                      | support is disabled, |
-|                      |                      | the job status is    |
-|                      |                      | set to \'Prerun      |
-|                      |                      | failed\' with        |
-|                      |                      | message \'Restart    |
-|                      |                      | not Active.\'        |
-+----------------------+----------------------+----------------------+
-| GDGOPT               | ABSOLUTE             | -   Method used to   |
-|                      |                      |     reset the base   |
-|                      |                      |     generation for   |
-|                      |                      |     Generation Data  |
-|                      |                      |     Groups during a  |
-|                      |                      |     restart.         |
-|                      |                      | -   Valid values     |
-|                      |                      |     include:         |
-|                      |                      |     -   NONE: Do     |
-|                      |                      |         nothing.     |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   ABSOLUTE:    |
-|                      |                      |         Reset to the |
-|                      |                      |         base         |
-|                      |                      |         recorded     |
-|                      |                      |         during the   |
-|                      |                      |         last run.    |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   RELATIVE:    |
-|                      |                      |         Reset to the |
-|                      |                      |         highest base |
-|                      |                      |         that allows  |
-|                      |                      |         all the      |
-|                      |                      |         remaining    |
-|                      |                      |         references   |
-|                      |                      |         to resolve   |
-|                      |                      |         successfully |
-|                      |                      |         without      |
-|                      |                      |         skipping     |
-|                      |                      |         generations. |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   CATALOG      |
-|                      |                      |         RESYNC: Set  |
-|                      |                      |         the base so  |
-|                      |                      |         that the     |
-|                      |                      |         highest      |
-|                      |                      |         relative     |
-|                      |                      |         generation   |
-|                      |                      |         created in   |
-|                      |                      |         bypassed     |
-|                      |                      |         steps        |
-|                      |                      |         references   |
-|                      |                      |         the current  |
-|                      |                      |         generation.  |
-+----------------------+----------------------+----------------------+
-| DUPDSNACT            | NONE                 | -   Action to take   |
-|                      |                      |     when a dataset   |
-|                      |                      |     to be created is |
-|                      |                      |     already          |
-|                      |                      |     cataloged during |
-|                      |                      |     a normal run.    |
-|                      |                      | -   Valid values     |
-|                      |                      |     include:         |
-|                      |                      |     -   NONE: Do     |
-|                      |                      |         nothing.     |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   SCRATCH:     |
-|                      |                      |         Scratch the  |
-|                      |                      |         dataset.     |
-|                      |                      |     -   REUSE:       |
-|                      |                      |         Convert      |
-|                      |                      |         DISP=NEW to  |
-|                      |                      |         DISP=OLD to  |
-|                      |                      |         reuse the    |
-|                      |                      |         existing     |
-|                      |                      |         allocation.  |
-+----------------------+----------------------+----------------------+
-| RESDSNACT            | SCRATCH              | -   Action to take   |
-|                      |                      |     when a dataset   |
-|                      |                      |     to be created is |
-|                      |                      |     already          |
-|                      |                      |     cataloged during |
-|                      |                      |     a restart.       |
-|                      |                      | -   Valid values     |
-|                      |                      |     include:         |
-|                      |                      |     -   NONE: Do     |
-|                      |                      |         nothing.     |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   SCRATCH:     |
-|                      |                      |         Scratch the  |
-|                      |                      |         dataset.     |
-|                      |                      |     -   REUSE:       |
-|                      |                      |         Convert      |
-|                      |                      |         DISP=NEW to  |
-|                      |                      |         DISP=OLD to  |
-|                      |                      |         reuse the    |
-|                      |                      |         existing     |
-|                      |                      |         allocation.  |
-+----------------------+----------------------+----------------------+
-| AUTOSTEP             | YES                  | -   Automatic        |
-|                      |                      |     restart step     |
-|                      |                      |     assignment.      |
-|                      |                      | -   Valid values     |
-|                      |                      |     include:         |
-|                      |                      |     -   YES: Assign  |
-|                      |                      |         a restart    |
-|                      |                      |         step as the  |
-|                      |                      |         job          |
-|                      |                      |         executes -   |
-|                      |                      |         reset to     |
-|                      |                      |         null if good |
-|                      |                      |         EOJ.         |
-|                      |                      |                      |
-|                      |                      |     ```{=html}       |
-|                      |                      |     <!-- -->         |
-|                      |                      |     ```              |
-|                      |                      |     -   NO: Do not   |
-|                      |                      |         assign a     |
-|                      |                      |         restart step |
-|                      |                      |                      |
-|                      |                      |       automatically. |
-+----------------------+----------------------+----------------------+
-| XPRLIST              | \<Blank\>            | -   Allows a         |
-|                      |                      |     two-character    |
-|                      |                      |     suffix to be     |
-|                      |                      |     provided for the |
-|                      |                      |     XPRLSTxx member  |
-|                      |                      |     of XPSPARMS to   |
-|                      |                      |     be used as the   |
-|                      |                      |     table for        |
-|                      |                      |     dataset          |
-|                      |                      |     filtering.       |
-|                      |                      | -   The XPRLIST      |
-|                      |                      |     syntax is as     |
-|                      |                      |     follows:         |
-|                      |                      | -   The patterns can |
-|                      |                      |     contain the wild |
-|                      |                      |     card characters  |
-|                      |                      |     \'\*\' and       |
-|                      |                      |     \'%\'.           |
-|                      |                      | -   An asterisk (\*) |
-|                      |                      |     represents 0 --  |
-|                      |                      |     8 characters, up |
-|                      |                      |     to the end of    |
-|                      |                      |     the current      |
-|                      |                      |     dataset level    |
-|                      |                      |     (up to a dot or  |
-|                      |                      |     blank).          |
-|                      |                      | -   Percent (\'%\')  |
-|                      |                      |     represents any   |
-|                      |                      |     single character |
-|                      |                      |     in the current   |
-|                      |                      |     position, except |
-|                      |                      |     a dot (\'.\').   |
-|                      |                      | -   An asterisk (\*) |
-|                      |                      |     at the end of    |
-|                      |                      |     the pattern      |
-|                      |                      |     matches any      |
-|                      |                      |     number of        |
-|                      |                      |     characters to    |
-|                      |                      |     the end of the   |
-|                      |                      |     name.            |
-+----------------------+----------------------+----------------------+
+||||
+|--- |--- |--- |
+|ADOPT|*Blank*|<ul><li>Determines if the LSAM can become the primary LSAM authority during failover.</li><li>Valid values are Y (yes) and N (no) or a system name.</li><li>The named system will be eligible to become the primary LSAM.</li></ul>|
+|EVENTPASS|20 asterisks ********************|Sets the event control password to be used for all external messages to the SAM, regardless of Userid.|
+|Force-SYS-AFF|No|<ul><li>If selected, the jobs will be submitted with affinity for submitting system.</li><li>This is useful in a test environment with a MAS, but with OpCon on only one system.</li></ul>|
+|INTV|00.00.20|<ul><li>This value determines the maximum delay for external resource recognition (batch triggers, Pre-run Data Triggers, and so forth).</li><li>A valid value must use the following syntax: hh.mm.ss.</li></ul>|
+|JCLDD|XPSJCL|Sets the default DDNAME in the LSAM JCL Proc. It is used to locate JCL for any batch Job Start request from the SAM that does NOT have a DDNAME assigned. Note: This parameter is user configurable. For more information on configuring this parameter, refer to LSAM Options and JCL Procedures.|
+|LSAM|N|<ul><li>Determines if this LSAM is running as a secondary PlexSAM (PSAM) or as the primary LSAM for a Sysplex.</li><li>This parameter has no affect if SYSPLEX=N is coded. For information on the SYSPLEX parameter, refer to SYSPLEX.</li><li>Valid values are Y (yes), N (no) or a system name.</li></ul>|
+|LOG-UNIT|*Blank*|Specifies a generic or esoteric name for a group of DASD devices for LSAMLOG allocation.<ul><li>1 - 8 character name or blank.</li></ul>|
+|LOG-VOLUME|*Blank*|Specifies a specific volume serial for LSAMLOG allocation.
+                                
+                                    1 - 6 character name or blank.|
+|MACHINEID|*|Defines the name of the LSAM.
+                                    If set to an asterisk (*), the LSAM uses the system name from SYSNAME.
+                                    The name may be up to 8 characters long and must match the name entered for the Machine in the OpCon/xps Enterprise Manager.
+                                    SMANetCom must be able to resolve this machine name to a TCP/IP address. For more information, refer to Machine Name Resolution in the Concepts online help.|
+|MSGCLASS|A|Defines the MSGCLASS allocated to dynamic REXX tasks.
+                                    The class is one character, A through Z or 0 through 9, and must be a valid output class specified at JES initialization.|
+|MLWTO|YES|Determines if the LSAM should process minor lines of multi-line console messages.
+                                    Valid values are YES and NO.|
+|Override-DD|*Blank*|The name of a DD statement in the LSAM JCL to use as the default override DD, if one is not specified in the job definition.
+                                    A blank value means that there will be no default.|
+|XPSDYNAM|IEESYSAS|Identifies the cataloged procedure to use for dynamic tasks (Rexx and command).|
+|PLEXGRP|'XPSV4.01 '|Included for backward compatibility. The Sysplex group name is now determined by the XPSID defined for the LSAM.|
+|PORT|3100|The first port in a range of FIVE port assignments for the TCPIP HOST IP address.
+                                    This value must be a valid TCP/IP port number and cannot be used by any other process.
+                                    This first value must also be defined to the SAM implementation. For information on defining a machine in OpCon/xps, refer to Create the Machine in OpCon/xps.|
+|JORSPORT|+1|Port number for JORS, expressed as an offset from PORT or as an absolute port number.
+                                    This is always stored as a relative offset, so it will change when PORT changes.
+                                    JORSPORT=0 or +0 will disable the JORS server.|
+|PROCESS|030|A number defining the maximum number of jobs the LSAM can simultaneously manage (1 – 512).
+                                    This value is used during the LSAM's first initialization after an IPL to determine CSA usage. Refer to CSA Storage Allocation on CSA Storage Allocation to determine the impact of this parameter.After initialization, the maximum process count allowed will be limited by the initial allocation.
+                                    PROCESS=0 can be used to prevent jobs from starting, similar to setting the machine to LIMITED.
+                                    PROCESS=RESET will cause the LSAM to reset the process count to the value it had before PROCESS=0 was used.|
+|RECOVERY|PROMPT|Determines the LSAM's behavior during recovery from a system failure.
+                                    Upon reactivation, the LSAM searches the RECLOG for jobs that were executing at the time the system went down.
+                                    If any are found, the operator may be prompted or the LSAM automatically sends termination messages to the SMANetCom.
+                                    If prompted, the operator may select to ignore executing job terminations (for instance, if they were already terminated by the Scheduler and restarts are waiting).
+                                    Valid values are PROMPT and AUTO.|
+|RESTORE-COND-CODES|YES|The z/OS LSAM restores the return codes for skipped steps so that conditional processing in restarted jobs will proceed as if the full job was run.
+                                    Setting this parameter to "NO" will leave the skipped steps in "not run" status.|
+|SETQUES|Automatic calculations using PROCESS=|Overrides default queue limits. Refer to CSA Storage Allocation prior to setting these values.
+                                    Extended CSA (ECSA) is consumed in proportion to these values.
+                                    Valid queues include: (JOB=nnn [;MSG=nnn] [;DSN=nnn] [;WTO=nnn] [;EVT=nnn]) 
+                                
+                                Note: These must be defined in the XPSPARMxx since they are not dynamic. Using the MODIFY command to change these values has no effect on the LSAM.|
+|SPINOFF|Y|Determines if the LSAM automatically spins off a new LSAM LOG dataset each day at midnight.
+                                    If set to N, a SPINLOG command (F lsamname,SPINLOG) should be scheduled each day to ensure the log does not exceed allocated space.
+                                    If set to Y, the LSAM automatically manages the log.
+                                    Valid values are Y (yes) and N (no).|
+|SYSPLEX|N|Determines if the LSAM is running in a SYSPLEX environment.
+                                    If Y, the XPSPLEX task is automatically started when the LSAM is started.
+                                    Valid values are Y (yes) and N (no).|
+|SMF64|K|Determines if the VSAM trigger records are deleted or left in the SMA Data Sets.
+                                    SMF must be recording record type 64 for JOB, STC and TSU SUSBSYS for all VSAM triggers.
+                                    If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
+|SPFAUDIT|N|Determines if the LSAM issues XPS083I messages for ISPF Users that update or delete DSN Table entries.
+                                    Valid values are Y (yes) and N (no).|
+|TCPIP|*Blank*|Identifies the Host TCPIP application name on the z/OS machine.|
+|TRACLASS|*Blank*|Defines an optional list of one to eight JES single character execution classes to monitor for external job tracking (e.g., TRACLASS=PR places all jobs in JES execution classes 'P' and 'R' in the current SAM schedule and will track them to completion).
+                                 
+                                Note: The continuation character C, in column 72 of the job card, bypasses this option.|
+|TRACLAS8|*Blank*|When using 2-8 character job classes, this parameter will be used as a mask to match the class. The syntax is the same as used with TRACMASK.|
+|TRACMASK|*Blank*|Defines a job name mask of eight characters (e.g., **PROD**) for OpCon/xps external job tracking.
+                                 
+                                Note: The continuation character C, in column 72 of the job card, bypasses this option.|
+|TRACSCHD|*Blank*|Defines the default schedule name for external job tracking. The default is AdHoc.|
+|TRACE|N|Defines the trace level for the LSAM.
+                                    Valid values include:Up to eight digits 1 – 8.Y or 9 sets tracing for all levels.N or 0 disables tracing.
+                                
+                                Note: This parameter is used for debugging purposes only.|
+|USEJMR|NO|Controls the use of the JMRUSEID field by the LSAM tracking exits.
+                                    If YES, the LSAM uses the entire field.
+                                    If NO, the LSAM does not use the field at all.
+                                    A number from 0 – 63 can be used to specify the offset within the field that is used for a single bit flag.
+                                
+                                Note: USEJMR=NO is normally required to coexist with TWS. Enabling USEJMR may improve performance in some cases.|
+|USERID=
+                                [userid|NONE]|*Blank*|Defines the installation default RACF USER= to be used on any batch Job Start request from the SAM that does NOT already have an owning User assigned.
+                                    This value is inserted in the USER= parameter of the JOB Card at submission.|
+|RUNMODE|Prod|When set to RUNMODE=TEST, batch jobs will be submitted with TYPRUN=SCAN and success or failure will be determined by the JCL scanner.|
+|JOBRC|MAXRC|Determines how the job failure criteria are applied.
+                                    Valid values are MAXRC, LASTRC, or JCL.
+                                    MAXRC - The highest return code in the job is tested.
+                                    LASTRC - The return code from the last executed step is tested.
+                                    JCL - On z/OS 1.13 or higher, uses the test specified by JES defaults or the jobcard JOBRC parameter.|
+|QUEUED-IS-RUNNING|NO|By default, z/OS batch jobs show "Pre-run" status after submission to JES, then switch to "Running" when they start execution. Setting this parameter to "Yes" will make the job show that it is running as soon as it is submitted.
+                                    This may effect automation triggers based on job status changes.|
+|RESTART|NO|If YES, Restart support is active.
+                                
+                                Note: If this option is turned on after the LSAM is intialized, the 'F lsamname,REPEXIT' command should be issued to load the XPRUSI exit if it has not already been loaded.
+                                
+                                    If NO, the Restart support is not active.
+                                
+                                Note: If a user requests a Step restart when this support is disabled, the job status is set to 'Prerun failed' with message 'Restart not Active.'|
+|GDGOPT|ABSOLUTE|Method used to reset the base generation for Generation Data Groups during a restart.
+                                    Valid values include:NONE: Do nothing.ABSOLUTE: Reset to the base recorded during the last run.RELATIVE: Reset to the highest base that allows all the remaining references to resolve successfully without skipping generations.CATALOG RESYNC: Set the base so that the highest relative generation created in bypassed steps references the current generation.|
+|DUPDSNACT|NONE|Action to take when a dataset to be created is already cataloged during a normal run.
+                                    Valid values include:NONE: Do nothing.SCRATCH: Scratch the dataset.REUSE: Convert DISP=NEW to DISP=OLD to reuse the existing allocation.|
+|RESDSNACT|SCRATCH|Action to take when a dataset to be created is already cataloged during a restart.
+                                    Valid values include:NONE: Do nothing.SCRATCH: Scratch the dataset.REUSE: Convert DISP=NEW to DISP=OLD to reuse the existing allocation.|
+|AUTOSTEP|YES|Automatic restart step assignment.
+                                    Valid values include:YES: Assign a restart step as the job executes - reset to null if good EOJ.NO: Do not assign a restart step automatically.|
+|XPRLIST|*Blank*|Allows a two-character suffix to be provided for the XPRLSTxx member of XPSPARMS to be used as the table for dataset filtering.
+                                    The XPRLIST syntax is as follows:
+                                    IDSN=dataset patternIVOL=volser patternXDSN=dataset patternXVOL=volser pattern
+                                    The patterns can contain the wild card characters '*' and '%'.
+                                    An asterisk (*) represents 0 – 8 characters, up to the end of the current dataset level (up to a dot or blank).
+                                    Percent ('%') represents any single character in the current position, except a dot ('.').
+                                    An asterisk (*) at the end of the pattern matches any number of characters to the end of the name.|
 
 :::note
 The XPSPRMxx member is used only at IPL time. Changes to Parameters after IPL should be done using the operator command \[F lsamname,parm=option\]. If the parameter change is to be permanent, it should also be made to XPSPRMxx so it is not rolled back at the next IPL.
