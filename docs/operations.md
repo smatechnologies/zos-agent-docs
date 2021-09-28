@@ -13,14 +13,10 @@ The following table presents z/OS LSAM components including module names, compon
 |XPSSUPV|LSAM Task|Initiates internal tracking queues, attaches XPSERVER, processes operator commands, logs completed SAM activity and calls XPSUBMIT as requested by XPSERVER.|
 |XPSPLEX|XPSPLEX Task|SYSPLEX Management Module controls fault tolerance actions and global XCF interaction between LSAM and PSAMs.|
 |XPSFETCH|All Modules|XPS Primary Control Block (XPCB) manager and XPS version control module.|
-||Batch Job
-                                Dynamic REXX 
-                                Started Task|SMA file transfer server.|
-|XPFTAGT|Batch Job
-                                Dynamic REXX
-                                Started task|SMA file transfer agent.|
+||Batch Job<br/>Dynamic REXX <br/>Started Task|SMA file transfer server.|
+|XPFTAGT|Batch Job<br/>Dynamic REXX<br/>Started task|SMA file transfer agent.|
 |XPSQMGR|All Modules|LSAM Tracking and Message Queue manager.|
-|XPSERVER|LSAM Task|TCP/IP communications and SAM Request Client/Server gateway for the Primary LSAM. Communicates tracking info to the OpCon/xps SAM (via IP connection).|
+|XPSERVER|LSAM Task|TCP/IP communications and SAM Request Client/Server gateway for the Primary LSAM. Communicates tracking info to the SMA Opcon SAM (via IP connection).|
 |XPSUBMIT|LSAM Task|JCL submission routine, Started Task (STC) initiation, operator command task and REXX task creation.|
 |XPSPARM|LSAM Task|Runtime Parameter and Operator command parse routine.|
 |XPSLOGQ|LSAM Task|Communications and Message logging routine.|
@@ -34,9 +30,7 @@ The following table presents z/OS LSAM components including module names, compon
 |XPSU84|SYS.IEFU84 (Dynamic)|SMF Interface for Job Execution tracking and Step Control actions.|
 |XPSUSI|SYS.IEFUSI (Dynamic)|Step initiation exit interface for dataset processing.|
 |XPSWTOEX|CNZ_WTOMDBEXIT|Console message processing.|
-|XPSCOMM|Batch Step
-                                REXX Call
-                                Started Task|Batch update and OEM interface. Communicates MSGIN commands to SAM.|
+|XPSCOMM|Batch Step<br/>REXX Call<br/>Started Task|Batch update and OEM interface. Communicates MSGIN commands to SAM.|
 |XPSPF001|TSO/ISPF|ISPF Trigger table editor.|
 |XPSPAUTH|TSO/ISPF|TSO Authorized Command Interface (Entry in IKJTSOxx as Auth CMD).|
 |XPSISPF|TSO/ISPF|ISPLINK/ISPEXEC Call Interface.|
@@ -44,7 +38,7 @@ The following table presents z/OS LSAM components including module names, compon
 |XPSAFAPI|XPSAGENT|SAF Security API for JCL Edit and SYSOUT Browse.|
 |XPSAUDIT|Started Task|Displays current LSAM Usage information, storage allocations, etc.|
 
-In addition to the functional components of XPS390, an API Macro Library \[highlevel.midlevel.MACLIB\] is distributed with the product, allowing a skilled assembler programmer the ability to write additional customized API interfaces to OpCon/xps.
+In addition to the functional components of XPS390, an API Macro Library \[highlevel.midlevel.MACLIB\] is distributed with the product, allowing a skilled assembler programmer the ability to write additional customized API interfaces to SMA Opcon.
 
 ### LSAM Options
 
@@ -83,7 +77,7 @@ Tracking is provided through storage queues, control blocks and tables located i
 
 ### XPSLOG Logging Function
 
-The RECLOG DD in the OPCONxx Proc designates a sequential generation dataset that logs all significant traffic to and from the SAM. This log is a repository for current trigger table contents and provides a minute-by-minute status for system recovery after an outage. For this reason, the OPCONxx task(s) should always be one of the last tasks to terminate during planned shutdowns. If OPCONxx is terminated before all production processing is complete, or there are multiple intermediate IPLs (without starting the LSAM), it could cause OpCon/xps to post 'in-flight' jobs as errors when it is reinstated.
+The RECLOG DD in the OPCONxx Proc designates a sequential generation dataset that logs all significant traffic to and from the SAM. This log is a repository for current trigger table contents and provides a minute-by-minute status for system recovery after an outage. For this reason, the OPCONxx task(s) should always be one of the last tasks to terminate during planned shutdowns. If OPCONxx is terminated before all production processing is complete, or there are multiple intermediate IPLs (without starting the LSAM), it could cause SMA Opcon to post 'in-flight' jobs as errors when it is reinstated.
 
 The log also takes "checkpoints" each hour to record changes to trigger tables and so forth. Each night at midnight (00:00:01hrs) the XPSLOGQ program log automatically spins off a new generation. The operator can also request a spin-off (F *lsamname*,SPINLOG) at any time. The SPINLOG command can also be a scheduled job; however, SMA recommends that the number of generations retained should be sufficient for a full week of processing logs to be available.
 
@@ -97,7 +91,7 @@ If the dynamic allocation fails with the specified UNIT or VOLUME, it will be re
 
 ## LSAM Program Operation
 
-The OPCONxx and XPSPLEX tasks should be started as soon as possible after an IPL. No scheduled batch job submissions or executions function properly if OpCon/xps has not been initialized. If SYSPLEX=Y is coded in your XPSPRMxx member, the XPSPLEX task is automatically started by the OPCONxx task. The typical start command is:
+The OPCONxx and XPSPLEX tasks should be started as soon as possible after an IPL. No scheduled batch job submissions or executions function properly if SMA Opcon has not been initialized. If SYSPLEX=Y is coded in your XPSPRMxx member, the XPSPLEX task is automatically started by the OPCONxx task. The typical start command is:
 
 ```shell
 S *lsamname*\[.\<*taskname\>*\] 
@@ -139,26 +133,14 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 |F lsamname,REPEXIT|Exits Reinit.|Releases ECSA, re-allocates and reloads SMF exits.|
 |F lsamname,REPUSERx|User Exits Reinit.|Where 'x' is the User Exit Number.|
 |F lsamname,CLEARQ|Clears LSAM execution queues.|Use only as directed by SMA Support.|
-|F lsamname,TRACE=
-                                [Y|N|0|9|[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
-|F lsamname,RESET=
-                                [S|C|(sysid)][,NOPROMPT]
-                                 
-                                Caution: This command should only be entered during failover recovery.|Re-initializes the LSAM.|S= System RESET – completely removes LSAM internals and restarts all tasks.
-                                    C=Cycle LSAM – simply shuts down the LSAM and restarts it.
-                                    If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.|
-|F lsamname,SHUTDOWN|Shuts down the OPCON/XPS LSAM|Cycles down LSAM and stop the XPSPLEX Task.|
-|F lsamname,REMOVEX
-                                [,NOPROMPT]
-                                 
-                                Caution: Do not use this command unless directed by SMA.|Removes the LSAM and internals|Shuts down the LSAM and removes all exits and storage queues.|
+|F lsamname,TRACE=<br/>[Y|N|0|9|[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
+|F lsamname,RESET=<br/>[S|C|(sysid)][,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the LSAM.|S= System RESET – completely removes LSAM internals and restarts all tasks.<br/>C=Cycle LSAM – simply shuts down the LSAM and restarts it.<br/>If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.|
+|F lsamname,SHUTDOWN|Shuts down the SMA Opcon LSAM|Cycles down LSAM and stop the XPSPLEX Task.|
+|F lsamname,REMOVEX<br/>[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the LSAM and internals|Shuts down the LSAM and removes all exits and storage queues.|
 |F lsamname,parm=value|Resets most parameters in XPSPRMxx.|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. Refer to Run-time Parameters.|
-|F lsamname,
-                                XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|None.|
-|F lsamname,
-                                XPRLIST,ADD,[I|X][DSN|VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
-|F lsamname,
-                                XPRLIST,DELETE,[I|X][DSN|VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
+|F lsamname,<br/>XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|None.|
+|F lsamname,<br/>XPRLIST,ADD,[I|X][DSN|VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
+|F lsamname,<br/>XPRLIST,DELETE,[I|X][DSN|VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
 |F lsamname,XPRLIST=xx|Reloads the dataset filter table from member XPRLSTxx.|This action completely replaces the filter table in memory.|
 |F lsamname,XPSPARM=xx|Resets parms from the settings in XPSPRMxx.|Persists until the next IPL. The xx value is not remembered.|
 |P lsamname|Stops the LSAM.|Cycles down LSAM but XPSPLEX remains.|
@@ -167,14 +149,14 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 
 When the LSAM task is down or independent data is needed, the XPSAUDIT task can provide further operational data: the data is displayed on the system log, and appears in the job log of the XPSAUDIT job.
 
-  Command Syntax          Description
-  ----------------------- ----------------------------------------------------------------
-  S XPSAUDIT,PARM=STOR    Displays the LSAM storage assignments on the executing system.
-  S XPSAUDIT,PARM=JOBS    Displays the LSAM Job Queue on the executing system.
-  S XPSAUDIT,PARM=PARMS   Displays the LSAM stored Parms on the executing system.
-  S XPSAUDIT,PARM=DSNT    Displays the LSAM DSN Trigger Table on the executing system.
-  S XPSAUDIT,PARM=WTOT    Displays the LSAM WTO Trigger Table on the executing system.
-  S XPSAUDIT              Displays the all the above.
+|  Command Syntax|Description|
+|-|-|
+|S XPSAUDIT,PARM=STOR|Displays the LSAM storage assignments on the executing system.|
+|S XPSAUDIT,PARM=JOBS|Displays the LSAM Job Queue on the executing system.|
+|S XPSAUDIT,PARM=PARMS|Displays the LSAM stored Parms on the executing system.|
+|S XPSAUDIT,PARM=DSNT|Displays the LSAM DSN Trigger Table on the executing system.|
+|S XPSAUDIT,PARM=WTOT|Displays the LSAM WTO Trigger Table on the executing system.|
+|S XPSAUDIT|Displays the all the above.|
 
 ## z/OS LSAM Fail-Over, Reconfiguration, and Recovery
 
@@ -185,10 +167,10 @@ The z/OS LSAM allows for various procedures for adopting the work of failing PSA
 
 The XPSPLEX task manages Adoption and Fail-Over reconfiguration. The primary LSAM always handles recovery from Fail-Over.
 
-  XPSPLEX Command Syntax                       Description
-  -------------------------------------------- -------------------------------
-  F XPSPLEX,STATUS                             Displays LSAM/PSAM Status.
-  F XPSPLEX,\[ADOPTWKLD\|DROPWKLD\](ssss,nn)   Reassign/release Machine Ids.
+|  XPSPLEX Command Syntax|Description|
+|-|-|
+|F XPSPLEX,STATUS|Displays LSAM/PSAM Status.|
+|F XPSPLEX,\[ADOPTWKLD\|DROPWKLD\](ssss,nn)|Reassign/release Machine Ids.|
 
   : Sysplex Operator Commands
 
@@ -227,7 +209,7 @@ Now you may start the primary LSAM OPCONxx task. The HOST file on the SAM Server
 
 ## Defining the z/OS SMAFT Server
 
-The z/OS SMAFT server is distributed as compiled REXX, and relies on services provided by the TSO environment, so it must be run in a TMP. It can be run as a batch job, started task or OpCon/xps dynamic REXX job (Event Name=XPFTSRVR, EXEC Parm=\"PORT=*port*).
+The z/OS SMAFT server is distributed as compiled REXX, and relies on services provided by the TSO environment, so it must be run in a TMP. It can be run as a batch job, started task or SMA Opcon dynamic REXX job (Event Name=XPFTSRVR, EXEC Parm=\"PORT=*port*).
 
 Sample JCL:
 
@@ -261,4 +243,4 @@ Sample JCL:
 2. Members XPFTAGT, XPFTPARM and XPRXCRC must be in the SYSEXEC library.
 3. Security is determined using normal z/OS security server rules.
 
-If "Backup then Overwrite" or "Backup then Append" is set on the File Transfer job in OpCon/xps and the target machine is a z/OS machine, the SMAFT agent attempts to call a REXX program named XPFTBACK, with the name of the target dataset. XPFTBACK is responsible for whatever actions are appropriate to back up the dataset. If it exists, and returns with a zero, the file transfer continues. If XPFTBACK is not found or it returns a non-zero value, the transfer is terminated. A sample member is included in the INSTLIB dataset, with examples of using DFSMS/hsm or SMCOPY to backup the dataset.
+If "Backup then Overwrite" or "Backup then Append" is set on the File Transfer job in SMA Opcon and the target machine is a z/OS machine, the SMAFT agent attempts to call a REXX program named XPFTBACK, with the name of the target dataset. XPFTBACK is responsible for whatever actions are appropriate to back up the dataset. If it exists, and returns with a zero, the file transfer continues. If XPFTBACK is not found or it returns a non-zero value, the transfer is terminated. A sample member is included in the INSTLIB dataset, with examples of using DFSMS/hsm or SMCOPY to backup the dataset.
