@@ -13,7 +13,7 @@ The following table presents z/OS LSAM components including module names, compon
 |XPSSUPV|LSAM Task|Initiates internal tracking queues, attaches XPSERVER, processes operator commands, logs completed SAM activity and calls XPSUBMIT as requested by XPSERVER.|
 |XPSPLEX|XPSPLEX Task|SYSPLEX Management Module controls fault tolerance actions and global XCF interaction between LSAM and PSAMs.|
 |XPSFETCH|All Modules|XPS Primary Control Block (XPCB) manager and XPS version control module.|
-||Batch Job<br/>Dynamic REXX <br/>Started Task|SMA file transfer server.|
+|XPFTSRVR|Batch Job<br/>Dynamic REXX <br/>Started Task|SMA file transfer server.|
 |XPFTAGT|Batch Job<br/>Dynamic REXX<br/>Started task|SMA file transfer agent.|
 |XPSQMGR|All Modules|LSAM Tracking and Message Queue manager.|
 |XPSERVER|LSAM Task|TCP/IP communications and SAM Request Client/Server gateway for the Primary LSAM. Communicates tracking info to the SMA Opcon SAM (via IP connection).|
@@ -133,14 +133,14 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 |F lsamname,REPEXIT|Exits Reinit.|Releases ECSA, re-allocates and reloads SMF exits.|
 |F lsamname,REPUSERx|User Exits Reinit.|Where 'x' is the User Exit Number.|
 |F lsamname,CLEARQ|Clears LSAM execution queues.|Use only as directed by SMA Support.|
-|F lsamname,TRACE=<br/>[Y|N|0|9|[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
-|F lsamname,RESET=<br/>[S|C|(sysid)][,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the LSAM.|S= System RESET – completely removes LSAM internals and restarts all tasks.<br/>C=Cycle LSAM – simply shuts down the LSAM and restarts it.<br/>If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.|
+|F lsamname,TRACE=<br/>[Y\|N\|0\|9\|[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
+|F lsamname,RESET=<br/>[S\|C\|(sysid)][,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the LSAM.|S= System RESET – completely removes LSAM internals and restarts all tasks.<br/>C=Cycle LSAM – simply shuts down the LSAM and restarts it.<br/>If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.|
 |F lsamname,SHUTDOWN|Shuts down the SMA Opcon LSAM|Cycles down LSAM and stop the XPSPLEX Task.|
 |F lsamname,REMOVEX<br/>[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the LSAM and internals|Shuts down the LSAM and removes all exits and storage queues.|
 |F lsamname,parm=value|Resets most parameters in XPSPRMxx.|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. Refer to Run-time Parameters.|
 |F lsamname,<br/>XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|None.|
-|F lsamname,<br/>XPRLIST,ADD,[I|X][DSN|VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
-|F lsamname,<br/>XPRLIST,DELETE,[I|X][DSN|VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
+|F lsamname,<br/>XPRLIST,ADD,[I\|X][DSN\|VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
+|F lsamname,<br/>XPRLIST,DELETE,[I\|X][DSN\|VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
 |F lsamname,XPRLIST=xx|Reloads the dataset filter table from member XPRLSTxx.|This action completely replaces the filter table in memory.|
 |F lsamname,XPSPARM=xx|Resets parms from the settings in XPSPRMxx.|Persists until the next IPL. The xx value is not remembered.|
 |P lsamname|Stops the LSAM.|Cycles down LSAM but XPSPLEX remains.|
@@ -150,7 +150,7 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 When the LSAM task is down or independent data is needed, the XPSAUDIT task can provide further operational data: the data is displayed on the system log, and appears in the job log of the XPSAUDIT job.
 
 |  Command Syntax|Description|
-|-|-|
+| --- | --- |
 |S XPSAUDIT,PARM=STOR|Displays the LSAM storage assignments on the executing system.|
 |S XPSAUDIT,PARM=JOBS|Displays the LSAM Job Queue on the executing system.|
 |S XPSAUDIT,PARM=PARMS|Displays the LSAM stored Parms on the executing system.|
@@ -168,7 +168,7 @@ The z/OS LSAM allows for various procedures for adopting the work of failing PSA
 The XPSPLEX task manages Adoption and Fail-Over reconfiguration. The primary LSAM always handles recovery from Fail-Over.
 
 |  XPSPLEX Command Syntax|Description|
-|-|-|
+| --- | --- |
 |F XPSPLEX,STATUS|Displays LSAM/PSAM Status.|
 |F XPSPLEX,\[ADOPTWKLD\|DROPWKLD\](ssss,nn)|Reassign/release Machine Ids.|
 
