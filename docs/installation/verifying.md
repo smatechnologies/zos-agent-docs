@@ -1,6 +1,6 @@
 # Verifying installation
 
-Do not attempt to start XPS390 until all prior Customization Processes are complete. Refer to the [Installation checklist](../checklist), and ensure all procedures are complete.
+Do not attempt to start XPS390 until all prior Customization Processes are complete. Refer to the [Installation checklist](checklist.md), and ensure all procedures are complete.
 
 ## LSAM Verification
 

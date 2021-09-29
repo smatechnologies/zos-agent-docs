@@ -132,4 +132,4 @@ DATE:
     2. \_\_\_\_ The SMAFT programs are compiled Rexx, and require either the IBM Rexx Library for z/OS or the IBM Rexx Alternate Library for z/OS. If necessary, the alternate library can be installed from the files obtained from IBM at:
     3. \_\_\_\_ [http://www-1.ibm.com/support/docview.wss?rs=960&uid=swg24006107](http://www-1.ibm.com/support/docview.wss?rs=960&uid=swg24006107), or from MAKEALT_ZOS.ZIP, which should have been provided with the z/OS LSAM installation files.
 10. **IMPORT IVP SCHEDULE**:
-    1. Import IVPMVS1 schedule using ImPex.exe - for methodology, refer to [Importing IVP Schedule Job Definitions](installation.md#Importin).
+    1. Import IVPMVS1 schedule using ImPex.exe - for methodology, refer to [Importing IVP Schedule Job Definitions](verifying.md#Importin).
