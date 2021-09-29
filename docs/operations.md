@@ -8,35 +8,35 @@ sidebar_label: 'Components and Operation'
 
 The following table presents z/OS LSAM components including module names, component locations within the architecture (the LSAM task, JES2, JES3, and so forth) and component functions.
 
-|Module|Location|Function|
-|--- |--- |--- |
-|XPSSUPV|LSAM Task|Initiates internal tracking queues, attaches XPSERVER, processes operator commands, logs completed SAM activity and calls XPSUBMIT as requested by XPSERVER.|
-|XPSPLEX|XPSPLEX Task|SYSPLEX Management Module controls fault tolerance actions and global XCF interaction between LSAM and PSAMs.|
-|XPSFETCH|All Modules|XPS Primary Control Block (XPCB) manager and XPS version control module.|
-|XPFTSRVR|Batch Job<br/>Dynamic REXX <br/>Started Task|SMA file transfer server.|
-|XPFTAGT|Batch Job<br/>Dynamic REXX<br/>Started task|SMA file transfer agent.|
-|XPSQMGR|All Modules|LSAM Tracking and Message Queue manager.|
-|XPSERVER|LSAM Task|TCP/IP communications and SAM Request Client/Server gateway for the Primary LSAM. Communicates tracking info to the SMA Opcon SAM (via IP connection).|
-|XPSUBMIT|LSAM Task|JCL submission routine, Started Task (STC) initiation, operator command task and REXX task creation.|
-|XPSPARM|LSAM Task|Runtime Parameter and Operator command parse routine.|
-|XPSLOGQ|LSAM Task|Communications and Message logging routine.|
-|XPSASCRE|IEESYSAS (Dynamic)|Address Space Create (ASCRE) Initialization routine. It is used to initialize execution tracking of Started Task (STC), operator commands and REXX jobs.|
-|XPSEVENT|IEESYSAS (Dynamic)|REXX and system command task. Created by XPSUBMIT when a REXX procedure is to be executed dynamically or an operator command is to be executed.|
-|XPRESTRT|LSAM Task|Interruption recovery module. Uses the RECLOG to determine jobs that were "in-process" at the time of a catastrophic machine failure and notifies SAM of job failures.|
-|XPSTATUS|LSAM Task|JES2 Converter Status Routine (capture converter JCL errors, etc.), Pre-run Tape Unit, File Trigger and dependent non-scheduled task processor.|
-|XPSELOAD|LSAM Task|Exit loader – establishes dynamic exits.|
-|XPSU83|SYS.IEFU83 (Dynamic)|SMF Interface for File Trigger management.|
-|XPSUJV|SYS.IEFUJV (Dynamic)|SMF Interface for Job Submission tracking.|
-|XPSU84|SYS.IEFU84 (Dynamic)|SMF Interface for Job Execution tracking and Step Control actions.|
-|XPSUSI|SYS.IEFUSI (Dynamic)|Step initiation exit interface for dataset processing.|
-|XPSWTOEX|CNZ_WTOMDBEXIT|Console message processing.|
-|XPSCOMM|Batch Step<br/>REXX Call<br/>Started Task|Batch update and OEM interface. Communicates MSGIN commands to SAM.|
-|XPSPF001|TSO/ISPF|ISPF Trigger table editor.|
-|XPSPAUTH|TSO/ISPF|TSO Authorized Command Interface (Entry in IKJTSOxx as Auth CMD).|
-|XPSISPF|TSO/ISPF|ISPLINK/ISPEXEC Call Interface.|
-|XPSAGENT|LSAM Task|Sysout viewing / JCL edit agent. Communicates with Enterprise Manager Host Window function.|
-|XPSAFAPI|XPSAGENT|SAF Security API for JCL Edit and SYSOUT Browse.|
-|XPSAUDIT|Started Task|Displays current LSAM Usage information, storage allocations, etc.|
+|Module	|Location	|Function	|
+|--- 	|--- 	|--- 	|
+|XPSSUPV	|LSAM Task	|Initiates internal tracking queues, attaches XPSERVER, processes operator commands, logs completed SAM activity and calls XPSUBMIT as requested by XPSERVER.	|
+|XPSPLEX	|XPSPLEX Task	|SYSPLEX Management Module controls fault tolerance actions and global XCF interaction between LSAM and PSAMs.	|
+|XPSFETCH	|All Modules	|XPS Primary Control Block (XPCB) manager and XPS version control module.	|
+|XPFTSRVR	|Batch Job<br/>Dynamic REXX <br/>Started Task	|SMA file transfer server.	|
+|XPFTAGT	|Batch Job<br/>Dynamic REXX<br/>Started task	|SMA file transfer agent.	|
+|XPSQMGR	|All Modules	|LSAM Tracking and Message Queue manager.	|
+|XPSERVER	|LSAM Task	|TCP/IP communications and SAM Request Client/Server gateway for the Primary LSAM. Communicates tracking info to the SMA Opcon SAM (via IP connection).	|
+|XPSUBMIT	|LSAM Task	|JCL submission routine, Started Task (STC) initiation, operator command task and REXX task creation.	|
+|XPSPARM	|LSAM Task	|Runtime Parameter and Operator command parse routine.	|
+|XPSLOGQ	|LSAM Task	|Communications and Message logging routine.	|
+|XPSASCRE	|IEESYSAS (Dynamic)	|Address Space Create (ASCRE) Initialization routine. It is used to initialize execution tracking of Started Task (STC), operator commands and REXX jobs.	|
+|XPSEVENT	|IEESYSAS (Dynamic)	|REXX and system command task. Created by XPSUBMIT when a REXX procedure is to be executed dynamically or an operator command is to be executed.	|
+|XPRESTRT	|LSAM Task	|Interruption recovery module. Uses the RECLOG to determine jobs that were "in-process" at the time of a catastrophic machine failure and notifies SAM of job failures.	|
+|XPSTATUS	|LSAM Task	|JES2 Converter Status Routine (capture converter JCL errors, etc.), Pre-run Tape Unit, File Trigger and dependent non-scheduled task processor.	|
+|XPSELOAD	|LSAM Task	|Exit loader – establishes dynamic exits.	|
+|XPSU83	|SYS.IEFU83 (Dynamic)	|SMF Interface for File Trigger management.	|
+|XPSUJV	|SYS.IEFUJV (Dynamic)	|SMF Interface for Job Submission tracking.	|
+|XPSU84	|SYS.IEFU84 (Dynamic)	|SMF Interface for Job Execution tracking and Step Control actions.	|
+|XPSUSI	|SYS.IEFUSI (Dynamic)	|Step initiation exit interface for dataset processing.	|
+|XPSWTOEX	|CNZ_WTOMDBEXIT	|Console message processing.	|
+|XPSCOMM	|Batch Step<br/>REXX Call<br/>Started Task	|Batch update and OEM interface. Communicates MSGIN commands to SAM.	|
+|XPSPF001	|TSO/ISPF	|ISPF Trigger table editor.	|
+|XPSPAUTH	|TSO/ISPF	|TSO Authorized Command Interface (Entry in IKJTSOxx as Auth CMD).	|
+|XPSISPF	|TSO/ISPF	|ISPLINK/ISPEXEC Call Interface.	|
+|XPSAGENT	|LSAM Task	|Sysout viewing / JCL edit agent. Communicates with Enterprise Manager Host Window function.	|
+|XPSAFAPI	|XPSAGENT	|SAF Security API for JCL Edit and SYSOUT Browse.	|
+|XPSAUDIT	|Started Task	|Displays current LSAM Usage information, storage allocations, etc.	|
 
 In addition to the functional components of XPS390, an API Macro Library \[highlevel.midlevel.MACLIB\] is distributed with the product, allowing a skilled assembler programmer the ability to write additional customized API interfaces to SMA Opcon.
 
@@ -120,43 +120,43 @@ Operator commands may be used to stop the LSAM task, display certain attributes 
 If you start the LSAM with an optional task name the lsamname in the commands below can be replaced by the task name that was used to start the LSAM. This will issue the command to each LSAM that was started with the same task name.
 :::
 
-| Command Syntax       | Description          | Response or Action   |
-|--- |--- |--- |
-|S lsamname[./*taskname*]|Starts the LSAM.|None.|
-|F lsamname,DISP=PARMS|Returns a list of the current Stored XPS Parameters.|Refer to message XPS021R.|
-|F lsamname, DISP=STOR|Displays Storage usage on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=JOBS|Displays the LSAM Job Queue on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=DSNT|Displays the LSAM DSN Trigger Table on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=WTOT|Displays the LSAM WTO Trigger Table on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=ALL|Displays all Internal Parms and Values.|Refer to message XPS021R.|
-|F lsamname,SPINLOG|Spins off the current generation of the RECLOG.|Allocates a new generation of the RECLOG. By default, this occurs automatically every midnight).|
-|F lsamname,REPEXIT|Exits Reinit.|Releases ECSA, re-allocates and reloads SMF exits.|
-|F lsamname,REPUSERx|User Exits Reinit.|Where 'x' is the User Exit Number.|
-|F lsamname,CLEARQ|Clears LSAM execution queues.|Use only as directed by SMA Support.|
-|F lsamname,TRACE=<br/>[Y\|N\|0\|9\|[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
-|F lsamname,RESET=<br/>[S\|C\|(sysid)][,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the LSAM.|S= System RESET – completely removes LSAM internals and restarts all tasks.<br/>C=Cycle LSAM – simply shuts down the LSAM and restarts it.<br/>If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.|
-|F lsamname,SHUTDOWN|Shuts down the SMA Opcon LSAM|Cycles down LSAM and stop the XPSPLEX Task.|
-|F lsamname,REMOVEX<br/>[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the LSAM and internals|Shuts down the LSAM and removes all exits and storage queues.|
-|F lsamname,parm=value|Resets most parameters in XPSPRMxx.|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. Refer to Run-time Parameters.|
-|F lsamname,<br/>XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|None.|
-|F lsamname,<br/>XPRLIST,ADD,[I\|X][DSN\|VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
-|F lsamname,<br/>XPRLIST,DELETE,[I\|X][DSN\|VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
-|F lsamname,XPRLIST=xx|Reloads the dataset filter table from member XPRLSTxx.|This action completely replaces the filter table in memory.|
-|F lsamname,XPSPARM=xx|Resets parms from the settings in XPSPRMxx.|Persists until the next IPL. The xx value is not remembered.|
-|P lsamname|Stops the LSAM.|Cycles down LSAM but XPSPLEX remains.|
+| Command Syntax       	| Description          	| Response or Action   	|
+|--- 	|--- 	|--- 	|
+|S lsamname[./*taskname*]	|Starts the LSAM.	|None.	|
+|F lsamname,DISP=PARMS	|Returns a list of the current Stored XPS Parameters.	|Refer to message XPS021R.	|
+|F lsamname, DISP=STOR	|Displays Storage usage on the LPAR SYSLOG.	|Refer to message XPS021R.	|
+|F lsamname, DISP=JOBS	|Displays the LSAM Job Queue on the LPAR SYSLOG.	|Refer to message XPS021R.	|
+|F lsamname, DISP=DSNT	|Displays the LSAM DSN Trigger Table on the LPAR SYSLOG.	|Refer to message XPS021R.	|
+|F lsamname, DISP=WTOT	|Displays the LSAM WTO Trigger Table on the LPAR SYSLOG.	|Refer to message XPS021R.	|
+|F lsamname, DISP=ALL	|Displays all Internal Parms and Values.	|Refer to message XPS021R.	|
+|F lsamname,SPINLOG	|Spins off the current generation of the RECLOG.	|Allocates a new generation of the RECLOG. By default, this occurs automatically every midnight).	|
+|F lsamname,REPEXIT	|Exits Reinit.	|Releases ECSA, re-allocates and reloads SMF exits.	|
+|F lsamname,REPUSERx	|User Exits Reinit.	|Where 'x' is the User Exit Number.	|
+|F lsamname,CLEARQ	|Clears LSAM execution queues.	|Use only as directed by SMA Support.	|
+|F lsamname,TRACE=<br/>[Y\|N\|0\|9\|[1-8]{1,8}	|Sets SYSLOG trace options.	|Use only as directed by SMA Support.	|
+|F lsamname,RESET=<br/>[S\|C\|(sysid)][,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.	|Re-initializes the LSAM.	|S= System RESET – completely removes LSAM internals and restarts all tasks.<br/>C=Cycle LSAM – simply shuts down the LSAM and restarts it.<br/>If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.	|
+|F lsamname,SHUTDOWN	|Shuts down the SMA Opcon LSAM	|Cycles down LSAM and stop the XPSPLEX Task.	|
+|F lsamname,REMOVEX<br/>[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.	|Removes the LSAM and internals	|Shuts down the LSAM and removes all exits and storage queues.	|
+|F lsamname,parm=value	|Resets most parameters in XPSPRMxx.	|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. Refer to Run-time Parameters.	|
+|F lsamname,<br/>XPRLIST,DISPLAY	|Displays the dataset cleanup filter table.	|None.	|
+|F lsamname,<br/>XPRLIST,ADD,[I\|X][DSN\|VOL]=pattern	|Adds an entry to the dataset cleanup filter table.	|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.	|
+|F lsamname,<br/>XPRLIST,DELETE,[I\|X][DSN\|VOL]=pattern	|Removes an entry from the dataset cleanup filter table.	|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.	|
+|F lsamname,XPRLIST=xx	|Reloads the dataset filter table from member XPRLSTxx.	|This action completely replaces the filter table in memory.	|
+|F lsamname,XPSPARM=xx	|Resets parms from the settings in XPSPRMxx.	|Persists until the next IPL. The xx value is not remembered.	|
+|P lsamname	|Stops the LSAM.	|Cycles down LSAM but XPSPLEX remains.	|
 
 ## Audit Task Commands
 
 When the LSAM task is down or independent data is needed, the XPSAUDIT task can provide further operational data: the data is displayed on the system log, and appears in the job log of the XPSAUDIT job.
 
-|  Command Syntax|Description|
-| --- | --- |
-|S XPSAUDIT,PARM=STOR|Displays the LSAM storage assignments on the executing system.|
-|S XPSAUDIT,PARM=JOBS|Displays the LSAM Job Queue on the executing system.|
-|S XPSAUDIT,PARM=PARMS|Displays the LSAM stored Parms on the executing system.|
-|S XPSAUDIT,PARM=DSNT|Displays the LSAM DSN Trigger Table on the executing system.|
-|S XPSAUDIT,PARM=WTOT|Displays the LSAM WTO Trigger Table on the executing system.|
-|S XPSAUDIT|Displays the all the above.|
+|  Command Syntax	|Description	|
+| --- 	| --- 	|
+|S XPSAUDIT,PARM=STOR	|Displays the LSAM storage assignments on the executing system.	|
+|S XPSAUDIT,PARM=JOBS	|Displays the LSAM Job Queue on the executing system.	|
+|S XPSAUDIT,PARM=PARMS	|Displays the LSAM stored Parms on the executing system.	|
+|S XPSAUDIT,PARM=DSNT	|Displays the LSAM DSN Trigger Table on the executing system.	|
+|S XPSAUDIT,PARM=WTOT	|Displays the LSAM WTO Trigger Table on the executing system.	|
+|S XPSAUDIT	|Displays the all the above.	|
 
 ## z/OS LSAM Fail-Over, Reconfiguration, and Recovery
 
@@ -167,10 +167,10 @@ The z/OS LSAM allows for various procedures for adopting the work of failing PSA
 
 The XPSPLEX task manages Adoption and Fail-Over reconfiguration. The primary LSAM always handles recovery from Fail-Over.
 
-|  XPSPLEX Command Syntax|Description|
-| --- | --- |
-|F XPSPLEX,STATUS|Displays LSAM/PSAM Status.|
-|F XPSPLEX,\[ADOPTWKLD\|DROPWKLD\](ssss,nn)|Reassign/release Machine Ids.|
+|  XPSPLEX Command Syntax	|Description	|
+| --- 	| --- 	|
+|F XPSPLEX,STATUS	|Displays LSAM/PSAM Status.	|
+|F XPSPLEX,\[ADOPTWKLD\|DROPWKLD\](ssss,nn)	|Reassign/release Machine Ids.	|
 
   : Sysplex Operator Commands
 
