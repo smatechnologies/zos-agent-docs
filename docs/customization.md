@@ -304,7 +304,7 @@ With some customization, it is possible to run the z/OS agent without updating t
 - Make a copy of the IEESYSAS system procedure, adding a STEPLIB for the agent library.
   - Modify the XPSDYNAM entry in XPSPRMxx to identify the copy.
 - Load XPSASCRE into LPA.
-  - SETPROG LPA,ADD,MODNAME=XPSASCRE,DSNAME=OPCON.V140303.LINKLIB
+  - SETPROG LPA,ADD,MODNAME=XPSASCRE,DSNAME=OPCON.V210004.LINKLIB
 
 ### JCL and REXX Library
 

@@ -1,13 +1,13 @@
 # Verifying installation
 
-Do not attempt to start XPS390 until all prior Customization Processes are complete. Refer to the [Installation checklist](../checklist), and ensure all procedures are complete.
+Do not attempt to start XPS390 until all prior Customization Processes are complete. Refer to the [Installation checklist](checklist.md), and ensure all procedures are complete.
 
 ## LSAM Verification
 
 Start the OpCon/xps LSAM task with the following command:
 
-- S *lsamproc*\[.*lsamname*\]\[,SUB=*JESA*\]
-- E.g., S OPCON01
+- `S *lsamproc*\[.*lsamname*\]\[,SUB=*JESA*\]`
+- E.g., `S OPCON01`
 
 The following (or similar) messages should be received on the MVS SYSLOG and/or Operations Console:
 
@@ -260,22 +260,6 @@ Job dependencies are set as follows:
 
 At this point, ensure that the USERID used on IVPJOB16 has authority to schedule jobs. In the Enterprise Manager \'s (EM) Administration screen, give batch User ID "TSOUSER" permission to update IVPMVS1 and IVPMVS2.
 
-:::note
-The D,EXITS command is no longer valid. Also, since we no longer use the IEAVMXIT exit, the K M,UEXIT command does not effect the z/OS LSAM.
-
-WTO exit processing now uses a dynamic exit, which should always work, but you can verify it by entering:
-D PROG,EXIT,MODNAME=XPSWTOEX
-
-It should be active on CNZ_WTOMDBEXIT:
-
-```
-CSV462I 12.16.07 PROG,EXIT DISPLAY
-MODULE XPSWTOEX
-EXIT(S) CNZ_WTOMDBEXIT
-```
-
-You can also use D PROG,EXIT,EXITNAME=CNZ_WTOMDBEXIT to see it from the "other side".
-:::
 
 ### Creating a Notifying Event
 
