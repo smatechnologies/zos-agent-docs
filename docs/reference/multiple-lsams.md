@@ -20,7 +20,7 @@ The following statement assigns XPSID=T to the current execution:
 //XPS\$T DD DUMMY
 ```
 
-### INSTILB and INITLOG
+### INSTLIB and INITLOG
 
 The INSTLIB library contains member INITLOG to allow the definition of new LSAM logs. The installation parameters generated the initial log dataset name. Update the dataset name in both steps to a new, unique name. SMA recommends naming the log files with the XPSID and system name.
 
