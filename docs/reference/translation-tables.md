@@ -19,8 +19,6 @@ The search order used to access this configuration file is as follows. The searc
 
 The defaults can be overridden, by supplying a TCPXLBIN DDNAME in the server JCL:
 
-```shell
 //TCPXLBIN DD DISP=SHR,DSN=*your.translat.table*
-```
 
 The dataset **must** be in the format created by the IBM CONVXLAT program. Only SBCS translations are supported.

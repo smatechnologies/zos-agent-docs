@@ -10,11 +10,13 @@ Example XPSCOMM JCL Job Step
 
 In the above example, a sample job step executes a request to add a job named "IVPJOB17" to the schedule named "IVPMVS1" with frequency code "ONDEMAND".
 
-Security is provided by the source of the "USER=" on the job card or the security ID created by the Started Task or other caller of XPSCOMM. This user-id is passed to OpCon/xps along with the schedule command. This user-id must be defined to OpCon/xps Administration with departmental authority to the schedule named on the command. Refer to [Working with Security](https://help.smatechnologies.com/opcon/core/latest/UI/Enterprise-Manager/Working-with-Security.md#top) for information regarding setting up OpCon/xps Users and setting up privileges within the **Enterprise Manager** online help.
+Security is provided by the source of the "USER=" on the job card or the security ID created by the Started Task or other caller of XPSCOMM. This user-id is passed to OpCon/xps along with the event. This user-id must be defined to OpCon/xps Administration with the necessary authority to the schedule named on the command. Refer to [Working with Security](https://help.smatechnologies.com/opcon/core/latest/UI/Enterprise-Manager/Working-with-Security.md#top) for information regarding setting up OpCon/xps Users and setting up privileges within the **Enterprise Manager** online help.
+
+See the [Mapping z/OS users to OpCon user and token definitions] for details about defining OpCon userids and external event tokens for each user.</p>
 
 XPSCOMM may be executed via batch job, started task, internal called routine or REXX procedure.
 
-Records or parms starting with dollar sign '$' are passed to OpCon/xps through the MSGIN mechanism after adding the user-id and password. Records from file input that do not start with '$' are treated as comments and ignored. Parm values that do not start with '$' will be returned to OpCon/xps in one of two ways, depending on the job's status.
+Records or parms starting with dollar sign '\$' are passed to OpCon/xps through the MSGIN mechanism after adding the user-id and password. Records from file input that do not start with '\$' are treated as comments and ignored. Parm values that do not start with '\$' will be returned to OpCon/xps in one of two ways, depending on the job's status.
 
 - If the job is being executed by the same OpCon/xps instance, the string will be used to insert a job status description for the job.
 - If the job is not being executed by the same OpCon/xps instance, the string will be displayed in the SAM log.
