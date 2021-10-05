@@ -4,6 +4,7 @@ The XPSCOMM routine is an OpCon/xps API interface to the MSGIN service available
 
 The PARM field of the execute statement can contain any valid MSGIN string, or \'\$EVENT=eventname\' where eventname is an entry in the OpCon/xps ISPF Event Table. If the PARM is omitted or empty, XPSCOMM will attempt to read the events from the MSGIN DD. This file may be instream data, PDS or sequential file. Both fixed and variable length records are supported. The **\$EVENT=\...** syntax is not supported for file input.
 
+>In a multiple LSAM environment, the destination LSAM can be selected by the XPS$x DD statement or, beginning with V21.01, by starting the PARM with **@x,**, where *x* is the XPSID.  The remaining parms will be processed as if the **@x,** were not present.
 
 XPSCOMM can be also called as a TSO command. The TSO command arguments will be treated as PARM input.
 
