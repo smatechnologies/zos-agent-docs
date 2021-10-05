@@ -17,6 +17,7 @@ Variable length substitution will always take place if the JCLSCAN character is 
 
 Beginning with 5.04.03, the following built-in variables are supported in DJF:
 
+| | |
 |--- |--- |
 |%YY|Two digit year from schedule date|
 |%MM|Two digit month from schedule date|
@@ -41,13 +42,12 @@ The --SET statement has three forms:
 - --SETJCLSCAN=*@*
   - Sets the character used in the JCL to identify the variables. This is primarily intended to allow the specification of the '@' character in the local character set.
   - If two different characters are supplied, then subsequent variable replacements will be performed in two passes, first searching for variables referenced by the second character, then with the first. (If the same character is listed twice, only a single pass will be performed.)
-  - This option can also be set from the job definition. If the first entry in the JCL variables is \\\\JCLSCAN=.
-  - *xy*\\\\, then the variables will be processed as if the JCL started with **\--SET JCLSCAN=xy**. (This format requires two characters.)
-- --SET*var*=*value*
+  - This option can also be set from the job definition. If the first entry in the JCL variables is \\\\JCLSCAN=*xy*\\\\, then the variables will be processed as if the JCL started with **\--SET JCLSCAN=xy**. (This format requires two characters.)
+- --SET *var*=*value*
   - This assigns a value to variable *var*, replacing any previous value, if any. The assignment takes place after substitution of any variables in the statement.
   - The result is equivalent to the value that would have resulted from a job definition containing \\\\@*var*=*value\\\\*. (Note that the \'@\' prefix is added, so should not be included in the --SET. If the variable name begins with \'@\', DJF will attempt to replace it with any previously defined value.)
-- --SETvar=*value1 + value2*
-- *--*SETvar=*value1* - *value2*
+- --SET var=*value1 + value2*
+- --SET var=*value1* - *value2*
   - If *value1* is numeric, calculates the sum or difference between the values and assigns it to *var*.
 - --SET var=SUBSTR(string,start\[,length\[,pad\]\])
   - The string and start parameters are required, and the length and pad arguments are optional.
@@ -71,23 +71,13 @@ The --SET statement has three forms:
 
 #### --GET
 
-String is interpreted as a date in YYYYMMDD or YYMMDD format. The number of days in *offset* is added to *string* and the result returned in the same format. *Offset* can be signed.
-
 -   \--GET *var*=\[\[**opcon_property**\]\]     -   Any OpCon property that can be used in the job definition is
         allowed, and is evaluated in the context of the current job.
-
-    ```{=html}
-    <!-- -->
-    ```
     -   If the variable *var* is already defined, this statement is
         ignored.
     -   To work around possible translation problems, *any* matched
         characters can be used to start and end the token definition:
         -   \--GET var=@@\$SCHEDULE DATE (+1d)@@.
-
-        ```{=html}
-        <!-- -->
-        ```
         -   \--GET var=\#\#\$SCHEDULE DATE (+1d)\#\#.
 
 ### New DJF Statements for Conditional JCL
@@ -109,10 +99,6 @@ JCL based on logical tests.
         -   GE - Greater than or equal.
     -   If the operator and string2 are omitted, the result is true if
         string1 has the value TRUE.
-
-    ```{=html}
-    <!-- -->
-    ```
     -   \--IF blocks can be nested up to 7 levels deep.
 -   \--ELSE
     -   Inside an \--IF block toggles the statement include status.
@@ -146,10 +132,6 @@ These statements do not directly affect the JCL that is submitted.
         LSAM feedback.
 -   \--INCLUDE *lib*(**member**),*set,comment*
     -   The only required parameter is the member name.
-
-    ```{=html}
-    <!-- -->
-    ```
     -   Parameters:
         -   lib
             -   The DDNAME for the library containing the member.
@@ -175,10 +157,6 @@ These statements do not directly affect the JCL that is submitted.
                     \--SET \\\\var=manywordswithspaces\\\\.
         -   comment
             -   Single character.
-
-            ```{=html}
-            <!-- -->
-            ```
             -   If set, any lines with this character in the first
                 column will be skipped.
 -   \--INCLUDE *property_name,type*
@@ -187,17 +165,9 @@ These statements do not directly affect the JCL that is submitted.
         -   The property value is interpreted as multiple lines,
             separated by \'\\n\' or \'\\N\'.
         -   Long records will be wrapped at 80 characters.
-
-        ```{=html}
-        <!-- -->
-        ```
         -   Any \'\\\' characters in the data must be doubled.
     -   *type* - type of data to include
         -   Optional.
-
-        ```{=html}
-        <!-- -->
-        ```
         -   If type is **D**, then any include lines beginning with
             \"//\" will be skipped.
 :::

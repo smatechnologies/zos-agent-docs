@@ -6,7 +6,28 @@ Prior to attempting to start and test the z/OS LSAM, various system, security, J
 
 Before continuing on, review the LSAM JCL Procedure in your system PROCLIB and the XPSPRMxx definition in INSTLIB. The following is a typical LSAM JCL procedure.
 
-![LSAM Started Task Proc Example](/img/LSAM-Started-Task-Proc-Example.png "LSAM Started Task Proc Example")
+```jcl
+//OPCON01  PROC LOGEN='(-0)' 
+//* 
+//*******************************************************************
+//*                                                                 *
+//*                                                                 *
+//*******************************************************************
+//OPCONXPS EXEC PGM=XPSSUPV,REGION=0M,TIME=1440 
+//*STEPLIB DD DSN=OPCON.V210003.LINKLIB,DISP=SHR 
+//*
+//*******************************************************************
+//* XPSPARMS default is to use XPSMRM00 
+//* Optionally, specify an explicit XPSPARM member 
+//* If XPSPARMS is omitted, OpCon will use the system parmlib 
+//XPSPARMS DD DSN=OPCON.V210003.INSTLIB,DISP=SHR 
+//*******************************************************************
+//*
+//XPSJCL   DD DSN=OPCON.V210003.INSTLIB,DISP=SHR  <= FOR IVP 
+//TEMPJCL  DD DSN=OPCON.V210003.TEMPJCL,DISP=SHR  <= FOR IVP 
+//SYSEXEC  DD DSN=OPCON.V210003.INSTLIB,DISP=SHR  <= FOR IVP 
+//RECLOG   DD DSN=OPCON.V210003.ZOS1.LSAMLOG&LOGEN,DISP=OLD 
+```
 
 During Installation Verification Procedures (IVP), several DD statements are used to access IVP Jobs and REXX procedures. These DD statements are clearly marked ("IVP ONLY") and may be removed or modified when XPS390 is ready for production.
 
@@ -20,85 +41,46 @@ The following is an example of a typical LSAM Parmlib XPSPRMxx member implementa
 If you are planning to use the step restart capability of SMA Opcon, you should change the RESTART parameter to RESTART=Y and review the defaults assigned to the parameters in the Restart section.
 :::
 
-XPS021I - Current Stored Parms for ZOS1IBM
-
 ```
-MACHINEID=ZOS1
-PORT=3100
-JORSPORT=+1 (3100)
-PROCESS=30
-USEJMR=NO
-INTV=00.00.20
-SPINOFF=Y
-JCLDD=XPSJCL
-OVERRIDE-DD=TEMPJCL
-JOBRC=MAXRC
-QUEUED-IS-RUNNING=N
-FORCE-SYS-AFF=N
-RESTART=Y
-RESTORE-COND-CODES=Y
-GDGOPT=A
-DUPDSNACT=S
-RESDSNACT=S
-XPRLIST=01
-AUTOSTEP=Y
-SYSPLEX=N
-TCPIP
-SMF15=D
-SMF64=D
-TRACLASS=TQ
-TRACLAS8=
-TRACMASK=
-TRACSCHD=
-USERID=
-XPSDYNAM=IEESYSAS
-MSGCLASS=A
-MLWTO=Y
-SPFAUDIT=N
-LOG-UNIT
-LOG-VOLUME
-RECOVERY=PROMPT
-SUBSYS=JES2
-TRACE=N
-SMA Opcon MACHINE NAME
-LSAM PORT
-JORS PORT
-PROCESS COUNT
-JMR USER FIELD
-WAKE UP INTERVAL
-Spin Log Each Night
-DEFAULT JCL LIBRARY
-DEFAULT OVERRIDE LIBRARY
-RC for failure check
-Show queued jobs as running
-Force System affinity
-Step Restart Active?
-Return codes for skipped steps
-GDG option
-Dup Dataset Action
-Dup Dataset Action on restart
-Dataset exclude list
-Automatic step selection
-LSAM on SYSPLEX?
-TCP/IP Task Name
-SMF Type 15 Disposition
-SMF Type 64 Disposition
-Dynamic Tracking Classes
-Dynamic Tracking Class Mask
-Dynamic Tracking Mask
-Dynamic Tracking Schedule
-Default USER
-Dynamic task proc
-REXX SYSOUT CLASS
-Multi-line WTO Triggers
-Print Step Msgs
-Log ISPF User Chgs
-LSAMLOG allocation unit
-LSAMLOG allocation volume
-Recovery Option
-JES Subsystem
-Trace Status
-* SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)
+XPS021I - CURRENT STORED PARMS FOR ZOS1                       
+MACHINEID=ZOS1                OPCON/XPS MACHINE NAME      
+PORT=3100                     LSAM PORT                   
+JORSPORT=+1 (3101)            JORS PORT                   
+PROCESS=30                    PROCESS COUNT               
+USEJMR=NO                     JMR USER FIELD              
+INTV=00.00.20                 WAKE UP INTERVAL            
+SPINOFF=Y                     Spin Log Each Night         
+JCLDD=XPSJCL                  DEFAULT JCL LIBRARY         
+OVERRIDE-DD=TEMPJCL           DEFAULT OVERRIDE LIBRARY    
+JOBRC=MAXRC                   RC for failure check        
+QUEUED-IS-RUNNING=N           Show queued jobs as running 
+FORCE-SYS-AFF=N               Force System affinity       
+RESTART=Y                     Step restart active?          
+RESTORE-COND-CODES=Y          Return codes for skipped steps
+GDGOPT=A                      GDG option                    
+DUPDSNACT=N                   Dup Dataset Action            
+RESDSNACT=S                   Dup Dataset Action on restart 
+XPRLIST=00                    Dataset exclude list          
+AUTOSTEP=Y                    Automatic step selection      
+SYSPLEX=N                     LSAM on SYSPLEX?            
+TCPIP=                        TCP/IP Task Name            
+SMF15=K                       SMF Type 15 Disposition     
+SMF64=K                       SMF Type 64 Disposition     
+TRACLASS=                     Dynamic Tracking Classes    
+TRACLAS8=                     Dynamic Tracking Class Mask 
+TRACMASK=                     Dynamic Tracking Mask       
+TRACSCHD=                     Dynamic Tracking Schedule   
+USERID=                       Default USER                
+XPSDYNAM=IEESYSAS             Dynamic task proc           
+MSGCLASS=A                    REXX SYSOUT CLASS           
+MLWTO=Y                       Multi-line WTO Triggers     
+SPFAUDIT=N                    Log ISPF User Chgs          
+LOG-UNIT=                     LSAMLOG allocation unit     
+LOG-VOLUME=                   LSAMLOG allocation volume   
+RECOVERY=PROMPT               Recovery Option             
+SUBSYS=JES2                   JES Subsystem               
+TRACE=N                       Trace Status                
+SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)        
 ```
 
 :::note
@@ -166,7 +148,21 @@ Security for batch job submission and file permissions is provided through the S
 
 Example RACF Commands Allowing LSAM Submission of Batch Jobs
 
-![Example RACF Commands Allowing LSAM Submission of Batch Jobs](/img/Example-RACF-Commands-Allowing-LSAM-Submission-of-Batch-Jobs.png "Example RACF Commands Allowing LSAM Submission of Batch Jobs")
+1. Define resource profiles in the SURROGAT class for each user who needs to allow others to be surrogate users.
+
+       RDEFINE SURROGAT execution-userid.SUBMIT UACC(NONE) OWNER(execution-userid)
+
+2. Specify that another user can act as a surrogate.
+
+       PE execution-userid.SUBMIT CLASS(SURROGAT) ID(OPCON01) ACCESS(READ)
+
+3. Validate that an execution-userid can be submitted by OPCON01.
+
+       RLIST SURROGAT execution-userid.SUBMIT AUTHUSER
+
+4. Activate the SURROGAT class.
+
+       SETROPTS RACLIST(SURROGAT) REFRESH
 
 In addition to SURROGAT authority, your LSAM task also needs an OMVS Segment defined. This is a particular requirement of RACF that authorizes the LSAM to use the z/OS TCP/IP API. All that is needed is a unique UID value. No other OMVS options are required. The RACF Command is **ALU OPCON01 OMVS(UID(nnnnnnnn))** where nnnnnnnn is any number from 0 to 2147483647.
 
@@ -240,7 +236,12 @@ In the following figure, we use standard TOP SECRET commands to define the neces
 
 Top Secret Definition Examples
 
-![Top Secret Definition Examples](/img/Top-Secret-Definition-Examples.png "Top Secret Definition Examples")
+```
+TSS PER(lsamname) DSN(OPCON.) ACC(ALL)
+TSS ADD(STC) PROC(lsamname) ACID(lsamname)
+TSS ADD(OPER) SURROGAT(lsamname.SUBMIT)
+TSS ADD(lsamname) UID(0) GROUP(OMVSGRP) DFLTGRP(OMVSGRP) -OMVSPGM(/bin/sh)
+```
 
 ## SMF Parameters
 
@@ -263,7 +264,21 @@ SUBSYS(JES2,EXITS(IEFUJV,IEFUSI,IEFU83,IEFU84))
 
 SMF Minimum Customization Requirements
 
-![SMF Minimum Customization Requirements](/img/SMF-Minimum-Customization-Requirements.png "SMF Minimum Customization Requirements")
+```
+ACTIVE                          /* ACTIVE SMF RECORDING            */
+DSNAME (SYS1.MAN1,
+        SYS1.MAN2,
+        SYS1.MAN3) 
+NOPROMPT                        /* DO NOT PROMPT OPERATOR          */
+REC (PERM)                      /* TYPE 17 PERM RECORDS ONLY       */ 
+MAXDORM (3000)                  /* WRITE IDLE BUFFER AFTER 30 MIN  */ 
+STATUS (010000)                 /* WRITE SMF STATS AFTER 1 HOUR    */
+JWT (0400)                      /* 522 AFTER 30 MINUTES            */ 
+SID (SYS1) 
+LISTDSN                         /* LIST DATA SET STATUS AT IPL     */ 
+SYS (NOTYPE (16:19,66:69) , EXITS (IEFU83, IEFU84, IEFUJV, IEFUSI),
+    NOINTERVAL, NODETAIL)
+```
 
 The above example shows type 61.64, 65, 30, 14 and 15 records being recorded. The type 14 and 15 SMF records can become voluminous and many shops do not wish to record them on a daily basis due to the impact on SMF Data Set (MAN1, MAN2, and so forth) capacities. Thus, you may request that XPS390 not allow the writing of these records to the SMF data sets. Use the SMF15= and SMF64= options in XPSPRMnn to control whether or not these SMF records are actually written to the SMF data sets.
 

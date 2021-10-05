@@ -13,7 +13,23 @@ The following (or similar) messages should be received on the MVS SYSLOG and/or 
 
 System Console Messages of Start of LSAM
 
-![System Console Messages of Start of LSAM](/img/4_4.jpg "System Console Messages of Start of LSAM")
+```
+XPR105I - FILTER TABLE UPDATED                               
+XPS075I - Trigger Table Expire Date: 21.232                  
+XPS077I - XPSU83   found in STEPLIB                          
+XPS077I - XPSU83   File Trigger Exit Established             
+XPS077I - XPSU84   found in STEPLIB                          
+XPS077I - XPSU84   Job Tracking Exit Established             
+XPS077I - XPSUJV   found in STEPLIB                          
+XPS077I - XPSUJV   Job Init Exit Established                 
+XPS077I - XPSWTOEX found in STEPLIB                          
+XPS079I - XPSWTOEX Msg Trigger Exit Established              
+XPS028I - Agent Ready on Port: 3101 - JES2                   
+XPS075I - Trigger Table Expire Date: 21.232                  
+XPS001I - OpCon/xps 21.00.0301 STARTED - ZOS1                
+XPS005I - TCP/IP - IP Open  Port:  3100                      
+XPS015A - XPS390 Awaiting Connection to SAM Server           
+```
 
 When SYSPLEX=Y is coded in XPSPRMxx, start messages should also be received for XPSPLEX. If any other results are observed - contact OpCon Support.
 
@@ -269,9 +285,29 @@ In any ISPF screen, enter the command "TSO XPSPF001". If the OpCon/xps Automatio
 
 Building a Test Notification Event in the Event Table
 
-![Building a Test Notification Event in the Event Table](/img/Building-a-Test-Notification-Event-in-the-Event-Table.png "Building a Test Notification Event in the Event Table")
+```
+┌─────────────────────────────────────────────────────────────────┐
+│       OpCon ISPF - Active Action Trigger Definition             │
+│                                                                 │
+│  Token Name :  TESTEVT1                                         │
+│  Action Type:  $NOTIFY     $JOB, $SCHEDULE, $MACHINE,...        │
+│  Action     :  ACTION       ADD, DELETE, HOLD, RELEASE,...      │
+│  Element    :  00100        Job Name, Mach-Id, Action,...       │
+│  Set Type   :  I            UP, DOWN, GOOD, BAD, Sev Num,...    │
+│  Schd Date  :               Blank, Date Keyword or Token        │
+│  Schd Name  :               Schedule Name or Token Value        │
+│  Frequency  :               Frequency for $JOB:ADD              │
+│  Security   :  USERID       Sec Id for OpCon Function           │
+│  Message    :  IVPJOB12 Ended                                   │
+│                                                                 │
+│     A=Add new action, U=Update current action.                  │
+│                                                                 │
+│  F1=HELP     F2=SPLIT    F3=END      F4=RETURN   F5=IFIND       │
+│  F6=BOOK     F7=UP       F8=DOWN     F9=SWAP    F10=LEFT        │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-For the IVP test, the Event Token must be "TESTEVT1". The event type and action are required (**$NOTIFY** and **ACTION**). The "Element" is the user personal notification ID number (usually 5 digits). This identifies the user to the Event Notification System (ENS) and it identifies the method of notification (phone \#, email address, etc) that is received. The "Set Type" is **1** (Informational message) and the Security Id should be the OpCon ID with permissions for receiving MSGIN events. The "Message" is any 40-character text (used in text messaging or emails, only).
+For the IVP test, the Event Token must be "TESTEVT1". The event type and action are required (**$NOTIFY** and **ACTION**). The "Element" is the user personal notification ID number (usually 5 digits). This identifies the user to the Event Notification System (ENS) and it identifies the method of notification (phone \#, email address, etc) that is received. The "Set Type" is **I** (Informational message) and the Security Id should be the OpCon ID with permissions for receiving MSGIN events. The "Message" is any 40-character text (used in text messaging or emails, only).
 
 ### Building and Executing the IVP Schedule
 

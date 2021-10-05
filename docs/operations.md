@@ -193,7 +193,10 @@ No in-flight processing on the PSAM is interrupted during this process. The SAM 
 
 HOST File Example - Fail-Over Preparation
 
-![HOST File Example - Fail-Over Preparation](/img/HOST-File-Example-Fail-Over-Preparation.png "HOST File Example - Fail-Over Preparation")
+```
+209.94.231.01	SYS1	/* Normal Operation    */
+*209.94.231.02	SYS1	/* Fail-Over Operation */
+```
 
 It is often the practice to simply comment out the Fail-Over IP address in normal operation and swap the comment notation if z/OS Fail-Over is initiated.
 
