@@ -44,9 +44,8 @@ By entering a "D" line command, the entry is deleted. You are prompted for confi
 
 By entering an "S" line command, the entry is selected and the screen displays entry detail that may be altered.
 
-:::caution
-Altering a PASSIVE entry that is referenced by a scheduled job may invalidate the entry if the SAM schedule record for the referencing job(s) is not also altered to reflect the change. Each entry in the dataset table must have a unique combination of Resource name, Type, DSN Key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a file prerun on a job definition).
-:::
+>### **caution**
+>Altering a PASSIVE entry that is referenced by a scheduled job may invalidate the entry if the SAM schedule record for the referencing job(s) is not also altered to reflect the change. Each entry in the dataset table must have a unique combination of Resource name, Type, DSN Key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a file prerun on a job definition).
 
 ### WTO Table Administration
 
@@ -58,9 +57,8 @@ WTO Table Administration
 
 ![WTO Table Administration](/img/WTO-Table-Administration.png "WTO Table Administration")
 
-:::note
-Each entry in the message table must have a unique combination of Resource name, Message key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a message prerun on a job definition).
-:::
+>### note
+>Each entry in the message table must have a unique combination of Resource name, Message key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a message prerun on a job definition).
 
 #### Automated Response Feature
 
@@ -74,7 +72,11 @@ The above example causes a response to the message below with an **\"R** **70,Y\
 
 \*70 XPSTIMER - Test WTOR - Enter any Character.
 
-Replies longer than seven characters may be continued on the next line following the Event Token. Replies up to 19 characters are supported.
+#### Automated Command Feature
+
+The WTO Table and ISPF interface can be used to set up automatic commands in response to messages. This feature is LSAM resident and independent of the SAM or scheduling functions. Automatic commands are defined by beginning the Event token field with a hyphen (-). 
+
+Replies or commands can be up to 27 characters long.
 
 #### Special Event Token Values
 
@@ -118,14 +120,19 @@ In the above example, an existing entry in the table is used as a template to cr
 
 $JOB:ADD,CURRENT,SYSProd,IVPJOB09,ONRequest,TSOID01,\*\*\*pswd\*\*
 
-The "Security" identification must match the SAM functional definitions for the Schedule. The Job name (Element) must be defined on the Master Schedule with the Frequency noted or the event fails. The password is dynamic and must be defaulted on the SAM security definition for the associated user. The Schedule Date accepts any eight character value. Both the Schedule Name and Schedule Date accept OpCon/xps tokens. For information on OpCon/xps tokens, refer to [Properties](https://help.smatechnologies.com/opcon/core/latest/Concepts/Properties.md#top) in the **Concepts** online help.
+The "Security" field identifies a z/OS userid to use on the triggered event, in place of the triggering userid. See [Mapping users to OpCon user and token](mapping.md) section for details about defining OpCon userids and external event tokens for each user. Userid overrides are applied before OpCon custom field lookups.
 
+ The Schedule Date accepts any eight character value. 
+
+>If an event with a userid override is triggered with **$EVENT=*event*** from XPSCOMM, the triggering user must be authorized or the override will be ignored. The user must have READ permission to either the ***override*.SUBMIT** or ***override*.OPCON** profile in the SURROGATE SAF class.  
+>>For backward compatibility, READ access is assumed for ***override*.OPCON** if the profile is not defined.
+ 
 Event errors are recorded in the SAM Log on the SAM Server. No feedback for event processing is returned to the LSAM.
 
-:::note
-The Schedule and Frequency names in the Event table are each limited to 12 characters.
-:::
-
+>:::note
+>The Schedule and Frequency names in the Event table are each limited to 12 characters.
+>:::
+>
 #### Special Trigger Handling
 
 When the events are triggered from the DSN or WTO tables, some special
@@ -133,13 +140,34 @@ values are allowed:
 
 - $CONSOLE:DISPLAY and $NOTIFY:LOG
     If the message field for one of these events is equal to **&TEXT**, it will be replaced by information about the triggering event:
-  - DSN triggers will display **MachineID\|Jobname\|Action\|Dataset.name**\*Action* is the first character of the dataset trigger action
+  - DSN triggers will display **MachineID\|Jobname\|Action\|Dataset.name** *Action* is the first character of the dataset trigger action
   - WTO triggers will display the message text
 - $JOB:ADD
     Job Instance properties will be added containing the triggering information. This allows the trigger data to be used as input to the added job:
-  - DSN triggers include **RSRC=resource;DSN=dataset.name**
-  - WTO triggers include **RSRC=resource;MSG=message text**
+  - DSN triggers include **RSRC=*resource*;DSN=*`dataset.name`*;VOL=*volser***
+  - WTO triggers include **RSRC=*resource*;MSG=*message text***
 
-:::note
-If the WTO message text contains any commas, they will be converted to spaces in the event text.
-:::
+>:::note\
+>Commas in the WTO message text will be translated to spaces in the event text.
+>:::
+
+### Securing Automation table updates.
+
+It is possible to secure the Automation table updates through SAF definitions.
+Automation table updates require UPDATE permission to the SAF profile **OPCON.XPS$*x*.XPSPF** profile in the FACILITY class, where ‘x’ is the XPSID of the
+ system being accessed.  Generic and discrete profiles are supported.
+
+>Note: For backward compatibility, if no profile is defined for the resource, the user will be allowed to update the tables.
+ 
+**RACF Examples**
+
+- To prevent ordinary users from updating the automation tables for the
+ LSAM with XPSID=S, but allow members of group SCHED:
+
+      RDEFINE FACILITY OPCON.XPS$S.XPSPF UACC(READ)
+      PERMIT OPCON.XPS$S.XPSPF CLASS(FACILITY) ID(SCHED) ACC(UPDATE)
+    
+- To prevent ordinary users from updating the automation tables for all LSAMs, but allow user USERA and group SCHED:
+
+      RDEFINE FACILITY OPCON.XPS$%.XPSPF UACC(READ)
+      PERMIT OPCON.XPS$%.XPSPF CLASS(FACILITY) ID(USERA SCHED) ACC(UPDATE)
