@@ -6,7 +6,7 @@ Do not attempt to start XPS390 until all prior Customization Processes are compl
 
 Start the OpCon/xps LSAM task with the following command:
 
-- `S *lsamproc*\[.*lsamname*\]\[,SUB=*JESA*\]`
+- S *lsamproc*[.*lsamname*][,SUB=*JESx*]
 - E.g., `S OPCON01`
 
 The following (or similar) messages should be received on the MVS SYSLOG and/or Operations Console:
@@ -168,7 +168,7 @@ For the SAM and supporting services to communicate with the z/OS LSAM, the Machi
   - Refer to <ins>Configure the Hosts File on the SAM Application Server</ins>.
   - For information on configuring a DNS server, contact the network administrator.
 - To confirm name resolution for DNS or hosts file configuration, ping the machine by name from the SAM application server.
-- In OpCon release 3.30 and above, the administrator can assign the TCP/IP address to the machine in the *Communication Settings* tab located in the *Advanced Settings Panel* in the *Enterprise Manager\>Operation\> Machines* screen.
+- In OpCon release 3.30 and above, the administrator can assign the TCP/IP address to the machine in the *Communication Settings* tab located in the *Advanced Settings Panel* in the *Enterprise Manager>Operation> Machines* screen.
 
 :::caution
 
@@ -180,7 +180,7 @@ If the administrator assigns the TCP/IP address to the machine through the Advan
 
 1. Right-click on the **Start** button.
 2. Select **Explore** from the menu.
-3. Browse to the *<Windows Directory\>*\\**System32**\\**Drivers**\\**etc**\\ directory.
+3. Browse to the *\<Windows Directory\>*\System32\Drivers\etc\ directory.
 4. Find the hosts file.
 5. Right-click the file and select Open With.
 6. Select an *ASCII text editor* (e.g., Notepad) from the **Choose the program you want use list box**.
@@ -188,7 +188,7 @@ If the administrator assigns the TCP/IP address to the machine through the Advan
 8. Type the *TCP/IP address* for the z/OS LSAM machine.
 9. Press the Tab key.
 10. Type the *machine name* as it is entered in the Enterprise Manager.
-11. Use menu path: **File \> Save**.
+11. Use menu path: **File > Save**.
 12. **Close ☒** the text editor.
 
 ### Adding the Machine
@@ -199,7 +199,7 @@ After verifying licensing and name resolution between the OpCon server and the L
 
 When a z/OS LSAM is installed, create a machine record with a unique Machine name and Socket number in OpCon:
 
-1. Use menu path: **Start \> Programs \> OpConxps \> Enterprise Manager**.
+1. Use menu path: **Start > Programs > OpConxps > Enterprise Manager**.
 2. In the **Username** text box, enter a *case-sensitive* *User Login ID* (e.g., ocadm) on the OpCon login screen.
 3. In the **Password** text box, enter the *case-sensitive password* for the user.
 4. In the **Profile** drop-down list, select the *Profile*.
@@ -229,7 +229,7 @@ When a z/OS LSAM is installed, create a machine record with a unique Machine nam
 
 ### Importing IVP Schedule Job Definitions
 
-The *<Target Directory\>*\\Opconxps\\Utilities directory created by the SAM install process contains a file named "IVPMVS.mdb". This file is an SQL Export of a predefined IVP Schedules. Import this file to the OpCon/xps master schedule using the Schedule Import Export utility.
+The *\<Target Directory\>*\Opconxps\Utilities directory created by the SAM install process contains a file named "IVPMVS.mdb". This file is an SQL Export of a predefined IVP Schedules. Import this file to the OpCon/xps master schedule using the Schedule Import Export utility.
 
 <ins>Import the IVP Schedules</ins>
 
@@ -237,12 +237,12 @@ The *<Target Directory\>*\\Opconxps\\Utilities directory created by the SAM inst
 2. Click the **ODBC** button if the Login to Schedule Import Export screen or the Access Database DSN screen appears.
 3. Click the **System DSN** tab in the ODBC Data Source Administrator window.
 4. Click the **Add** button.
-5. In the drop-down list in the Create New Data Source window, select **Microsoft Access Driver (\*.mdb)**.
+5. In the drop-down list in the Create New Data Source window, select **Microsoft Access Driver (*.mdb)**.
 6. Click the **Finish** button.
 7. In the Data Source Name text box, enter **IVPMVS** in the ODBC Microsoft Access Setup window.
 8. *(Optional)* In the **Description** text box, enter a *description*.
 9. Click the **Select** button.
-10. Go to the **Directories** frame in the Select Database window. Browse to the **IVPMVS.MDB** file (e.g., C:\\Program Files\\OpConxps\\Utilities\\IVPMVS.MDB).
+10. Go to the **Directories** frame in the Select Database window. Browse to the **IVPMVS.MDB** file (e.g., C:\Program Files\OpConxps\Utilities\IVPMVS.MDB).
 11. Click the.*mdb* file and then click the **OK** button.
 12. Click the **OK** button.
 13. Click the **OK** button in the ODBC Microsoft Access Setup window.
@@ -274,7 +274,7 @@ Job dependencies are set as follows:
 - IVPJOB18 runs After IVPJOB16.
 - IVPJOB19 runs After IVPJOB18.
 
-At this point, ensure that the USERID used on IVPJOB16 has authority to schedule jobs. In the Enterprise Manager \'s (EM) Administration screen, give batch User ID "TSOUSER" permission to update IVPMVS1 and IVPMVS2.
+At this point, ensure that the USERID used on IVPJOB16 has authority to schedule jobs. In the Enterprise Manager's (EM) Administration screen, give batch User ID "TSOUSER" permission to update IVPMVS1 and IVPMVS2.
 
 
 ### Creating a Notifying Event
@@ -307,7 +307,7 @@ Building a Test Notification Event in the Event Table
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-For the IVP test, the Event Token must be "TESTEVT1". The event type and action are required (**$NOTIFY** and **ACTION**). The "Element" is the user personal notification ID number (usually 5 digits). This identifies the user to the Event Notification System (ENS) and it identifies the method of notification (phone \#, email address, etc) that is received. The "Set Type" is **I** (Informational message) and the Security Id should be the OpCon ID with permissions for receiving MSGIN events. The "Message" is any 40-character text (used in text messaging or emails, only).
+For the IVP test, the Event Token must be "TESTEVT1". The event type and action are required (**$NOTIFY** and **ACTION**). The "Element" is the user personal notification ID number (usually 5 digits). This identifies the user to the Event Notification System (ENS) and it identifies the method of notification (phone #, email address, etc) that is received. The "Set Type" is **I** (Informational message) and the Security Id should be the OpCon ID with permissions for receiving MSGIN events. The "Message" is any 40-character text (used in text messaging or emails, only).
 
 ### Building and Executing the IVP Schedule
 
@@ -335,9 +335,9 @@ IVPPROC1 waits for a WTO trigger message (from IVPJOB15). IVPCommand executes an
 
 IVPJOB14 should start after IVPCommand completes. IVPJOB14 should fail with the message "Failed - Terminated IVPSTEP2". This message will also be received on the MVS operator console: "XPS104I - Job TERMINATED Due to Step Cond Code". This job was forcibly terminated and flushed after step 2. Step 3 did not run.
 
-Check the console log. Notice that a REXX procedure \[IVPREXX\] ran as a "pre-run" to IVPJOB14. A message should be seen on the MVS console indicating the pre-run REXX had a completion code of "0000" so the associated job was submitted: "XPS089I - REXX:IVPJOB14 RCD=0000, ID=IVPJOB14". The post process $Event "Mark(s) Good" IVPJOB14.
+Check the console log. Notice that a REXX procedure [IVPREXX] ran as a "pre-run" to IVPJOB14. A message should be seen on the MVS console indicating the pre-run REXX had a completion code of "0000" so the associated job was submitted: "XPS089I - REXX:IVPJOB14 RCD=0000, ID=IVPJOB14". The post process $Event "Mark(s) Good" IVPJOB14.
 
-IVPJOB15 is now released. The DSN table entry for the File pre-run is set up immediately. When the status of IVPJOB15 becomes "Wait Start Time -- File(s) Not Avail", edit and SAVE any member in the OpCon/xps INSTLIB using the TSO USERID. It may take a minute but IVPJOB15 is submitted shortly. It should ABEND with a User 101 \["Failed -- J9999 Abended-U0101"\]. The ABEND is an expected condition meant to test trapping of system abends in scheduled jobs. The message issued by the DSN trigger of IVPJOB15 releases IVPPROC1.
+IVPJOB15 is now released. The DSN table entry for the File pre-run is set up immediately. When the status of IVPJOB15 becomes "Wait Start Time -- File(s) Not Avail", edit and SAVE any member in the OpCon/xps INSTLIB using the TSO USERID. It may take a minute but IVPJOB15 is submitted shortly. It should ABEND with a User 101 ["Failed -- J9999 Abended-U0101"]. The ABEND is an expected condition meant to test trapping of system abends in scheduled jobs. The message issued by the DSN trigger of IVPJOB15 releases IVPPROC1.
 
 When IVPJOB15 is marked "Good", IVPJOB16 and IVPREXX1 execute. IVPJOB17 is dynamically added by an XPSCOMM step in IVPJOB16. The step is a forced DSN ENQ lock in IVPJOB16 that is intended to hold the OpCon/xps OBJLIB until IVPJOB17 starts.
 
@@ -347,7 +347,7 @@ When IVPJOB17 attempts to start, a "DSN ENQ Wait" condition should be discovered
 In order to create the NOT CATLG 2 condition, IVPJOB17 allocates a new dataset with the same name as an existing dataset. If the dataset is directed to SMS storage, the allocation fails and the job ends with a JCL error.
 :::
 
-IVPJOB18: This job has four steps and creates datasets to be used for restart testing in IVPJOB19. The test record for each dataset contains the override variable \@DATE. This override variable is set by OpCon/xps with the token value of \[\[\$NOW\]\], which resolves to the current date and time when the job is started. It is not necessary to verify the test record contents; IVPJOB19 creates the same datasets with different text.
+IVPJOB18: This job has four steps and creates datasets to be used for restart testing in IVPJOB19. The test record for each dataset contains the override variable @DATE. This override variable is set by OpCon/xps with the token value of [[$NOW]], which resolves to the current date and time when the job is started. It is not necessary to verify the test record contents; IVPJOB19 creates the same datasets with different text.
 
 The first time this job is run, all steps should end with CC=0000. If the GDG base has not been deleted, subsequent executions produce a CC=0012 in the first step. This is acceptable:
 
@@ -374,7 +374,7 @@ The job is designed test all restart capabilities. The first run tests the clean
 
 Verify that the generation was not incremented and the test record has a new date and time. For additional testing, submit this job outside of OpCon/xps 2 times, and then restart the job. The original generation should be replaced, but the new generations remains intact.
 
-Next, verify that step4 is flagged as non-restartable. In Job Configuration, under the General Category, the Step field for STEP4 should display "004\*STEP4 0000". Now try to select this step for restart. An informational popup window should display the message, "This is a non-restartable step. Confirm selection". This warns the user that changes may be necessary to the job in order to start in this step. In most cases, it indicates that temporary datasets, created in a previous step, are not available during the restart.
+Next, verify that step4 is flagged as non-restartable. In Job Configuration, under the General Category, the Step field for STEP4 should display `004*STEP4 0000`. Now try to select this step for restart. An informational popup window should display the message, "This is a non-restartable step. Confirm selection". This warns the user that changes may be necessary to the job in order to start in this step. In most cases, it indicates that temporary datasets, created in a previous step, are not available during the restart.
 
 :::note
 OpCon allows the restart, after user confirmation, but problems may occur if the reasons that the step is not restartable are ignored.

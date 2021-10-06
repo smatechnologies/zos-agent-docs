@@ -24,7 +24,7 @@ See [Mapping z/OS users to OpCon user and token definitions](mapping.md) for det
 
 XPSCOMM may be executed via batch job, started task, internal called routine, TSO command or REXX procedure.
 
-Records or parms starting with dollar sign '\$' are passed to OpCon/xps through the MSGIN mechanism after adding the user-id and password. Records from file input that do not start with '\$' are treated as comments and ignored. Parm values that do not start with '\$' will be returned to OpCon/xps in one of two ways, depending on the job's status.
+Records or parms starting with dollar sign '$' are passed to OpCon/xps through the MSGIN mechanism after adding the user-id and password. Records from file input that do not start with '$' are treated as comments and ignored. Parm values that do not start with '$' will be returned to OpCon/xps in one of two ways, depending on the job's status.
 
 - If the job is being executed by the same OpCon/xps instance, the string will be sent as a job status description for the job.
 - If the job is not being executed by the same OpCon/xps instance, the string will be displayed in the SAM log.

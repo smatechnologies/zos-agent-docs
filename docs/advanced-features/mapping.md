@@ -50,10 +50,10 @@ By default, only security administrators can view or update custom fields.  To a
     RDEFINE FIELD USER.CSDATA.XPSTOKEN UACC(NONE) 
                                                                      
     /* ALLOW EACH USER TO VIEW THEIR OWN XPSUSER                     
-    PERMIT USER.CSDATA.XPSUSER CLASS(FIELD) ID(&amp;RACUID) ACC(READ) 
+    PERMIT USER.CSDATA.XPSUSER CLASS(FIELD) ID(&RACUID) ACC(READ) 
                                                                      
     /* ALLOW EACH USER TO UPDATE THEIR OWN EVENT TOKENS              
-    PERMIT USER.CSDATA.XPSTOKEN CLASS(FIELD) ID(&amp;RACUID) ACC(UPDATE) 
+    PERMIT USER.CSDATA.XPSTOKEN CLASS(FIELD) ID(&RACUID) ACC(UPDATE) 
      
     SETROPTS CLASSACT(FIELD) RACLIST(FIELD) 
 ## <a name="Multiple_lsams"></a>Multiple LSAM instances
@@ -79,10 +79,10 @@ With multiple LSAM instances, you may want to use generic FIELD profiles to allo
     RDEFINE FIELD USER.CSDATA.XP%TOKEN UACC(NONE) 
                                                                      
     /* ALLOW EACH USER TO VIEW THEIR OWN XPSUSER                     
-    PERMIT USER.CSDATA.XP%USER CLASS(FIELD) ID(&amp;RACUID) ACC(READ) 
+    PERMIT USER.CSDATA.XP%USER CLASS(FIELD) ID(&RACUID) ACC(READ) 
                                                                      
     /* ALLOW EACH USER TO UPDATE THEIR OWN EVENT TOKENS              
-    PERMIT USER.CSDATA.XP%TOKEN CLASS(FIELD) ID(&amp;RACUID) ACC(UPDATE) 
+    PERMIT USER.CSDATA.XP%TOKEN CLASS(FIELD) ID(&RACUID) ACC(UPDATE) 
      
     SETROPTS RACLIST(FIELD) REFRESH
  

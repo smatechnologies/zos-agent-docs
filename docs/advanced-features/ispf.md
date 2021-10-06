@@ -79,8 +79,9 @@ By entering a "D" line command, the entry is deleted. You are prompted for confi
 
 By entering an "S" line command, the entry is selected and the screen displays entry detail that may be altered.
 
->### **caution**
->Altering a PASSIVE entry that is referenced by a scheduled job may invalidate the entry if the SAM schedule record for the referencing job(s) is not also altered to reflect the change. Each entry in the dataset table must have a unique combination of Resource name, Type, DSN Key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a file prerun on a job definition).
+:::caution
+Altering a PASSIVE entry that is referenced by a scheduled job may invalidate the entry if the SAM schedule record for the referencing job(s) is not also altered to reflect the change. Each entry in the dataset table must have a unique combination of Resource name, Type, DSN Key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a file prerun on a job definition).
+:::
 
 ### WTO Table Administration
 
@@ -121,8 +122,9 @@ Command ==>                                                   Scroll ==> PAGE
 ******************************* Bottom of data ********************************
 ```
 
->### note
+:::note
 >Each entry in the message table must have a unique combination of Resource name, Message key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a message prerun on a job definition).
+:::
 
 #### Automated Response Feature
 
@@ -153,9 +155,9 @@ Automated Response Entry in WTO Table
 └────────────────────────────────────────────────────────────────┘
 ```
 
-The above example causes a response to the message below with an **\"R** **70,Y\"**.
+The above example causes a response to the message below with an **"R** **70,Y"**.
 
-\*70 XPSTIMER - Test WTOR - Enter any Character.
+    *70 XPSTIMER - Test WTOR - Enter any Character.
 
 #### Automated Command Feature
 
@@ -168,8 +170,8 @@ Replies or commands can be up to 27 characters long.
 The following special values have defined actions and will not use the Event table.
 
 - $CONSOLE - Sends the trigger information to the SAM log in the following form:
-  - Messages: MachineID\|Jobname\|JobID\|Message text
-  - Datasets: MachineID\|Jobname\|DSNx\|DSNAME\|Resource
+  - Messages: MachineID&#124;Jobname&#124;JobID&#124;Message text
+  - Datasets: MachineID&#124;Jobname&#124;DSNx&#124;DSNAME&#124;Resource
     - "x" is the triggering condition:
       - E = EXISTS
       - C = CREATED
@@ -253,9 +255,9 @@ The "Security" field identifies a z/OS userid to use on the triggered event, in 
  
 Event errors are recorded in the SAM Log on the SAM Server. No feedback for event processing is returned to the LSAM.
 
->:::note
->The Schedule and Frequency names in the Event table are each limited to 12 characters.
->:::
+:::note
+The Schedule and Frequency names in the Event table are each limited to 12 characters.
+:::
 
 #### Special Trigger Handling
 
@@ -264,16 +266,21 @@ values are allowed:
 
 - $CONSOLE:DISPLAY and $NOTIFY:LOG
     If the message field for one of these events is equal to **&TEXT**, it will be replaced by information about the triggering event:
-  - DSN triggers will display **MachineID\|Jobname\|Action\|Dataset.name** *Action* is the first character of the dataset trigger action
+  - DSN triggers will display 
+
+    **MachineID&#124;Jobname&#124;Action&#124;Dataset.name** 
+
+    *Action* is the first character of the dataset trigger action
+
   - WTO triggers will display the message text
 - $JOB:ADD
     Job Instance properties will be added containing the triggering information. This allows the trigger data to be used as input to the added job:
   - DSN triggers include **RSRC=*resource*;DSN=*`dataset.name`*;VOL=*volser***
   - WTO triggers include **RSRC=*resource*;MSG=*message text***
 
->:::note\
->Commas in the WTO message text will be translated to spaces in the event text.
->:::
+:::note
+Commas in the WTO message text will be translated to spaces in the event text. 
+:::
 
 ### Securing Automation table updates.
 

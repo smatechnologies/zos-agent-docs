@@ -84,13 +84,13 @@ SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)
 ```
 
 :::note
-All characters after the first space on the line and all lines that begin with an asterisk ('\*') are considered comments. For backward compatibility, commas may be used for continuation, but, beginning with V4.01, they are optional between lines. As before, multiple parameters on a single line must be separated by commas.
+All characters after the first space on the line and all lines that begin with an asterisk ('*') are considered comments. For backward compatibility, commas may be used for continuation, but, beginning with V4.01, they are optional between lines. As before, multiple parameters on a single line must be separated by commas.
 
 ### Syntax
 
-\[\@systemname \]parameter=\[option\]{,parameter=\[option\]}...
+[@systemname ]parameter=[option]{,parameter=[option]}...
 
-The optional *\@systemname* prefix can be used to filter the input records. Any records beginning with an **@systemname** will be skipped, unless **systemname** matches the current system name, as defined in the     static system symbol SYSNAME.
+The optional *@systemname* prefix can be used to filter the input records. Any records beginning with an **@systemname** will be skipped, unless **systemname** matches the current system name, as defined in the     static system symbol SYSNAME.
 
 ### Run-time Parameters
 
@@ -136,10 +136,10 @@ The optional *\@systemname* prefix can be used to filter the input records. Any 
 |DUPDSNACT|NONE|Action to take when a dataset to be created is already cataloged during a normal run.<br/>Valid values include:<ul><li>NONE: Do nothing.</li><li>SCRATCH: Scratch the dataset.</li><li>REUSE: Convert DISP=NEW to DISP=OLD to reuse the existing allocation.</li></ul>|
 |RESDSNACT|SCRATCH|Action to take when a dataset to be created is already cataloged during a restart.<br/>Valid values include:<ul><li>NONE: Do nothing.</li><li>SCRATCH: Scratch the dataset.</li><li>REUSE: Convert DISP=NEW to DISP=OLD to reuse the existing allocation.</li></ul>|
 |AUTOSTEP|YES|Automatic restart step assignment.<br/>Valid values include:YES: Assign a restart step as the job executes - reset to null if good EOJ.NO: Do not assign a restart step automatically.|
-|XPRLIST|*Blank*|Allows a two-character suffix to be provided for the XPRLSTxx member of XPSPARMS to be used as the table for dataset filtering.<br/>The XPRLIST syntax is as follows:<br/>IDSN=dataset pattern<br/>IVOL=volser pattern<br/>XDSN=dataset pattern<br/>XVOL=volser pattern<br/>The patterns can contain the wild card characters '\*' and '%'.<br/>An asterisk (\*) represents 0 – 8 characters, up to the end of the current dataset level (up to a dot or blank).<br/>Percent ('%') represents any single character in the current position, except a dot ('.').<br/>An asterisk (\*) at the end of the pattern matches any number of characters to the end of the name.|
+|XPRLIST|*Blank*|Allows a two-character suffix to be provided for the XPRLSTxx member of XPSPARMS to be used as the table for dataset filtering.<br/>The XPRLIST syntax is as follows:<br/>IDSN=dataset pattern<br/>IVOL=volser pattern<br/>XDSN=dataset pattern<br/>XVOL=volser pattern<br/>The patterns can contain the wild card characters '*' and '%'.<br/>An asterisk (*) represents 0 – 8 characters, up to the end of the current dataset level (up to a dot or blank).<br/>Percent ('%') represents any single character in the current position, except a dot ('.').<br/>An asterisk (*) at the end of the pattern matches any number of characters to the end of the name.|
 
 :::note
-The XPSPRMxx member is used only at IPL time. Changes to Parameters after IPL should be done using the operator command \[F lsamname,parm=option\]. If the parameter change is to be permanent, it should also be made to XPSPRMxx so it is not rolled back at the next IPL.
+The XPSPRMxx member is used only at IPL time. Changes to Parameters after IPL should be done using the operator command [F lsamname,parm=option]. If the parameter change is to be permanent, it should also be made to XPSPRMxx so it is not rolled back at the next IPL.
 :::
 
 ## Security Setup
@@ -180,25 +180,25 @@ If the OpCon userid is longer than eight characters, the first eight characters 
 
 ### Partial Matching with Windows Domain
 
-If the OpCon userid is in the form domain\\user, as when Windows authentication is used, the results vary with releases:
+If the OpCon userid is in the form domain\user, as when Windows authentication is used, the results vary with releases:
 
 #### LSAM versions below 15.07
 
 In this case, the first eight characters of the userid, including the domain and separator, will be used, which will normally not be useful.
 
-For example, if the OpCon user is "CORP\\johndoe", the z/OS userid will be "CORP\\JOH".
+For example, if the OpCon user is "CORP\johndoe", the z/OS userid will be "CORP\JOH".
 
 #### LSAM versions 15.07 and higher and UI versions below 16
 
 In this case, only the characters following the separator will be used, but the UI only sends eight characters, so the result may not be correct.
 
-For example, if the OpCon user is "CORP\\johndoe", the z/OS userid will be "JOH".
+For example, if the OpCon user is "CORP\johndoe", the z/OS userid will be "JOH".
 
 #### LSAM versions 15.07 and higher and UI versions 16 or higher
 
 In this case, only the first eight characters following the separator will be used.
 
-For example, if the OpCon user is "CORP\\johndoe", the z/OS userid will be "JOHNDOE".
+For example, if the OpCon user is "CORP\johndoe", the z/OS userid will be "JOHNDOE".
 
 ### Distributed Identity Mapping
 
@@ -216,13 +216,13 @@ Distributed identity mapping is defined and enabled by the z/OS security adminis
   - RACMAP id(ZOSUSER) map userdidfilter(name('OpConUser')) registry(name('OPCON'))
   - RACMAP id(SYSPROG) map userdidfilter(name('ocadm')) registry(name('OPCON'))
 - Full Windows userids, with domain, are supported:
-  - RACMAP id(ZOSUSER) map userdidfilter(name('Domain\\OpConUser')) registry(name('OPCON'))
+  - RACMAP id(ZOSUSER) map userdidfilter(name('Domain\OpConUser')) registry(name('OPCON'))
 - Wildcard mapping:
-  - RACMAP id(ZOSUSER) map userdidfilter(name('\*')) registry(name('OPCON'))
+  - RACMAP id(ZOSUSER) map userdidfilter(name('*')) registry(name('OPCON'))
 - Changes to the identity mapping will become active when the IDIDMAP class is refreshed:
   - SETROPTS RACLIST(IDIDMAP) REFRESH
 
-For more details, consult the *Distributed Identity Filters* section in the **z/OS Security Server RACF Security Administrator\'s Guide**.
+For more details, consult the *Distributed Identity Filters* section in the **z/OS Security Server RACF Security Administrator's Guide**.
 
 ##### CA-Top Secret and CA-ACF2
 
@@ -302,14 +302,14 @@ A senior MVS Systems Programmer should have the authority to implement the IKJTS
 
 The SMA Opcon ISPMLIB and ISPPLIB libraries are required in the TSO Logon Proc for each user of SMA Opcon that also has a TSO logon, or a CLIST or EXEC can be written using LIBDEF to provide access.
 
-### Library Autorization
+### Library Authorization
 
 Most all of the SMA Opcon LINKLIB library contents require APF authorization.
 
 In the default configuration, the following members require LINKLST access:
 
 - XPSASCRE
-- XPSEVENT\*
+- XPSEVENT
 
 If your installation standards do not allow the addition of libraries to APF list or LINKLST concatenations, you have to copy the contents of the SMA Opcon LINKLIB to defined libraries with the proper APF and LINKLST characteristics (e.g., SYS1.LINKLIB). However, your installation and maintenance procedures for XPS390 need to reflect the changes so subsequent maintenance releases applies properly. SMA supplies an IEBCOPY job in highlevel.midlevel.INSTLIB(LINKLST) to perform a link list copy.
 
@@ -325,7 +325,7 @@ With some customization, it is possible to run the z/OS agent without updating t
 
 JCL for batch jobs and programs for dynamic REXX jobs must be located in libraries allocated to the LSAM. To add, remove, or change a library allocation: change the LSAM JCL, then stop and restart the LSAM using the RESET=C command or using a STOP and a START command. There are no restrictions on the DD names or library concatenations.
 
-A library with a DD name beginning with \'TEMP\' is eligible for temporary member processing, and must be writable by the LSAM task.
+A library with a DD name beginning with 'TEMP' is eligible for temporary member processing, and must be writable by the LSAM task.
 
 ## Sysplex Configuration
 
@@ -344,27 +344,27 @@ The "Machine ID" value is up to 8 characters, system name defined in the IEASYMx
 
 When you are not running a Sysplex, the selection of a configuration for XPS390 is easy. It must be set up as individual machines with separate Machine IDs within SAM. Each LSAM has its own copy of JCL libraries, PROCLIBS, and so on. SAM handles all routing of work. You should not use NJE to send scheduled production jobs from one system to another in a local network -- use SMA Opcon to submit the job where it runs.
 
-Configuration \#1 - Independent LPAR Scheduling
+Configuration #1 - Independent LPAR Scheduling
 
-![Configuration \#1 - Independent LPAR Scheduling](/img/Configuration-1-Independent-LPAR-Scheduling.png "Configuration #1 - Independent LPAR Scheduling")
+![Configuration #1 - Independent LPAR Scheduling](/img/Configuration-1-Independent-LPAR-Scheduling.png "Configuration #1 - Independent LPAR Scheduling")
 
-Each machine has all SMF Exits Installed, XPSPRMxx defined, etc. \-- just as with a single machine installation. Each XPSPRMxx has the LSAM=Y and SYSPLEX=N options set. The SMA Opcon SAM HOST file, DNS, or SMA Opcon machine definitions contains the IP addresses for all three machines and their respective MACHINEIDs.
+Each machine has all SMF Exits Installed, XPSPRMxx defined, etc. -- just as with a single machine installation. Each XPSPRMxx has the LSAM=Y and SYSPLEX=N options set. The SMA Opcon SAM HOST file, DNS, or SMA Opcon machine definitions contains the IP addresses for all three machines and their respective MACHINEIDs.
 
 ### Scheduling a SYSPLEX
 
 When configuring a Sysplex, the selection of a configuration for XPS390 depends upon your installation "Operational Profile".
 
-Configuration \#2 - Sysplex Scheduling
+Configuration #2 - Sysplex Scheduling
 
-![Configuration \#2 - Sysplex Scheduling](/img/Configuration--2-Sysplex-Scheduling.png "Configuration #2 - Sysplex Scheduling")
+![Configuration #2 - Sysplex Scheduling](/img/Configuration--2-Sysplex-Scheduling.png "Configuration #2 - Sysplex Scheduling")
 
 When Scheduling a Multi-Access Spool (MAS) environment, the machine that submits the batch JCL, the machine that converts the JCL (loads the Procs defined in the job), and the machine that runs the resulting job may all be different. JES2 MAS and JES3 Local processor support is only available in a Sysplex environment (any CF level). In the above example, we define the Primary LSAM as a "Gateway" for both SYSA and SYSB in the SAM Server. The Machine ID is the target system for the jobs within the MAS/Sysplex and the Gateway is always the Primary LSAM machine.
 
-For this configuration option to function properly, the environment must employ a Sysplex (at any CF level). Workload Manager does not interfere with schedule operation when a Master Gateway is used. Also, you may use JES2 \*ROUTE XEQ records in JCL to route jobs to machines within the MAS and XPS390 tracks each job with no problem. However, we suggest using the Machine-id feature in SMA Opcon to route work to dedicated machines.
+For this configuration option to function properly, the environment must employ a Sysplex (at any CF level). Workload Manager does not interfere with schedule operation when a Master Gateway is used. Also, you may use JES2 /*ROUTE XEQ records in JCL to route jobs to machines within the MAS and XPS390 tracks each job with no problem. However, we suggest using the Machine-id feature in SMA Opcon to route work to dedicated machines.
 
 Within JES, the Converter/Interpreter routine is charged with Proc access and the resolution of symbolic variables. Since the JES2 Proc is most often located in SYS1.PROCLIB -- AND -- since some shops have a different SYS1.PROCLIB for each machine, the concatenation of PROC00 may not support JCL submission and conversion on every machine in the JES2 MAS. For this reason, we recommend one LSAM as the "Master" in a MAS environment. On JES3 all CI processing is done on the Global processor so the primary LSAM may be on any machine.
 
-Each machine in the production Sysplex must have all the SMA Opcon Exits Installed, XPSPRMxx defined, etc. \-- just as with a single machine installation. The Master Gateway's XPSPRMxx has the LSAM=Y option set. All other LSAMs in the Sysplex have the LSAM=N option set, or all machines may share the XPSPRMxx file, with LSAM=system identifying the primary system. The SMA Opcon Server HOST file, DNS, or SMA Opcon machine definition contains the IP addresses for the Primary LSAM gateway name only. Access to other systems in the Sysplex is handled entirely by the Gateway LSAM via XCF.
+Each machine in the production Sysplex must have all the SMA Opcon Exits Installed, XPSPRMxx defined, etc. -- just as with a single machine installation. The Master Gateway's XPSPRMxx has the LSAM=Y option set. All other LSAMs in the Sysplex have the LSAM=N option set, or all machines may share the XPSPRMxx file, with LSAM=system identifying the primary system. The SMA Opcon Server HOST file, DNS, or SMA Opcon machine definition contains the IP addresses for the Primary LSAM gateway name only. Access to other systems in the Sysplex is handled entirely by the Gateway LSAM via XCF.
 
 As illustrated in the figure under [Scheduling a SYSPLEX](#Scheduli2), you may "mix-and-match" Gateways and independent LSAMs in the SAM configuration, as well as JES2 and JES3 systems. However, if all the LSAMs are members of the same Sysplex, then XPS390 can use the Sysplex message facility to route job submission from a single gateway, even across two or more JES2 MAS environments. In that case, all LSAMs, except the master gateway(s) must be running a PSAM environment.
 

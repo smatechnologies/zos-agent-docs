@@ -57,7 +57,7 @@ The XPSPRMxx member of the installation library \[*highlevel.midlevel*.INSTLIB\]
 
 ### LSAM Process Flow
 
-The first execution of the LSAM after an IPL establishes the XPS390 storage and tracking queue assignments for the life of that IPL (for information on CSA storage allocation, refer to [CSA Storage Allocation](advanced-features/csa-storage)). From that point on, all tracking is done \"in-storage\" and through Sysplex XCF. No file I/O is required to execute the schedule functions. This architecture makes XPS390 one of the *lowest overhead* schedulers for IBM mainframes. A transaction-logging file \[RECLOG\] records the status of each \"just completed\" job and a copy of each communication buffer received from, or sent to, SAM.
+The first execution of the LSAM after an IPL establishes the XPS390 storage and tracking queue assignments for the life of that IPL (for information on CSA storage allocation, refer to [CSA Storage Allocation](advanced-features/csa-storage)). From that point on, all tracking is done "in-storage" and through Sysplex XCF. No file I/O is required to execute the schedule functions. This architecture makes XPS390 one of the *lowest overhead* schedulers for IBM mainframes. A transaction-logging file \[RECLOG\] records the status of each "just completed" job and a copy of each communication buffer received from, or sent to, SAM.
 
 Once the log is established and the storage allocations are validated, LSAM attaches several subtasks to handle requests asynchronously. In this way, no major component is ever waiting on another component to complete a task before performing its task. This architecture makes XPS390 one of the *most responsive* schedulers for MVS. For instance, the XPSERVER communication task, the LSAM Supervisor, the XPSUBMIT Job submission and the XPSTATUS condition checking tasks are all asynchronous processes.
 
@@ -94,7 +94,7 @@ If the dynamic allocation fails with the specified UNIT or VOLUME, it will be re
 The OPCONxx and XPSPLEX tasks should be started as soon as possible after an IPL. No scheduled batch job submissions or executions function properly if SMA Opcon has not been initialized. If SYSPLEX=Y is coded in your XPSPRMxx member, the XPSPLEX task is automatically started by the OPCONxx task. The typical start command is:
 
 ```shell
-S *lsamname*\[.\<*taskname\>*\] 
+S lsamname[.taskname] 
 ```
 
 The PSAM-LSAM communication architecture is dynamic. You do not have to identify any z/OS IP addresses or network connections to any XPS390 component, manually. The LSAMs and PSAMs find each other during the course of normal processing.
@@ -122,7 +122,7 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 
 | Command Syntax       | Description          | Response or Action   |
 |--- |--- |--- |
-|S lsamname[./*taskname*]|Starts the LSAM.|None.|
+|S lsamname[.*taskname*]|Starts the LSAM.|None.|
 |F lsamname,DISP=PARMS|Returns a list of the current Stored XPS Parameters.|Refer to message XPS021R.|
 |F lsamname, DISP=STOR|Displays Storage usage on the LPAR SYSLOG.|Refer to message XPS021R.|
 |F lsamname, DISP=JOBS|Displays the LSAM Job Queue on the LPAR SYSLOG.|Refer to message XPS021R.|
@@ -133,14 +133,14 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 |F lsamname,REPEXIT|Exits Reinit.|Releases ECSA, re-allocates and reloads SMF exits.|
 |F lsamname,REPUSERx|User Exits Reinit.|Where 'x' is the User Exit Number.|
 |F lsamname,CLEARQ|Clears LSAM execution queues.|Use only as directed by SMA Support.|
-|F lsamname,TRACE=<br/>[Y\|N\|0\|9\|[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
-|F lsamname,RESET=<br/>[S\|C\|(sysid)][,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the LSAM.|S= System RESET – completely removes LSAM internals and restarts all tasks.<br/>C=Cycle LSAM – simply shuts down the LSAM and restarts it.<br/>If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.|
+|F lsamname,TRACE=Y&#124;N&#124;0&#124;9&#124;[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
+|F lsamname,RESET=S&#124;C&#124;(sysid)[,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the LSAM.|S= System RESET – completely removes LSAM internals and restarts all tasks.<br/>C=Cycle LSAM – simply shuts down the LSAM and restarts it.<br/>If RESET=(ssss) is coded, the LSAM is reset to the Machine ID in ssss and a RESET=C is performed.|
 |F lsamname,SHUTDOWN|Shuts down the SMA Opcon LSAM|Cycles down LSAM and stop the XPSPLEX Task.|
-|F lsamname,REMOVEX<br/>[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the LSAM and internals|Shuts down the LSAM and removes all exits and storage queues.|
+|F lsamname,REMOVEX[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the LSAM and internals|Shuts down the LSAM and removes all exits and storage queues.|
 |F lsamname,parm=value|Resets most parameters in XPSPRMxx.|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. Refer to Run-time Parameters.|
-|F lsamname,<br/>XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|None.|
-|F lsamname,<br/>XPRLIST,ADD,[I\|X][DSN\|VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
-|F lsamname,<br/>XPRLIST,DELETE,[I\|X][DSN\|VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
+|F lsamname,XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|None.|
+|F lsamname,XPRLIST,ADD,[I&#124;X]\[DSN&#124;VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
+|F lsamname,XPRLIST,DELETE,[I&#124;X]\[DSN&#124;VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
 |F lsamname,XPRLIST=xx|Reloads the dataset filter table from member XPRLSTxx.|This action completely replaces the filter table in memory.|
 |F lsamname,XPSPARM=xx|Resets parms from the settings in XPSPRMxx.|Persists until the next IPL. The xx value is not remembered.|
 |P lsamname|Stops the LSAM.|Cycles down LSAM but XPSPLEX remains.|
@@ -170,19 +170,19 @@ The XPSPLEX task manages Adoption and Fail-Over reconfiguration. The primary LSA
 |  XPSPLEX Command Syntax|Description|
 | --- | --- |
 |F XPSPLEX,STATUS|Displays LSAM/PSAM Status.|
-|F XPSPLEX,\[ADOPTWKLD\|DROPWKLD\](ssss,nn)|Reassign/release Machine Ids.|
+|F XPSPLEX,\[ADOPTWKLD&#124;DROPWKLD\](ssss,nn)|Reassign/release Machine Ids.|
 
   : Sysplex Operator Commands
 
-For example, the command [F XPSPLEX,ADOPTWKLD(SYS2,20)]{style="font-family: 'Courier New';"} causes the LSAM on which the command was issued to add work scheduled for PSAM machine id SYS2 to the LSAM workload.
+For example, the command `F XPSPLEX,ADOPTWKLD(SYS2,20)` causes the LSAM on which the command was issued to add work scheduled for PSAM machine id SYS2 to the LSAM workload.
 
 In the above example, up to 20 SYS2 processes can execute at once. SYS2 must not have an XPSPLEX or OPCONxx task running or the command fails.
 
-The command [F XPSPLEX,DROPWKLD(SYS2)]{style="font-family: 'Courier New'"} reverses the process, and executes automatically when an XPSPLEX task starts on SYS2.
+The command `F XPSPLEX,DROPWKLD(SYS2)` reverses the process, and executes automatically when an XPSPLEX task starts on SYS2.
 
 ### Fail-Over Procedure
 
-If the Primary LSAM fails, the PSAM in the Sysplex designated as the adopting member (ADOPT=Y coded in XPSPRMxx) prompts the operator with message XPS113A asking if the PSAM should assume the duties of the failed LSAM. When the operator replies \"Y\" to this message, the following process takes place on the PSAM automatically:
+If the Primary LSAM fails, the PSAM in the Sysplex designated as the adopting member (ADOPT=Y coded in XPSPRMxx) prompts the operator with message XPS113A asking if the PSAM should assume the duties of the failed LSAM. When the operator replies "Y" to this message, the following process takes place on the PSAM automatically:
 
 The PSAM adopts the machine id of the failing LSAM.
 
@@ -202,7 +202,7 @@ It is often the practice to simply comment out the Fail-Over IP address in norma
 
 ### Fail-Over Recovery
 
-When the system on which the Primary LSAM normally resides is recovered, you need to fall back to primary mode. To do this, enter Command: F LSAM,RESET=(ssss) on the Fail-Over PSAM, where ssss is the normal machine id of the PSAM. When the operator enters this command, a prompt is issued to confirm the reset request. If the operator answers "Y" to the confirmation, the following process takes place on the Fail-Over PSAM automatically:
+When the system on which the Primary LSAM normally resides is recovered, you need to fall back to primary mode. To do this, enter Command: `F LSAM,RESET=(ssss)` on the Fail-Over PSAM, where ssss is the normal machine id of the PSAM. When the operator enters this command, a prompt is issued to confirm the reset request. If the operator answers "Y" to the confirmation, the following process takes place on the Fail-Over PSAM automatically:
 
 1. The PSAM's machine id is changed to that of the command (ssss).
 2. The LSAM=N State is set for the PSAM (the Fail-Over LSAM returns to a PSAM state).
@@ -212,15 +212,17 @@ Now you may start the primary LSAM OPCONxx task. The HOST file on the SAM Server
 
 ## Defining the z/OS SMAFT Server
 
-The z/OS SMAFT server is distributed as compiled REXX, and relies on services provided by the TSO environment, so it must be run in a TMP. It can be run as a batch job, started task or SMA Opcon dynamic REXX job (Event Name=XPFTSRVR, EXEC Parm=\"PORT=*port*).
+The z/OS SMAFT server is distributed as compiled REXX, and relies on services provided by the TSO environment, so it must be run in a TMP. It can be run as a batch job, started task or SMA Opcon dynamic REXX job (Event Name=XPFTSRVR, EXEC Parm="PORT=*port*).
 
 Sample JCL:
 
-//SMAFT EXEC PGM=IKJEFT1B,PARM='XPFTSRVR **3110**'\
-//SYSTSIN DD DUMMY\
-//SYSTSPRT DD SYSOUT=\*\
-//SYSEXEC DD DISP=SHR,DSN=OPCON.V4R03M01.INSTLIB\
+```jcl
+//SMAFT EXEC PGM=IKJEFT1B,PARM='XPFTSRVR **3110**'
+//SYSTSIN DD DUMMY
+//SYSTSPRT DD SYSOUT=*
+//SYSEXEC DD DISP=SHR,DSN=OPCON.V4R03M01.INSTLIB
 //TCPXLBIN DD DISP=SHR,DSN=TCPIP.STANDARD.TCPXLBIN (optional)
+```
 
 1. The SMAFT server listening port must be supplied on the command line.
 2. Members XPFTSRVR, XPFTPARM and XPRXCRCC must be in the SYSEXEC library.
@@ -235,12 +237,14 @@ The z/OS SMAFT agent is distributed as compiled REXX, and relies on services pro
 
 Sample JCL:
 
-//SMAFT EXEC PGM=IKJEFT1B\
-//SYSTSIN DD DUMMY\
-//SYSTSPRT DD SYSOUT=\*\
-//XPSIN DD DUMMY\
-//SYSEXEC DD DISP=SHR,DSN=OPCON.V210004.INSTLIB\
+```jcl
+//SMAFT EXEC PGM=IKJEFT1B
+//SYSTSIN DD DUMMY
+//SYSTSPRT DD SYSOUT=*
+//XPSIN DD DUMMY
+//SYSEXEC DD DISP=SHR,DSN=OPCON.V210004.INSTLIB
 //TCPXLBIN DD DISP=SHR,DSN=TCPIP.STANDARD.TCPXLBIN (optional)
+```
 
 1. The SMAFT server listening port must be supplied on the command line.
 2. Members XPFTAGT, XPFTPARM and XPRXCRC must be in the SYSEXEC library.

@@ -2,14 +2,14 @@
 
 The Dynamic JCL Facility (DJF) provides run-time tailoring for JCL. It supports variable substitution and conditional inclusion of JCL statements.
 
-DJF statements are identified by hyphens in the first two columns ('\--') of the JCL. For visual organization, DJF statements may be indented by starting the statement with '\--' and up to forty spaces before the actual statement. Indentation has no syntactical meaning, e.g., the following forms are completely equivalent:
+DJF statements are identified by hyphens in the first two columns ('--') of the JCL. For visual organization, DJF statements may be indented by starting the statement with '--' and up to forty spaces before the actual statement. Indentation has no syntactical meaning, e.g., the following forms are completely equivalent:
 
-- \--IF @%FREQ EQ DAILY
-- \-- \--IF @%FREQ EQ DAILY
+- --IF @%FREQ EQ DAILY
+- -- --IF @%FREQ EQ DAILY
 
 ## Variables
 
-JCL variable tokens are normally defined in the job definition in OpCon, preceded by \'@\'. In versions of the z/OS LSAM prior to 5.04.04, the value of the variable is substituted in the JCL without moving any other data. Beginning with 5.04, if the first character of the variable name (so the definition begins with \'@%\'), the remaining data is moved right or left to fit the replacement value. In addition, to simplify variable identification, an option dot can be added to the name in the JCL, to separate it from the remaining data, and the dot will be removed after substitution.
+JCL variable tokens are normally defined in the job definition in OpCon, preceded by '@'. In versions of the z/OS LSAM prior to 5.04.04, the value of the variable is substituted in the JCL without moving any other data. Beginning with 5.04, if the first character of the variable name (so the definition begins with '@%'), the remaining data is moved right or left to fit the replacement value. In addition, to simplify variable identification, an option dot can be added to the name in the JCL, to separate it from the remaining data, and the dot will be removed after substitution.
 
 Variable length substitution will always take place if the JCLSCAN character is not '@'.
 
@@ -42,10 +42,10 @@ The --SET statement has three forms:
 - --SETJCLSCAN=*@*
   - Sets the character used in the JCL to identify the variables. This is primarily intended to allow the specification of the '@' character in the local character set.
   - If two different characters are supplied, then subsequent variable replacements will be performed in two passes, first searching for variables referenced by the second character, then with the first. (If the same character is listed twice, only a single pass will be performed.)
-  - This option can also be set from the job definition. If the first entry in the JCL variables is \\\\JCLSCAN=*xy*\\\\, then the variables will be processed as if the JCL started with **\--SET JCLSCAN=xy**. (This format requires two characters.)
+  - This option can also be set from the job definition. If the first entry in the JCL variables is \\\\JCLSCAN=*xy*\\\\, then the variables will be processed as if the JCL started with **--SET JCLSCAN=xy**. (This format requires two characters.)
 - --SET *var*=*value*
   - This assigns a value to variable *var*, replacing any previous value, if any. The assignment takes place after substitution of any variables in the statement.
-  - The result is equivalent to the value that would have resulted from a job definition containing \\\\@*var*=*value\\\\*. (Note that the \'@\' prefix is added, so should not be included in the --SET. If the variable name begins with \'@\', DJF will attempt to replace it with any previously defined value.)
+  - The result is equivalent to the value that would have resulted from a job definition containing \\\\@*var*=*value\\\\*. (Note that the '@' prefix is added, so should not be included in the --SET. If the variable name begins with '@', DJF will attempt to replace it with any previously defined value.)
 - --SET var=*value1 + value2*
 - --SET var=*value1* - *value2*
   - If *value1* is numeric, calculates the sum or difference between the values and assigns it to *var*.
@@ -71,24 +71,24 @@ The --SET statement has three forms:
 
 #### --GET
 
--   \--GET *var*=\[\[**opcon_property**\]\]     -   Any OpCon property that can be used in the job definition is
+-   --GET *var*=\[\[**opcon_property**\]\]     -   Any OpCon property that can be used in the job definition is
         allowed, and is evaluated in the context of the current job.
     -   If the variable *var* is already defined, this statement is
         ignored.
     -   To work around possible translation problems, *any* matched
         characters can be used to start and end the token definition:
-        -   \--GET var=@@\$SCHEDULE DATE (+1d)@@.
-        -   \--GET var=\#\#\$SCHEDULE DATE (+1d)\#\#.
+        -   --GET var=@@$SCHEDULE DATE (+1d)@@
+        -   --GET var=\#\#$SCHEDULE DATE (+1d)\#\#
 
 ### New DJF Statements for Conditional JCL
 
 DJF supports IF/ELSE/ENDIF processing to include or exclude blocks of
 JCL based on logical tests.
 
--   \--IF *string1 \[operator string2\]*     -   After any variable substitutions, string1 will be compared with
+-   --IF *string1 \[operator string2\]*     -   After any variable substitutions, string1 will be compared with
         string2 using the chosen logical operator. If the result is
         true, the following JCL statements will be included, up to the
-        corresponding \--ELSE or \--ENDIF. If the result was false, the
+        corresponding --ELSE or --ENDIF. If the result was false, the
         statements will be skipped.
     -   The operator can be any one of:
         -   EQ - Equal.
@@ -99,24 +99,24 @@ JCL based on logical tests.
         -   GE - Greater than or equal.
     -   If the operator and string2 are omitted, the result is true if
         string1 has the value TRUE.
-    -   \--IF blocks can be nested up to 7 levels deep.
--   \--ELSE
-    -   Inside an \--IF block toggles the statement include status.
-    -   Outside an \--IF block, ignored.
--   \--ENDIF
-    -   Closes an active \--IF block and reverts to the include status
+    -   --IF blocks can be nested up to 7 levels deep.
+-   --ELSE
+    -   Inside an --IF block toggles the statement include status.
+    -   Outside an --IF block, ignored.
+-   --ENDIF
+    -   Closes an active --IF block and reverts to the include status
         of the enclosing block, if any, or sets the include state to
         true, if not.
-    -   If no \--IF is active, this statement is ignored.
--   \--GOTO *label*
+    -   If no --IF is active, this statement is ignored.
+-   --GOTO *label*
     -   After variable substitution, skips all JCL statements up to a
         DJF label.
     -   The label statement must follow the GOTO in the JCL.
-    -   The \--IF nesting level is tracked, but the \--IF conditions are
+    -   The --IF nesting level is tracked, but the --IF conditions are
         ignored for any statements up to the label, so that you can
-        branch into an \--IF block.
--   \--.*label*
-    -   GOTO target label. If a \--GOTO is active, turns it off and
+        branch into an --IF block.
+-   --.*label*
+    -   GOTO target label. If a --GOTO is active, turns it off and
         begins including JCL from this point.
     -   If GOTO is not active, the statement is skipped.
     -   Variable substitution is *not* performed on labels.
@@ -125,12 +125,12 @@ JCL based on logical tests.
 
 These statements do not directly affect the JCL that is submitted.
 
--   \--NOP
+-   --NOP
     -   No-operation. This statement is simply skipped.
--   \--MSG *text*
+-   --MSG *text*
     -   After variable substitution, sends *text* as a *User Message*
         LSAM feedback.
--   \--INCLUDE *lib*(**member**),*set,comment*
+-   --INCLUDE *lib*(**member**),*set,comment*
     -   The only required parameter is the member name.
     -   Parameters:
         -   lib
@@ -143,33 +143,40 @@ These statements do not directly affect the JCL that is submitted.
             -   One to eight characters.
             -   Required parameter.
         -   set
-            -   Values: Y/N.
+            -   Values: Y/N
             -   If set to Y, this member contains variable assignments
-                in the form: var=value, one variable per line, with the
+                in the form: `var=value`, one variable per line, with the
                 variable name starting in the second column.
-                -   Each line is translated to:\
-                    \--SET var=value.
+                -   Each line is translated to:
+
+                        --SET var=value
+
             -   If JCLSCAN=%%, this will invoke special processing:
                 -   Any spaces in the line will be removed, and the
-                    result will be quoted, so\
-                    var = many words with spaces\
-                    will be translated to\
-                    \--SET \\\\var=manywordswithspaces\\\\.
+                    result will be quoted, so
+
+                        var = many words with spaces
+
+                    will be translated to
+
+                        --SET \\var=manywordswithspaces\\
+
         -   comment
             -   Single character.
             -   If set, any lines with this character in the first
                 column will be skipped.
--   \--INCLUDE *property_name,type*
+-   --INCLUDE *property_name,type*
     -   *property_name* - any OpCon property, up to 60 characters.
         -   Must be scoped (SI., JI., OI., etc.).
         -   The property value is interpreted as multiple lines,
-            separated by \'\\n\' or \'\\N\'.
+            separated by '\n' or '\N'.
         -   Long records will be wrapped at 80 characters.
-        -   Any \'\\\' characters in the data must be doubled.
+        -   Any '\\' characters in the data must be doubled.
     -   *type* - type of data to include
         -   Optional.
         -   If type is **D**, then any include lines beginning with
-            \"//\" will be skipped.
+            "//" will be skipped.
+
 :::
 
  
