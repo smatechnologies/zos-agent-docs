@@ -94,49 +94,49 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 
 ### Run-time Parameters
 
-||||
+|Parameter |Default |Details |
 |--- |--- |--- |
-|ADOPT|*Blank*|<ul><li>Determines if the LSAM can become the primary LSAM authority during failover.</li><li>Valid values are Y (yes) and N (no) or a system name.</li><li>The named system will be eligible to become the primary LSAM.</li></ul>|
+|ADOPT|*Blank*|Determines if the LSAM can become the primary LSAM authority during failover.<ul><li>Valid values are Y (yes) and N (no) or a system name.</li><li>The named system will be eligible to become the primary LSAM.</li></ul>|
 |EVENTPASS|20 asterisks ********************|Sets the event control password to be used for all external messages to the SAM, regardless of Userid.|
-|Force-SYS-AFF|No|<ul><li>If selected, the jobs will be submitted with affinity for submitting system.</li><li>This is useful in a test environment with a MAS, but with OpCon on only one system.</li></ul>|
-|INTV|00.00.20|<ul><li>This value determines the maximum delay for external resource recognition (batch triggers, Pre-run Data Triggers, and so forth).</li><li>A valid value must use the following syntax: hh.mm.ss.</li></ul>|
-|JCLDD|XPSJCL|Sets the default DDNAME in the LSAM JCL Proc. It is used to locate JCL for any batch Job Start request from the SAM that does NOT have a DDNAME assigned. Note: This parameter is user configurable. For more information on configuring this parameter, refer to LSAM Options and JCL Procedures.|
-|LSAM|N|<ul><li>Determines if this LSAM is running as a secondary PlexSAM (PSAM) or as the primary LSAM for a Sysplex.</li><li>This parameter has no affect if SYSPLEX=N is coded. For information on the SYSPLEX parameter, refer to SYSPLEX.</li><li>Valid values are Y (yes), N (no) or a system name.</li></ul>|
-|LOG-UNIT|*Blank*|Specifies a generic or esoteric name for a group of DASD devices for LSAMLOG allocation.<ul><li>1 - 8 character name or blank.</li></ul>|
+|Force-SYS-AFF|No|If Yes, the jobs will be submitted with affinity for submitting system.<ul><li>This is useful in a test environment with a MAS, but with OpCon on only one system.</li></ul>|
+|INTV|00.00.20|This value determines the maximum delay for external resource recognition (batch triggers, Pre-run Data Triggers, and so forth).<br /><br/>A valid value must use the following syntax: `hh.mm.ss`.|
+|JCLDD|XPSJCL|Sets the default DDNAME in the LSAM JCL Proc. It is used to locate JCL for any batch Job Start request from the SAM that does NOT have a DDNAME assigned.|
+|LSAM|N|In a Sysplex environment, determines which LSAM is running as the primary LSAM.<ul><li>This parameter has no affect if SYSPLEX=N is coded. For information on the SYSPLEX parameter, refer to SYSPLEX.</li><li>Valid values are Y (yes), N (no) or a system name.</li></ul>|
+|LOG-UNIT|*Blank*|Specifies a generic or esoteric name for a group of DASD devices for LSAMLOG allocation.<br /><br />1 - 8 character name or blank.|
 |LOG-VOLUME|*Blank*|Specifies a specific volume serial for LSAMLOG allocation.<br/><br/>1 - 6 character name or blank.|
-|MACHINEID|*|Defines the name of the LSAM.<br/>If set to an asterisk (*), the LSAM uses the system name from SYSNAME.<br/>The name may be up to 8 characters long and must match the name entered for the Machine in the SMA Opcon Enterprise Manager.<br/>SMANetCom must be able to resolve this machine name to a TCP/IP address. For more information, refer to Machine Name Resolution in the Concepts online help.|
+|MACHINEID|*|Defines the name of the LSAM.<ul><li>If set to an asterisk (*), the LSAM uses the system name from SYSNAME.</li></ul>The name may be up to 8 characters long and must match the name entered for the Machine in the SMA Opcon Enterprise Manager.|
 |MSGCLASS|A|Defines the MSGCLASS allocated to dynamic REXX tasks.<br/>The class is one character, A through Z or 0 through 9, and must be a valid output class specified at JES initialization.|
 |MLWTO|YES|Determines if the LSAM should process minor lines of multi-line console messages.<br/>Valid values are YES and NO.|
 |Override-DD|*Blank*|The name of a DD statement in the LSAM JCL to use as the default override DD, if one is not specified in the job definition.<br/>A blank value means that there will be no default.|
 |XPSDYNAM|IEESYSAS|Identifies the cataloged procedure to use for dynamic tasks (Rexx and command).|
-|PLEXGRP|'XPSV4.01 '|Included for backward compatibility. The Sysplex group name is now determined by the XPSID defined for the LSAM.|
-|PORT|3100|The first port in a range of FIVE port assignments for the TCPIP HOST IP address.<br/>This value must be a valid TCP/IP port number and cannot be used by any other process.<br/>This first value must also be defined to the SAM implementation. For information on defining a machine in SMA Opcon, refer to Create the Machine in SMA Opcon.|
+|PORT|3100|The port for the TCPIP HOST IP address.<br/>This value must be a valid TCP/IP port number and cannot be used by any other process.|
 |JORSPORT|+1|Port number for JORS, expressed as an offset from PORT or as an absolute port number.<br/>This is always stored as a relative offset, so it will change when PORT changes.<br/>JORSPORT=0 or +0 will disable the JORS server.|
 |PROCESS|030|A number defining the maximum number of jobs the LSAM can simultaneously manage (1 – 512).<br/>This value is used during the LSAM's first initialization after an IPL to determine CSA usage. Refer to CSA Storage Allocation on CSA Storage Allocation to determine the impact of this parameter.After initialization, the maximum process count allowed will be limited by the initial allocation.<br/>PROCESS=0 can be used to prevent jobs from starting, similar to setting the machine to LIMITED.<br/>PROCESS=RESET will cause the LSAM to reset the process count to the value it had before PROCESS=0 was used.|
 |RECOVERY|PROMPT|Determines the LSAM's behavior during recovery from a system failure.<br/>Upon reactivation, the LSAM searches the RECLOG for jobs that were executing at the time the system went down.<br/>If any are found, the operator may be prompted or the LSAM automatically sends termination messages to the SMANetCom.<br/>If prompted, the operator may select to ignore executing job terminations (for instance, if they were already terminated by the Scheduler and restarts are waiting).<br/>Valid values are PROMPT and AUTO.|
-|RESTORE-COND-CODES|YES|The z/OS LSAM restores the return codes for skipped steps so that conditional processing in restarted jobs will proceed as if the full job was run.<br/>Setting this parameter to "NO" will leave the skipped steps in "not run" status.|
+|RESTORE-COND-CODES|YES|The z/OS LSAM restores the return codes for skipped steps so that conditional processing in restarted jobs will proceed as if the full job was run.<br/><br/>Setting this parameter to "NO" will leave the skipped steps in "not run" status.|
 |SETQUES|Automatic calculations using PROCESS=|Overrides default queue limits. Refer to CSA Storage Allocation prior to setting these values.<br/>Extended CSA (ECSA) is consumed in proportion to these values.<br/>Valid queues include: (JOB=nnn [;MSG=nnn] [;DSN=nnn] [;WTO=nnn] [;EVT=nnn]) <br/><br/>Note: These must be defined in the XPSPARMxx since they are not dynamic. Using the MODIFY command to change these values has no effect on the LSAM.|
 |SPINOFF|Y|Determines if the LSAM automatically spins off a new LSAM LOG dataset each day at midnight.<br/>If set to N, a SPINLOG command (F lsamname,SPINLOG) should be scheduled each day to ensure the log does not exceed allocated space.<br/>If set to Y, the LSAM automatically manages the log.<br/>Valid values are Y (yes) and N (no).|
 |SYSPLEX|N|Determines if the LSAM is running in a SYSPLEX environment.<br/>If Y, the XPSPLEX task is automatically started when the LSAM is started.<br/>Valid values are Y (yes) and N (no).|
-|SMF64|K|Determines if the VSAM trigger records are deleted or left in the SMA Data Sets.<br/>SMF must be recording record type 64 for JOB, STC and TSU SUSBSYS for all VSAM triggers.<br/>If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
+|SMF15|K|Determines if the dataset trigger records are deleted or left in the SMF Data Sets.<br/>SMF must be recording record type 15 for JOB, STC and TSU SUBSYS for all dataset triggers.<br/>If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
+|SMF64|K|Determines if the VSAM trigger records are deleted or left in the SMF Data Sets.<br/>SMF must be recording record type 64 for JOB, STC and TSU SUBSYS for all VSAM triggers.<br/>If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
 |SPFAUDIT|N|Determines if the LSAM issues XPS083I messages for ISPF Users that update or delete DSN Table entries.<br/>Valid values are Y (yes) and N (no).|
 |TCPIP|*Blank*|Identifies the Host TCPIP application name on the z/OS machine.|
 |TRACLASS|*Blank*|Defines an optional list of one to eight JES single character execution classes to monitor for external job tracking (e.g., TRACLASS=PR places all jobs in JES execution classes 'P' and 'R' in the current SAM schedule and will track them to completion).<br/><br/>Note: The continuation character C, in column 72 of the job card, bypasses this option.|
 |TRACLAS8|*Blank*|When using 2-8 character job classes, this parameter will be used as a mask to match the class. The syntax is the same as used with TRACMASK.|
-|TRACMASK|*Blank*|Defines a job name mask of eight characters (e.g., **PROD**) for SMA Opcon external job tracking.<br/><br/>Note: The continuation character C, in column 72 of the job card, bypasses this option.|
-|TRACSCHD|*Blank*|Defines the default schedule name for external job tracking. The default is AdHoc.|
-|TRACE|N|Defines the trace level for the LSAM.<br/>Valid values include:Up to eight digits 1 – 8.Y or 9 sets tracing for all levels.N or 0 disables tracing.<br/><br/>Note: This parameter is used for debugging purposes only.|
+|TRACMASK|*Blank*|Defines a job name mask of eight characters (e.g., **PROD\*\*\*\***) for SMA Opcon external job tracking.<br/><br/>Note: The continuation character C, in column 72 of the job card, bypasses this option.|
+|TRACSCHD|AdHoc|Defines the default schedule name for external job tracking.|
+|TRACE|N|Defines the trace level for the LSAM.<br/>Valid values include: <ul><li>Up to nine digits 1 – 9.</li><li>Y sets tracing for all levels.</li><li>N or 0 disables tracing.</li></ul> Note: This parameter is used for debugging purposes only.|
 |USEJMR|NO|Controls the use of the JMRUSEID field by the LSAM tracking exits.<br/>If YES, the LSAM uses the entire field.<br/>If NO, the LSAM does not use the field at all.<br/>A number from 0 – 63 can be used to specify the offset within the field that is used for a single bit flag.<br/><br/>Note: USEJMR=NO is normally required to coexist with TWS. Enabling USEJMR may improve performance in some cases.|
 |USERID|*Blank*|Defines the installation default RACF USER= to be used on any batch Job Start request from the SAM that does NOT already have an owning User assigned.<br/>This value is inserted in the USER= parameter of the JOB Card at submission.<br/><br/>Specify NONE to disable|
 |RUNMODE|Prod|When set to RUNMODE=TEST, batch jobs will be submitted with TYPRUN=SCAN and success or failure will be determined by the JCL scanner.|
-|JOBRC|MAXRC|Determines how the job failure criteria are applied.<br/>Valid values are MAXRC, LASTRC, or JCL.<br/>MAXRC - The highest return code in the job is tested.<br/>LASTRC - The return code from the last executed step is tested.<br/>JCL - On z/OS 1.13 or higher, uses the test specified by JES defaults or the jobcard JOBRC parameter.|
+|JOBRC|MAXRC|Determines how the job failure criteria are applied.<br/>Valid values are MAXRC, LASTRC, or JCL.<ul><li>MAXRC - The highest return code in the job is tested.</li><li>LASTRC - The return code from the last executed step is tested.</li><li>JCL - On z/OS 1.13 or higher, uses the test specified by JES defaults or the jobcard JOBRC parameter.</li></ul>|
 |QUEUED-IS-RUNNING|NO|By default, z/OS batch jobs show "Pre-run" status after submission to JES, then switch to "Running" when they start execution. Setting this parameter to "Yes" will make the job show that it is running as soon as it is submitted.<br/>This may effect automation triggers based on job status changes.|
-|RESTART|NO|If YES, Restart support is active.<br/><br/>Note: If this option is turned on after the LSAM is intialized, the 'F lsamname,REPEXIT' command should be issued to load the XPRUSI exit if it has not already been loaded.<br/><br/>If NO, the Restart support is not active.<br/><br/>Note: If a user requests a Step restart when this support is disabled, the job status is set to 'Prerun failed' with message 'Restart not Active.'|
+|RESTART|NO|If YES, Restart support is active.<br/><br/>If NO, the Restart support is not active.<br/><br/>Note: If a user requests a Step restart when this support is disabled, the job status is set to 'Prerun failed' with message 'Restart not Active.'|
 |GDGOPT|ABSOLUTE|Method used to reset the base generation for Generation Data Groups during a restart.<br/>Valid values include:<ul><li>NONE: Do nothing.</li><li>ABSOLUTE: Reset to the base recorded during the last run.</li><li>RELATIVE: Reset to the highest base that allows all the remaining references to resolve successfully without skipping generations.</li><li>CATALOG RESYNC: Set the base so that the highest relative generation created in bypassed steps references the current generation.</li></ul>|
 |DUPDSNACT|NONE|Action to take when a dataset to be created is already cataloged during a normal run.<br/>Valid values include:<ul><li>NONE: Do nothing.</li><li>SCRATCH: Scratch the dataset.</li><li>REUSE: Convert DISP=NEW to DISP=OLD to reuse the existing allocation.</li></ul>|
 |RESDSNACT|SCRATCH|Action to take when a dataset to be created is already cataloged during a restart.<br/>Valid values include:<ul><li>NONE: Do nothing.</li><li>SCRATCH: Scratch the dataset.</li><li>REUSE: Convert DISP=NEW to DISP=OLD to reuse the existing allocation.</li></ul>|
-|AUTOSTEP|YES|Automatic restart step assignment.<br/>Valid values include:YES: Assign a restart step as the job executes - reset to null if good EOJ.NO: Do not assign a restart step automatically.|
-|XPRLIST|*Blank*|Allows a two-character suffix to be provided for the XPRLSTxx member of XPSPARMS to be used as the table for dataset filtering.<br/>The XPRLIST syntax is as follows:<br/>IDSN=dataset pattern<br/>IVOL=volser pattern<br/>XDSN=dataset pattern<br/>XVOL=volser pattern<br/>The patterns can contain the wild card characters '*' and '%'.<br/>An asterisk (*) represents 0 – 8 characters, up to the end of the current dataset level (up to a dot or blank).<br/>Percent ('%') represents any single character in the current position, except a dot ('.').<br/>An asterisk (*) at the end of the pattern matches any number of characters to the end of the name.|
+|AUTOSTEP|YES|Automatic restart step assignment.<br/>Valid values include:<ul><li>YES: Assign a restart step as the job executes - reset to null if good EOJ.</li><li>NO: Do not assign a restart step automatically.</li></ul>|
+|XPRLIST|*Blank*|Allows a two-character suffix to be provided for the XPRLSTxx member of XPSPARMS to be used as the table for dataset filtering.<br />The XPRLIST syntax is as follows:<ul><li>IDSN=dataset pattern</li><li>IVOL=volser pattern</li><li>XDSN=dataset pattern</li><li>XVOL=volser pattern</li></ul>The patterns can contain the wild card characters '\*' and '%'.<ul><li>An asterisk (\*) represents 0 – 8 characters, up to the end of the current dataset level (up to a dot or blank).</li><li>Percent ('%') represents any single character in the current position, except a dot ('.').</li><li>An asterisk (\*) at the end of the pattern matches any number of characters to the end of the name.</li></ul>|
 
 :::note
 The XPSPRMxx member is used only at IPL time. Changes to Parameters after IPL should be done using the operator command [F lsamname,parm=option]. If the parameter change is to be permanent, it should also be made to XPSPRMxx so it is not rolled back at the next IPL.
@@ -150,19 +150,19 @@ Example RACF Commands Allowing LSAM Submission of Batch Jobs
 
 1. Define resource profiles in the SURROGAT class for each user who needs to allow others to be surrogate users.
 
-       RDEFINE SURROGAT execution-userid.SUBMIT UACC(NONE) OWNER(execution-userid)
+        RDEFINE SURROGAT execution-userid.SUBMIT UACC(NONE) OWNER(execution-userid)
 
 2. Specify that another user can act as a surrogate.
 
-       PE execution-userid.SUBMIT CLASS(SURROGAT) ID(OPCON01) ACCESS(READ)
+        PE execution-userid.SUBMIT CLASS(SURROGAT) ID(OPCON01) ACCESS(READ)
 
 3. Validate that an execution-userid can be submitted by OPCON01.
 
-       RLIST SURROGAT execution-userid.SUBMIT AUTHUSER
+        RLIST SURROGAT execution-userid.SUBMIT AUTHUSER
 
 4. Activate the SURROGAT class.
 
-       SETROPTS RACLIST(SURROGAT) REFRESH
+        SETROPTS RACLIST(SURROGAT) REFRESH
 
 In addition to SURROGAT authority, your LSAM task also needs an OMVS Segment defined. This is a particular requirement of RACF that authorizes the LSAM to use the z/OS TCP/IP API. All that is needed is a unique UID value. No other OMVS options are required. The RACF Command is **ALU OPCON01 OMVS(UID(nnnnnnnn))** where nnnnnnnn is any number from 0 to 2147483647.
 
@@ -210,17 +210,26 @@ Distributed identity mapping is defined and enabled by the z/OS security adminis
 
 ##### RACF
 
-- Distributed identity mapping in RACF is enabled by activating and RACLISTing the IDIDMAP class:
-  - SETROPTS CLASSACT(IDIDMAP) RACLIST(IDIDMAP)
-- Ids are mapped with the RACMAP command:
-  - RACMAP id(ZOSUSER) map userdidfilter(name('OpConUser')) registry(name('OPCON'))
-  - RACMAP id(SYSPROG) map userdidfilter(name('ocadm')) registry(name('OPCON'))
-- Full Windows userids, with domain, are supported:
-  - RACMAP id(ZOSUSER) map userdidfilter(name('Domain\OpConUser')) registry(name('OPCON'))
-- Wildcard mapping:
-  - RACMAP id(ZOSUSER) map userdidfilter(name('*')) registry(name('OPCON'))
-- Changes to the identity mapping will become active when the IDIDMAP class is refreshed:
-  - SETROPTS RACLIST(IDIDMAP) REFRESH
+Distributed identity mapping in RACF is enabled by activating and RACLISTing the IDIDMAP class:
+
+    SETROPTS CLASSACT(IDIDMAP) RACLIST(IDIDMAP)
+Ids are mapped with the RACMAP command:
+
+    RACMAP id(ZOSUSER) map userdidfilter(name('OpConUser')) registry(name('OPCON'))
+
+    RACMAP id(SYSPROG) map userdidfilter(name('ocadm')) registry(name('OPCON'))
+
+Full Windows userids, with domain, are supported:
+
+     RACMAP id(ZOSUSER) map userdidfilter(name('Domain\OpConUser')) registry(name('OPCON'))
+
+Wildcard mapping can be used to assign a default:
+
+     RACMAP id(ZOSUSER) map userdidfilter(name('*')) registry(name('OPCON'))
+
+Changes to the identity mapping will become active when the IDIDMAP class is refreshed:
+
+     SETROPTS RACLIST(IDIDMAP) REFRESH
 
 For more details, consult the *Distributed Identity Filters* section in the **z/OS Security Server RACF Security Administrator's Guide**.
 
@@ -282,7 +291,7 @@ SYS (NOTYPE (16:19,66:69) , EXITS (IEFU83, IEFU84, IEFUJV, IEFUSI),
 
 The above example shows type 61.64, 65, 30, 14 and 15 records being recorded. The type 14 and 15 SMF records can become voluminous and many shops do not wish to record them on a daily basis due to the impact on SMF Data Set (MAN1, MAN2, and so forth) capacities. Thus, you may request that XPS390 not allow the writing of these records to the SMF data sets. Use the SMF15= and SMF64= options in XPSPRMnn to control whether or not these SMF records are actually written to the SMF data sets.
 
-The IKJTSOxx Parmlib member must be updated to reflect that the XPSPAUTH program is an Authorized TSO Command.
+The IKJTSOxx Parmlib member must be updated to reflect that the XPSPAUTH program is an Authorized TSO Command.  Optionally, add the XPSCOMM program so it can be called as a TSO command.
 
 ## TSO Parameters
 
@@ -291,12 +300,10 @@ The IKJTSOxx Parmlib member must be updated to reflect that the XPSPAUTH program
 ```shell
 AUTHCMD NAMES( +
 … +
-XPSPAUTH +
-… +
-)
+XPSPAUTH             /* OPCON                    */ + 
+XPSCOMM              /* OPCON                    */ + 
+…
 ```
-
-:::
 
 A senior MVS Systems Programmer should have the authority to implement the IKJTSOxx Parmlib member changes using the TSO PARMLIB command.
 

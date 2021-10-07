@@ -17,7 +17,7 @@ Variable length substitution will always take place if the JCLSCAN character is 
 
 Beginning with 5.04.03, the following built-in variables are supported in DJF:
 
-| | |
+|Variable |Value |
 |--- |--- |
 |%YY|Two digit year from schedule date|
 |%MM|Two digit month from schedule date|

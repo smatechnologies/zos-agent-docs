@@ -14,7 +14,6 @@ Once the z/OS libraries are functional, we need to provide security, SMF, and z/
 8. Fill in the panel options and hit enter to create the STAGE1 job and customize the installation members.
 9. Review the job card and allocation parameters in STAGE1. Run the STAGE1 job to create and load the installation datasets.
 10. After STAGE1 runs successfully, run STAGE2 to link edit the agent programs.
-11. Add production JCL and REXX libraries to the LSAM JCL:
-    - For information on adding production libraries to the LSAM JCL, refer to [LSAM Options and JCL Procedures](customization.md#LSAM).
+11. Add production JCL and REXX libraries to the LSAM JCL
 
 To begin using the LSAM, refer to [Customization process](../customization).

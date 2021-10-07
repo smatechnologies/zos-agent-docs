@@ -18,49 +18,20 @@ DATE:
     1. ____ PING to SAM IP Addr: ______________________________________ using TSO "PING" command. Ensure IP address is accessible before starting installation testing.
 3. **LSAM PARAMETERS**:
     1. ____ Review XPSPRMxx for installation requirements:
+        - Verify that the machine name and port are valid and unique
 
-        |||
-        |--- |--- |
-        |MACHINEID=*|OPCON/XPS MACHINE NAME|
-        |PROCESS=30|PROCESS COUNT|
-        |INTV=00.00.10|WAKE UP INTERVAL|
-        |JCLDD=XPSJCL|DEFAULT JCL LIBRARY|
-        |OVERRIDE_DD=TEMPJCL|DEFAULT OVERRIDE LIBRARY|
-        |XPSDYNAM=|Dynamic task proc|
-        |LSAM=Y|PRIMARY LSAM?|
-        |ADOPT=N|LSAM Adoption?|
-        |SYSPLEX=Y|Exploit SYSPLEX?|
-        |TCPIP=|TCP/IP Task Name|
-        |PORT=3100|LSAM PORT|
-        |JORSPORT=+1 (4101)|JORS PORT|
-        |RECOVERY=PROMPT|Recovery Option|
-        |SMF15=KEEP|SMF Type 15 Disposition|
-        |SMF64=KEEP|SMF Type 64 Disposition|
-        |SPFAUDIT=N|Log ISPF User Chgs|
-        |JOBRC=MAXRC|RC for failure check|
-        |SPINOFF=Y|Spin Log Each Night|
-        |TRACLASS=|Dynamic Tracking Classes|
-        |TRACMASK=|Dynamic Tracking Mask|
-        |TRACSCHD=|Dynamic Tracking Schedule|
-        |USERID=|Default USER|
-        |MSGCLASS=A|REXX SYSOUT CLASS|
-        |USEJMR=YES|JMR USER FIELD|
-        |MLWTO=Y|Multi-line WTO Triggers|
-        |RESTART=Y|Step restart active?|
-        |GDGOPT=A|GDG option|
-        |DUPDSNACT=S|Dup Dataset Action|
-        |RESDSNACT=S|Dup Dataset Action on restart|
-        |XPRLIST=01|Dataset exclude list|
-        |AUTOSTEP=Y|Automatic step selection|
-        |JOB_CARD_RESTART=Y|Restart from job card?|
-        |TRACE=N|Trace Status|
-        |FORCE_SYS_AFF=N|Force System affinity|
-        |* SETQUES=(JOB=120;MSG=1920;DSN=480;WTO=480;EVT=240)||
+            |Parameter|Value|
+            | --- | --- |
+            |MACHINEID=*|OPCON/XPS MACHINE NAME|
+            |PORT=3100|LSAM PORT|
+
+        - Review the remaining parameters as needed
+
 4. **FILES and PLACEMENTS**: (XPS390 libraries created by "XPS390 Allocate.jcl" file from Setup):
     1. ____ Review library and file placement
     2. ____ Review for proper APF authorization and access.
 
-        ||||
+        |Library|Member|Requirements|
         |--- |--- |--- |
         |OPCON.V210004.LINKLIB|XPSFETCH|APF Auth Required|
         ||XPSQMGR|APF Auth Required|
