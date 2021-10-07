@@ -8,7 +8,7 @@ Some features of OpCon automated restarts are limited when jobs are restarted by
 Full restart support is available if the job type is changed to **Batch** and the JCL is imported to an OpCon library:
 
 1. Change the job type
-    - Open the job with **Maintenance** **\>** **Edit Daily Job**
+    - Open the job with **Maintenance** **>** **Edit Daily Job**
     - Change the **z/OS Job Type** to **Batch**
     - Save the change
 2. Import the JCL

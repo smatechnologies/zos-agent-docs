@@ -11,12 +11,12 @@ ECSA usage:
 
 The tracking queues are allocated according to the PROCESS value in XPSPRMxx, unless they are overridden by the SETQUES parameter (JOB=jjj,MSG=mmm,DSN=ddd,WTO=mmm,EVT=eee). The values for each queue are the largest of the SETQUES, the default and the value calculated from the PROCESS parameter.
 
-- JOBQ - 16+1024\*(jjj+1)
+- JOBQ - 16+1024*(jjj+1)
 - JOBQ index - jjj
-- MSGQ - 16+126 \*(mmm+1)
-- DSNQ - 16+127\*(ddd+1)
-- WTOQ - 16+147\*(mmm+1)
-- EVTQ - 16+76\*(eee+1)
+- MSGQ - 16+126 *(mmm+1)
+- DSNQ - 16+127*(ddd+1)
+- WTOQ - 16+147*(mmm+1)
+- EVTQ - 16+76*(eee+1)
 
 |Queue|Calculated size|Default size|Default storage|
 |--- |--- |--- |--- |

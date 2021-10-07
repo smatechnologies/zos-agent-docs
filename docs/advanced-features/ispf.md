@@ -12,7 +12,25 @@ To display a given table, you may **S**)elect any entry on the main menu. To add
 
 ISPF Table Administration and Selection
 
-![ISPF Table Administration and Selection](/img/ISPF-Table-Administration-and-Selection.png "ISPF Table Administration and Selection")
+```
+==================  OpCon/xps Automation Table Administration = 21.00.04 ======
+     Command     =>                                                            
+                                                                               
+                                                                               
+                                                                               
+                   s - Edit Dataset Resource Table                             
+                     - Edit Message Resource Table                             
+                     - Edit Action Table                                       
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                                                                               
+                     Enter HELP for commands and syntax.                       
+ ============================================================== XPS21.00 ======
+```
 
 The DSN trigger table is selected from the Main Menu and displayed. The tables in OpCon/xps for z/OS are Sysplex Global. In other words, all LPARs in the SYSPLEX mirror all trigger entries. Triggers are defined by System Id (SMFID) or ANY. ANY allows the trigger to occur on any system in the SYSPLEX. A hard coded System Id is triggered only on that system.
 
@@ -20,7 +38,24 @@ The DSN table information is an abbreviated display of each entry. The display i
 
 DSN Table View
 
-![DSN Table View](/img/DSN-Table-View.png "DSN Table View")
+```
+===========================  OpCon/xps DSN Table  =============================
+Command ==>                                                   Scroll ==> CSR
+                                                                              
+ -DSName Mask ------------------------------- Name -- By Job - On Sys - Gens  
+  OPCON.TEST%%%.DATASET.G0000V00              WCTEST            ZOS1     01/01
+ -Type-Action  ---------------------------------------------------------------
+  CRE ADDJOB   $JOB:ADD,,AdHoc,TESTJOB1,,RSRC=WCTEST;DSN=OPCON.TEST%%%.DATASET
+-Last Referenced: 00.000 00:00 Last Triggered: 21.242 13:36 -By Job: BRIANKXX 
+                                                                               
+ -DSName Mask ------------------------------- Name -- By Job - On Sys - Gens  
+  OPCON.TEST%%%.DATASET.G0000V00              WCTEST2           ZOS1     00/01
+ -Type-Action  ---------------------------------------------------------------
+  CRE                                                                         
+-Last Referenced: 00.000 00:00 Last Triggered: 21.278 13:41 -By Job: +BRIANK  
+                                                                               
+******************************* Bottom of data ********************************
+```
 
 A minus "-" command or line command returns the display to the compressed format. In the expanded format, the T-Time represents the Trigger time if this resource has already triggered and is awaiting a job to reference it. The R-Time is the last time a job referenced this entry before it was triggered. The Gens represents the number of generations left to trigger and the original number of generations requested.
 
@@ -44,8 +79,9 @@ By entering a "D" line command, the entry is deleted. You are prompted for confi
 
 By entering an "S" line command, the entry is selected and the screen displays entry detail that may be altered.
 
->### **caution**
->Altering a PASSIVE entry that is referenced by a scheduled job may invalidate the entry if the SAM schedule record for the referencing job(s) is not also altered to reflect the change. Each entry in the dataset table must have a unique combination of Resource name, Type, DSN Key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a file prerun on a job definition).
+:::caution
+Altering a PASSIVE entry that is referenced by a scheduled job may invalidate the entry if the SAM schedule record for the referencing job(s) is not also altered to reflect the change. Each entry in the dataset table must have a unique combination of Resource name, Type, DSN Key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a file prerun on a job definition).
+:::
 
 ### WTO Table Administration
 
@@ -55,10 +91,40 @@ Just as with datasets, message triggers can have generations, System-id and crea
 
 WTO Table Administration
 
-![WTO Table Administration](/img/WTO-Table-Administration.png "WTO Table Administration")
+```
+===========================  OpCon/xps WTO Queues  ============================
+Command ==>                                                   Scroll ==> PAGE
+                                                                              
+--Msg-Msg-Message--------------------------------Time Range--By Job-- On----  
+  Off Len Key                                    From  To             Machid  
+  008 003 AM {SA06CDRM to SA02CDRM}              09:21-00:00          ANY     
+--Orig--Action---Action ------------------------------------------------------
+  Gens  Name                                                                   
+  01/01                                                                       
+-Last Referenced: 00.000 00:00 Last Triggered: 00.000 00:00 -By Job:          
+                                                                               
+--Msg-Msg-Message--------------------------------Time Range--By Job-- On----  
+  Off Len Key                                    From  To             Machid  
+  000 007 IEC705I                                                     ANY     
+--Orig--Action---Action ------------------------------------------------------
+  Gens  Name                                                                   
+  01/01 -S TAPEJ "S TAPEJOB"                                                  
+-Last Referenced: 00.000 00:00 Last Triggered: 00.000 00:00 -By Job:          
+                                                                               
+--Msg-Msg-Message--------------------------------Time Range--By Job-- On----  
+  Off Len Key                                    From  To             Machid  
+  000 007 IEF285I -{VOL SER}                                          ANY     
+--Orig--Action---Action ------------------------------------------------------
+  Gens  Name                                                                   
+  01/01 $JOBLOG                                                               
+-Last Referenced: 00.000 00:00 Last Triggered: 00.000 00:00 -By Job:          
+                                                                               
+******************************* Bottom of data ********************************
+```
 
->### note
+:::note
 >Each entry in the message table must have a unique combination of Resource name, Message key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a message prerun on a job definition).
+:::
 
 #### Automated Response Feature
 
@@ -66,11 +132,32 @@ The WTO Table and ISPF interface can be used to set up automated WTOR replies. T
 
 Automated Response Entry in WTO Table
 
-![Automated Response Entry in WTO Table](/img/Automated-Response-Entry-in-WTO-Table.png "Automated Response Entry in WTO Table")
+```
+┌────────────────────────────────────────────────────────────────┐
+│                                                  Enter Request │
+│          OpCon ISPF - WTO Message Table Update                 │
+│                                                                │
+│  Resource Name:  REPLYTST     Optional                         │
+│  Text Offset  :  000           Offset to Initial Text          │
+│  Fixed Len    :  008           Length of Initial Text          │
+│  Message Key  :  XPSTIMER {Test WTOR}                          │
+│  Time Range   :                In Format: HH:MM-HH:MM          │
+│  Issue Job    :                Job Issuing Message             │
+│  Generations  :  01/01         Generations before trigger      │
+│  On Mach-ID   :  ANY           Issuing MachineID or "ANY"      │
+│  Action       :  +Y                                            │
+│                                                                │
+│   U A=Add new Resource U=Update current Resource               │
+│                                                                │
+│  Press ENTER to add or change resource                         │
+│  F1=HELP     F2=SPLIT    F3=END      F4=RETURN   F5=IFIND      │
+│  F6=BOOK     F7=UP       F8=DOWN     F9=SWAP    F10=LEFT       │
+└────────────────────────────────────────────────────────────────┘
+```
 
-The above example causes a response to the message below with an **\"R** **70,Y\"**.
+The above example causes a response to the message below with an **"R** **70,Y"**.
 
-\*70 XPSTIMER - Test WTOR - Enter any Character.
+    *70 XPSTIMER - Test WTOR - Enter any Character.
 
 #### Automated Command Feature
 
@@ -83,8 +170,8 @@ Replies or commands can be up to 27 characters long.
 The following special values have defined actions and will not use the Event table.
 
 - $CONSOLE - Sends the trigger information to the SAM log in the following form:
-  - Messages: MachineID\|Jobname\|JobID\|Message text
-  - Datasets: MachineID\|Jobname\|DSNx\|DSNAME\|Resource
+  - Messages: MachineID&#124;Jobname&#124;JobID&#124;Message text
+  - Datasets: MachineID&#124;Jobname&#124;DSNx&#124;DSNAME&#124;Resource
     - "x" is the triggering condition:
       - E = EXISTS
       - C = CREATED
@@ -106,7 +193,25 @@ Created to support ACTIVE triggers, the Event table simplifies the definition of
 
 Event Trigger Table
 
-![Event Trigger Table](/img/Event-Trigger-Table.png "Event Trigger Table")
+```
+===========================  OpCon/xps Event Table  ===========================
+Command ==>                                                   Scroll ==> PAGE
+                                                                              
+  Event ID Type----- Action- Element- Set type Sch Date Schd Name-- Frequency- 
+  PRODEVT1 $JOB      ADD     PRODJOB0                   SYSProd     ONRequest 
+  Event Command------------------------------------------------------ Sec-Id-- 
+  $JOB:ADD,,SYSProd,PRODJOB07,ONRequest,                              SYSP001 
+                                                                               
+  PRODEVT2 $JOB      ADD     DAILYSMF                   SYSProd     ONRequest 
+  Event Command------------------------------------------------------ Sec-Id-- 
+  $JOB:ADD,,SYSProd,DAILYSMF,ONRequest,                               SYSP001 
+                                                                               
+  TESTEVT1 $JOB      ADD     IVPJOB07                   SYSProd     ONRequest 
+  Event Command------------------------------------------------------ Sec-Id-- 
+  $JOB:ADD,,SYSProd,IVPJOB07,ONRequest,                               SYSP001 
+                                                                               
+******************************* Bottom of data ********************************
+```
 
 Both DSN and WTO resources can be defined as ACTIVE triggers just by defining an Event Token or name. Once identified in a DSN or WTO trigger, an Event Token must be defined in the Event Table.
 
@@ -114,7 +219,28 @@ The Event Table is simply an ISPF front end to define MSGIN events. For more inf
 
 Event Table Addition and Alteration
 
-![Event Table Addition and Alteration](/img/Event-Table-Addition-and-Alteration.png "Event Table Addition and Alteration")
+```
+ ┌─────────────────────────────────────────────────────────────────┐
+ │       OpCon ISPF - Active Action Trigger Definition             │
+ │                                                                 │
+ │  Token Name :  TESTEVT9                                         │
+ │  Action Type:  $JOB        $JOB, $SCHEDULE, $MACHINE,...        │
+ │  Action     :  ADD          ADD, DELETE, HOLD, RELEASE,...      │
+ │  Element    :  IVPJOB09     Job Name, Mach-Id, Action,...       │
+ │  Set Type   :               UP, DOWN, GOOD, BAD, Sev Num,...    │
+ │  Schd Date  :  CURRENT      Blank, Date Keyword or Token        │
+ │  Schd Name  :  SYSProd      Schedule Name or Token Value        │
+ │  Frequency  :  ONRequest    Frequency for $JOB:ADD              │
+ │  Security   :  TSOID01      Sec Id for OpCon Function           │
+ │  Message    :                                                   │
+ │                                                                 │
+ │     A=Add new action, U=Update current action.                  │
+ │                                                                 │
+ │  F1=HELP     F2=SPLIT    F3=END      F4=RETURN   F5=IFIND       │
+ │  F6=BOOK     F7=UP       F8=DOWN     F9=SWAP    F10=LEFT        │
+ └─────────────────────────────────────────────────────────────────┘
+
+```
 
 In the above example, an existing entry in the table is used as a template to create a new entry. The resulting MSGIN Command sent to SAM is:
 
@@ -129,10 +255,10 @@ The "Security" field identifies a z/OS userid to use on the triggered event, in 
  
 Event errors are recorded in the SAM Log on the SAM Server. No feedback for event processing is returned to the LSAM.
 
->:::note
->The Schedule and Frequency names in the Event table are each limited to 12 characters.
->:::
->
+:::note
+The Schedule and Frequency names in the Event table are each limited to 12 characters.
+:::
+
 #### Special Trigger Handling
 
 When the events are triggered from the DSN or WTO tables, some special
@@ -140,16 +266,21 @@ values are allowed:
 
 - $CONSOLE:DISPLAY and $NOTIFY:LOG
     If the message field for one of these events is equal to **&TEXT**, it will be replaced by information about the triggering event:
-  - DSN triggers will display **MachineID\|Jobname\|Action\|Dataset.name** *Action* is the first character of the dataset trigger action
+  - DSN triggers will display 
+
+    **MachineID&#124;Jobname&#124;Action&#124;Dataset.name** 
+
+    *Action* is the first character of the dataset trigger action
+
   - WTO triggers will display the message text
 - $JOB:ADD
     Job Instance properties will be added containing the triggering information. This allows the trigger data to be used as input to the added job:
   - DSN triggers include **RSRC=*resource*;DSN=*`dataset.name`*;VOL=*volser***
   - WTO triggers include **RSRC=*resource*;MSG=*message text***
 
->:::note\
->Commas in the WTO message text will be translated to spaces in the event text.
->:::
+:::note
+Commas in the WTO message text will be translated to spaces in the event text. 
+:::
 
 ### Securing Automation table updates.
 

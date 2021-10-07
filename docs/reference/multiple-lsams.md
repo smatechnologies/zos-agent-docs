@@ -17,7 +17,7 @@ The following statement assigns XPSID=T to the current execution:
 :::
 
 ```shell
-//XPS\$T DD DUMMY
+//XPS$T DD DUMMY
 ```
 
 ### INSTLIB and INITLOG
@@ -38,7 +38,7 @@ The following batch XPSCOMM step selects the XPSID of "I":
 
 ```shell
 //MSGIN  EXEC PGM=XPSCOMM,PARM='$JOB:ADD,….'
-//XPS\$I     DD     DUMMY
+//XPS$I     DD     DUMMY
 ```
 
 ### TSO Commands
@@ -52,7 +52,7 @@ The following is a REXX program allocating the DD statement and invoking XPSPF00
 ```shell
 /* rexx */
 /*********************************************************************/
-/* This exec invokes OpCon\'s XPSPF001 interface */
+/* This exec invokes OpCon's XPSPF001 interface */
 /*********************************************************************/
 parse arg XPSID
 if XPSID \= '' then XPSDD = 'XPS$' || XPSID
