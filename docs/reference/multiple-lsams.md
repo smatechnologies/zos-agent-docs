@@ -17,10 +17,10 @@ The following statement assigns XPSID=T to the current execution:
 :::
 
 ```shell
-//XPS\$T DD DUMMY
+//XPS$T DD DUMMY
 ```
 
-### INSTILB and INITLOG
+### INSTLIB and INITLOG
 
 The INSTLIB library contains member INITLOG to allow the definition of new LSAM logs. The installation parameters generated the initial log dataset name. Update the dataset name in both steps to a new, unique name. SMA recommends naming the log files with the XPSID and system name.
 
@@ -38,7 +38,7 @@ The following batch XPSCOMM step selects the XPSID of "I":
 
 ```shell
 //MSGIN  EXEC PGM=XPSCOMM,PARM='$JOB:ADD,….'
-//XPS\$I     DD     DUMMY
+//XPS$I     DD     DUMMY
 ```
 
 ### TSO Commands
@@ -52,16 +52,16 @@ The following is a REXX program allocating the DD statement and invoking XPSPF00
 ```shell
 /* rexx */
 /*********************************************************************/
-/* This exec invokes OpCon\'s XPSPF001 interface */
+/* This exec invokes OpCon's XPSPF001 interface */
 /*********************************************************************/
 parse arg XPSID
 if XPSID \= '' then XPSDD = 'XPS$' || XPSID
 else XPSDD = 'XPS$S'
 address tso 'alloc DD('XPSDD') DUMMY'
 address ispexec
-"LIBDEF ISPMLIB DATASET ID('OPCON.V140303.ISPMLIB') STACK"
-"LIBDEF ISPLLIB DATASET ID('OPCON.V140303.LINKLIB') STACK"
-"LIBDEF ISPPLIB DATASET ID('OPCON.V140303.ISPPLIB') STACK"
+"LIBDEF ISPMLIB DATASET ID('OPCON.V210004.ISPMLIB') STACK"
+"LIBDEF ISPLLIB DATASET ID('OPCON.V210004.LINKLIB') STACK"
+"LIBDEF ISPPLIB DATASET ID('OPCON.V210004.ISPPLIB') STACK"
 "select CMD(xpspf001)"
 "LIBDEF ISPMLIB"
 "LIBDEF ISPPLIB"
