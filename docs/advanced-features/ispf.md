@@ -183,8 +183,8 @@ Automated Response Entry in WTO Table
 │   U A=Add new Resource U=Update current Resource               │
 │                                                                │
 │  Press ENTER to add or change resource                         │
-│  F1=HELP     F2=SPLIT    F3=END      F4=RETURN   F5=IFIND      │
-│  F6=BOOK     F7=UP       F8=DOWN     F9=SWAP    F10=LEFT       │
+│  Press CANCEL or EXIT to cancel update.                        │
+│                                                                │
 └────────────────────────────────────────────────────────────────┘
 ```
 
@@ -253,26 +253,25 @@ The Event Table is simply an ISPF front end to define MSGIN events. For more inf
 Event Table Addition and Alteration
 
 ```
- ┌─────────────────────────────────────────────────────────────────┐
- │       OpCon ISPF - Active Action Trigger Definition             │
- │                                                                 │
- │  Token Name :  TESTEVT9                                         │
- │  Action Type:  $JOB        $JOB, $SCHEDULE, $MACHINE,...        │
- │  Action     :  ADD          ADD, DELETE, HOLD, RELEASE,...      │
- │  Element    :  IVPJOB09     Job Name, Mach-Id, Action,...       │
- │  Set Type   :               UP, DOWN, GOOD, BAD, Sev Num,...    │
- │  Schd Date  :  CURRENT      Blank, Date Keyword or Token        │
- │  Schd Name  :  SYSProd      Schedule Name or Token Value        │
- │  Frequency  :  ONRequest    Frequency for $JOB:ADD              │
- │  Security   :  TSOID01      Sec Id for OpCon Function           │
- │  Message    :                                                   │
- │                                                                 │
- │     A=Add new action, U=Update current action.                  │
- │                                                                 │
- │  F1=HELP     F2=SPLIT    F3=END      F4=RETURN   F5=IFIND       │
- │  F6=BOOK     F7=UP       F8=DOWN     F9=SWAP    F10=LEFT        │
- └─────────────────────────────────────────────────────────────────┘
-
+┌─────────────────────────────────────────────────────────────────┐
+│       OpCon ISPF - Active Action Trigger Definition             │
+│                                                                 │
+│  Token Name :  TESTEVT9                                         │
+│  Action Type:  $JOB        $JOB, $SCHEDULE, $MACHINE,...        │
+│  Action     :  ADD          ADD, DELETE, HOLD, RELEASE,...      │
+│  Element    :  IVPJOB09     Job Name, Mach-Id, Action,...       │
+│  Set Type   :               UP, DOWN, GOOD, BAD, Sev Num,...    │
+│  Schd Date  :  CURRENT      Blank, Date Keyword or Token        │
+│  Schd Name  :  SYSProd      Schedule Name or Token Value        │
+│  Frequency  :  ONRequest    Frequency for $JOB:ADD              │
+│  Security   :  TSOID01      Sec Id for OpCon Function           │
+│  Message    :                                                   │
+│                                                                 │
+│   U A=Add new action, U=Update current action.                  │
+│                                                                 │
+│  Press ENTER to add or change action                            │
+│  Press CANCEL or EXIT to cancel update.                         │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 In the above example, an existing entry in the table is used as a template to create a new entry. The resulting MSGIN Command sent to SAM is:
@@ -314,6 +313,33 @@ values are allowed:
 :::note
 Commas in the WTO message text will be translated to spaces in the event text. 
 :::
+
+### Triggering Events
+
+In the Event table, or on an entry in the DSN or WTO tables with a linked event token, the **T** (trigger) line command can be used to send the defined event to OpCon.
+A pop-up dialogue allows the user to review or edit the MSGIN event and choose the destination LSAM.
+
+```
+┌────────────────────── ISPF Settings ──────────────────────┐
+│          OpCon ISPF - Confirm Event trigger               │
+│                                                           │
+│  DSN Key   :  OPCON.TEST1%%.DATASET.G0000V00              │
+│  Token     :  PRODEVT1                                    │
+│  XPSID     :  S                                           │
+│                                                           │
+│  $JOB:ADD,,SYSProd,PRODJOB07,ONRequest,RSRC=WCTEST;DSN=O  │
+│                                                           │
+│  Enter / to confirm                                       │
+│                                                           │
+│  Press ENTER to confirm trigger                           │
+│  Press CANCEL or EXIT to cancel                           │
+│                                                           │
+└───────────────────────────────────────────────────────────┘
+```
+
+The XPSID field and the event text can be changed before sending the event.
+Erasing the event text will restore it to the original value.
+The event text field can be scrolled left and right with the **F10** and **F11** keys.
 
 ### Securing Automation table updates.
 
