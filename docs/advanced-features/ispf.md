@@ -73,8 +73,8 @@ ISPF Table Administration and Selection
 The **FIND**, **FAN** and **FAT** primary commands are available to limit the table displays. 
 - **FIND *chars*** will show only entries whose key field start with *chars*.  
     - May be abbreviated to **F *chars***
-- **FAT** (find all triggered) will show only entries that are in *triggered* status.  
-- **FAN** (find all non-triggered) will show only entries that are not in *triggered* status.  
+- **FAT [*chars*]** (find all triggered) will show only entries that are in *triggered* status.  
+- **FAN [*chars*]** (find all non-triggered) will show only entries that are not in *triggered* status.  
 - **FIND OFF** clears the FIND filters.
     - The FIND settings are also reset when the primary panel is displayed.
 
