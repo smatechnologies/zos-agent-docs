@@ -300,10 +300,10 @@ Building a Test Notification Event in the Event Table
 │  Security   :  USERID       Sec Id for OpCon Function           │
 │  Message    :  IVPJOB12 Ended                                   │
 │                                                                 │
-│     A=Add new action, U=Update current action.                  │
+│   U A=Add new action, U=Update current action.                  │
 │                                                                 │
-│  F1=HELP     F2=SPLIT    F3=END      F4=RETURN   F5=IFIND       │
-│  F6=BOOK     F7=UP       F8=DOWN     F9=SWAP    F10=LEFT        │
+│  Press ENTER to add or change action                            │
+│  Press CANCEL or EXIT to cancel update.                         │
 └─────────────────────────────────────────────────────────────────┘
 ```
 

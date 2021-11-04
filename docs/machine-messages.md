@@ -18,13 +18,13 @@ XPS*nnnc*
 - **nnn** is the message reference number.
 - **c** is a message type indicator.
 
-| Message Type| Explanation|
-| --- | --- |
-| I| The message is Informational only.|
-| A | The message indicates a possible or probable operator Action is required.|
-| W | -   The message is a Warning message.<br/>-   Some operation or process may need review.|
-| E | -   The message indicates an Error condition.<br/>-   Corrective action is probable.|
-| None        | -   If type is none of the above the message is Informational and the type indicator represents the MODULE that issued the message.<br/>-   B=XPSUBMIT<br/>-   T=XPSTATUS<br/>-   X=XPSPLEX<br/>-   V=XPSSUPV<br/>-   O=XPSYSOUT<br/>-   S=XPSERVER|
+| Message Type	| Explanation	|
+| --- 	| --- 	|
+| I	| The message is Informational only.	|
+| A 	| The message indicates a possible or probable operator Action is required.	|
+| W 	| -   The message is a Warning message.<br/>-   Some operation or process may need review.	|
+| E 	| -   The message indicates an Error condition.<br/>-   Corrective action is probable.	|
+| None        	| -   If type is none of the above the message is Informational and the type indicator represents the MODULE that issued the message.<br/>-   B=XPSUBMIT<br/>-   T=XPSTATUS<br/>-   X=XPSPLEX<br/>-   V=XPSSUPV<br/>-   O=XPSYSOUT<br/>-   S=XPSERVER	|
 
 ## IBM Message Type Explanations
 

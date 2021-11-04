@@ -8,35 +8,35 @@ sidebar_label: 'Components and Operation'
 
 The following table presents z/OS LSAM components including module names, component locations within the architecture (the LSAM task, JES2, JES3, and so forth) and component functions.
 
-|Module|Location|Function|
-|--- |--- |--- |
-|XPSSUPV|LSAM Task|Initiates internal tracking queues, attaches XPSERVER, processes operator commands, logs completed SAM activity and calls XPSUBMIT as requested by XPSERVER.|
-|XPSPLEX|XPSPLEX Task|SYSPLEX Management Module controls fault tolerance actions and global XCF interaction between LSAM and PSAMs.|
-|XPSFETCH|All Modules|XPS Primary Control Block (XPCB) manager and XPS version control module.|
-|XPFTSRVR|Batch Job<br/>Dynamic REXX <br/>Started Task|SMA file transfer server.|
-|XPFTAGT|Batch Job<br/>Dynamic REXX<br/>Started task|SMA file transfer agent.|
-|XPSQMGR|All Modules|LSAM Tracking and Message Queue manager.|
-|XPSERVER|LSAM Task|TCP/IP communications and SAM Request Client/Server gateway for the Primary LSAM. Communicates tracking info to the SMA Opcon SAM (via IP connection).|
-|XPSUBMIT|LSAM Task|JCL submission routine, Started Task (STC) initiation, operator command task and REXX task creation.|
-|XPSPARM|LSAM Task|Runtime Parameter and Operator command parse routine.|
-|XPSLOGQ|LSAM Task|Communications and Message logging routine.|
-|XPSASCRE|IEESYSAS (Dynamic)|Address Space Create (ASCRE) Initialization routine. It is used to initialize execution tracking of Started Task (STC), operator commands and REXX jobs.|
-|XPSEVENT|IEESYSAS (Dynamic)|REXX and system command task. Created by XPSUBMIT when a REXX procedure is to be executed dynamically or an operator command is to be executed.|
-|XPRESTRT|LSAM Task|Interruption recovery module. Uses the RECLOG to determine jobs that were "in-process" at the time of a catastrophic machine failure and notifies SAM of job failures.|
-|XPSTATUS|LSAM Task|JES2 Converter Status Routine (capture converter JCL errors, etc.), Pre-run Tape Unit, File Trigger and dependent non-scheduled task processor.|
-|XPSELOAD|LSAM Task|Exit loader – establishes dynamic exits.|
-|XPSU83|SYS.IEFU83 (Dynamic)|SMF Interface for File Trigger management.|
-|XPSUJV|SYS.IEFUJV (Dynamic)|SMF Interface for Job Submission tracking.|
-|XPSU84|SYS.IEFU84 (Dynamic)|SMF Interface for Job Execution tracking and Step Control actions.|
-|XPSUSI|SYS.IEFUSI (Dynamic)|Step initiation exit interface for dataset processing.|
-|XPSWTOEX|CNZ_WTOMDBEXIT|Console message processing.|
-|XPSCOMM|Batch Step<br/>REXX Call<br/>Started Task|Batch update and OEM interface. Communicates MSGIN commands to SAM.|
-|XPSPF001|TSO/ISPF|ISPF Trigger table editor.|
-|XPSPAUTH|TSO/ISPF|TSO Authorized Command Interface (Entry in IKJTSOxx as Auth CMD).|
-|XPSISPF|TSO/ISPF|ISPLINK/ISPEXEC Call Interface.|
-|XPSAGENT|LSAM Task|Sysout viewing / JCL edit agent. Communicates with Enterprise Manager Host Window function.|
-|XPSAFAPI|XPSAGENT|SAF Security API for JCL Edit and SYSOUT Browse.|
-|XPSAUDIT|Started Task|Displays current LSAM Usage information, storage allocations, etc.|
+|Module	|Location	|Function	|
+|--- 	|--- 	|--- 	|
+|XPSSUPV	|LSAM Task	|Initiates internal tracking queues, attaches XPSERVER, processes operator commands, logs completed SAM activity and calls XPSUBMIT as requested by XPSERVER.	|
+|XPSPLEX	|XPSPLEX Task	|SYSPLEX Management Module controls fault tolerance actions and global XCF interaction between LSAM and PSAMs.	|
+|XPSFETCH	|All Modules	|XPS Primary Control Block (XPCB) manager and XPS version control module.	|
+|XPFTSRVR	|Batch Job<br/>Dynamic REXX <br/>Started Task	|SMA file transfer server.	|
+|XPFTAGT	|Batch Job<br/>Dynamic REXX<br/>Started task	|SMA file transfer agent.	|
+|XPSQMGR	|All Modules	|LSAM Tracking and Message Queue manager.	|
+|XPSERVER	|LSAM Task	|TCP/IP communications and SAM Request Client/Server gateway for the Primary LSAM. Communicates tracking info to the SMA Opcon SAM (via IP connection).	|
+|XPSUBMIT	|LSAM Task	|JCL submission routine, Started Task (STC) initiation, operator command task and REXX task creation.	|
+|XPSPARM	|LSAM Task	|Runtime Parameter and Operator command parse routine.	|
+|XPSLOGQ	|LSAM Task	|Communications and Message logging routine.	|
+|XPSASCRE	|IEESYSAS (Dynamic)	|Address Space Create (ASCRE) Initialization routine. It is used to initialize execution tracking of Started Task (STC), operator commands and REXX jobs.	|
+|XPSEVENT	|IEESYSAS (Dynamic)	|REXX and system command task. Created by XPSUBMIT when a REXX procedure is to be executed dynamically or an operator command is to be executed.	|
+|XPRESTRT	|LSAM Task	|Interruption recovery module. Uses the RECLOG to determine jobs that were "in-process" at the time of a catastrophic machine failure and notifies SAM of job failures.	|
+|XPSTATUS	|LSAM Task	|JES2 Converter Status Routine (capture converter JCL errors, etc.), Pre-run Tape Unit, File Trigger and dependent non-scheduled task processor.	|
+|XPSELOAD	|LSAM Task	|Exit loader – establishes dynamic exits.	|
+|XPSU83	|SYS.IEFU83 (Dynamic)	|SMF Interface for File Trigger management.	|
+|XPSUJV	|SYS.IEFUJV (Dynamic)	|SMF Interface for Job Submission tracking.	|
+|XPSU84	|SYS.IEFU84 (Dynamic)	|SMF Interface for Job Execution tracking and Step Control actions.	|
+|XPSUSI	|SYS.IEFUSI (Dynamic)	|Step initiation exit interface for dataset processing.	|
+|XPSWTOEX	|CNZ_WTOMDBEXIT	|Console message processing.	|
+|XPSCOMM	|Batch Step<br/>REXX Call<br/>Started Task	|Batch update and OEM interface. Communicates MSGIN commands to SAM.	|
+|XPSPF001	|TSO/ISPF	|ISPF Trigger table editor.	|
+|XPSPAUTH	|TSO/ISPF	|TSO Authorized Command Interface (Entry in IKJTSOxx as Auth CMD).	|
+|XPSISPF	|TSO/ISPF	|ISPLINK/ISPEXEC Call Interface.	|
+|XPSAGENT	|LSAM Task	|Sysout viewing / JCL edit agent. Communicates with Enterprise Manager Host Window function.	|
+|XPSAFAPI	|XPSAGENT	|SAF Security API for JCL Edit and SYSOUT Browse.	|
+|XPSAUDIT	|Started Task	|Displays current LSAM Usage information, storage allocations, etc.	|
 
 In addition to the functional components of XPS390, an API Macro Library \[highlevel.midlevel.MACLIB\] is distributed with the product, allowing a skilled assembler programmer the ability to write additional customized API interfaces to SMA Opcon.
 
@@ -149,14 +149,14 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 
 When the LSAM task is down or independent data is needed, the XPSAUDIT task can provide further operational data: the data is displayed on the system log, and appears in the job log of the XPSAUDIT job.
 
-|  Command Syntax|Description|
-| --- | --- |
-|S XPSAUDIT,PARM=STOR|Displays the LSAM storage assignments on the executing system.|
-|S XPSAUDIT,PARM=JOBS|Displays the LSAM Job Queue on the executing system.|
-|S XPSAUDIT,PARM=PARMS|Displays the LSAM stored Parms on the executing system.|
-|S XPSAUDIT,PARM=DSNT|Displays the LSAM DSN Trigger Table on the executing system.|
-|S XPSAUDIT,PARM=WTOT|Displays the LSAM WTO Trigger Table on the executing system.|
-|S XPSAUDIT|Displays the all the above.|
+|  Command Syntax	|Description	|
+| --- 	| --- 	|
+|S XPSAUDIT,PARM=STOR	|Displays the LSAM storage assignments on the executing system.	|
+|S XPSAUDIT,PARM=JOBS	|Displays the LSAM Job Queue on the executing system.	|
+|S XPSAUDIT,PARM=PARMS	|Displays the LSAM stored Parms on the executing system.	|
+|S XPSAUDIT,PARM=DSNT	|Displays the LSAM DSN Trigger Table on the executing system.	|
+|S XPSAUDIT,PARM=WTOT	|Displays the LSAM WTO Trigger Table on the executing system.	|
+|S XPSAUDIT	|Displays the all the above.	|
 
 ## z/OS LSAM Fail-Over, Reconfiguration, and Recovery
 
