@@ -23,6 +23,7 @@ module.exports = {
         'advanced-features/csa-storage',
         'advanced-features/xpscomm',
         'advanced-features/ispf',
+        'advanced-features/mapping',
         'advanced-features/xpstimer',
         'advanced-features/xpstrack',
         'advanced-features/restarting-jobs',

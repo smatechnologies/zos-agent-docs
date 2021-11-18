@@ -4,6 +4,47 @@ sidebar_label: 'Release notes'
 
 # z/OS LSAM Release notes
 
+## z/OS LSAM 21.01.05
+
+2021 November
+
+**New Features**
+
+- **ZOS-305**: XPSPF enhancements
+    - Allow search argument with FAT and FAN commands
+    - Allow MSGIN processing from **T**rigger command
+    - Fix FIND set and clear logic on main menu
+    - Add XPSID *x* command to change target system
+    - Open event editor if the Event token changes on trigger entry
+    - Allow XPSPF001 to run read only when XPSPAUTH is not in linklist or steplib
+
+**Fixes**
+
+- **ZOS-300**: Fix BLDL list length
+- **ZOS-301**: Clear trailing comma from long userids
+- **ZOS-302**: prevent UCB table underrun
+- **ZOS-304**: Use A2E translation for the square brackets in XPSMACH
+- **ZOS-312**: Do ENDREQ if RPLRBAR doesn't contain JOBNUM (JES3)
+- **ZOS-313**: Skip move on zero length records (JORS)
+
+## z/OS LSAM 21.00.03
+
+2021 June
+
+**New Features**
+
+- **ZOS-271**: Support multi-volume source datasets in file transfers
+- **ZOS-281**: Add ability to execute XPSCOMM and XPSWTO as TSO commands. Add ability to call XPSPF001 with XPSID argument.
+- **ZOS-284**: Map z/OS userid to OpCon userid and password through RACF custom fields.
+- **ZOS-290**: Add SAF security to ISPF automation table and XPSCOMM
+
+**Fixes**
+
+- **ZOS-280**: Sysplex fixes and performance improvements
+- **ZOS-295**: Issue console commands from MODIFY LSAM with requester's authority, not LSAM's.
+- **ZOS-296**: Fixed MSGQ display in XPSPF001, hide passwords and allow delete
+- **ZOS-297**: Allow XPSPF001 in split screen mode
+
 ## z/OS LSAM 20.01.02
 
 2020 October

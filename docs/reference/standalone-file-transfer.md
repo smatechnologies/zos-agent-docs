@@ -2,23 +2,14 @@
 
 The SMAFT agent can be run in a job step, using the following JCL:
 
-```shell
-//GETFILE EXEC PGM=IKJEFT1B,PARM=\'XPFTAGT\'
-
-//SYSEXEC DD DISP=SHR,DSN=*OPCON.V4R04M04.INSTLIB*
-
-//SYSTSIN DD DUMMY
-
-//SYSTSPRT DD SYSOUT=\*
-
-//XPSIN DD \*
-
-SERVER *name:port*
-
-file *Source File Name*
-
-SAVEAS *Destination File Name*
-```
+    //GETFILE EXEC PGM=IKJEFT1B,PARM='XPFTAGT'
+    //SYSEXEC DD DISP=SHR,DSN=OPCON.V210004.INSTLIB
+    //SYSTSIN DD DUMMY
+    //SYSTSPRT DD SYSOUT=*
+    //XPSIN DD *
+    SERVER name:port
+    file Source File Name
+    SAVEAS Destination File Name
 
 ## Standalone File Transfer JCL
 
