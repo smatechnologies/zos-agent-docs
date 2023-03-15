@@ -117,6 +117,7 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |SETQUES|Automatic calculations using PROCESS=|Overrides default queue limits. Refer to CSA Storage Allocation prior to setting these values.<br/>Extended CSA (ECSA) is consumed in proportion to these values.<br/>Valid queues include: (JOB=nnn [;MSG=nnn] [;DSN=nnn] [;WTO=nnn] [;EVT=nnn]) <br/><br/>Note: These must be defined in the XPSPARMxx since they are not dynamic. Using the MODIFY command to change these values has no effect on the LSAM.|
 |SPINOFF|Y|Determines if the LSAM automatically spins off a new LSAM LOG dataset each day at midnight.<br/>If set to N, a SPINLOG command (F lsamname,SPINLOG) should be scheduled each day to ensure the log does not exceed allocated space.<br/>If set to Y, the LSAM automatically manages the log.<br/>Valid values are Y (yes) and N (no).|
 |SYSPLEX|N|Determines if the LSAM is running in a SYSPLEX environment.<br/>If Y, the XPSPLEX task is automatically started when the LSAM is started.<br/>Valid values are Y (yes) and N (no).|
+|XPSPLEX|XPSPLEX|The name of the started task PROC for SYSPLEX communication.|
 |SMF15|K|Determines if the dataset trigger records are deleted or left in the SMF Data Sets.<br/>SMF must be recording record type 15 for JOB, STC and TSU SUBSYS for all dataset triggers.<br/>If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
 |SMF64|K|Determines if the VSAM trigger records are deleted or left in the SMF Data Sets.<br/>SMF must be recording record type 64 for JOB, STC and TSU SUBSYS for all VSAM triggers.<br/>If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
 |SPFAUDIT|N|Determines if the LSAM issues XPS083I messages for ISPF Users that update or delete DSN Table entries.<br/>Valid values are Y (yes) and N (no).|
@@ -320,9 +321,10 @@ In the default configuration, the following members require LINKLST access:
 
 If your installation standards do not allow the addition of libraries to APF list or LINKLST concatenations, you have to copy the contents of the SMA Opcon LINKLIB to defined libraries with the proper APF and LINKLST characteristics (e.g., SYS1.LINKLIB). However, your installation and maintenance procedures for XPS390 need to reflect the changes so subsequent maintenance releases applies properly. SMA supplies an IEBCOPY job in highlevel.midlevel.INSTLIB(LINKLST) to perform a link list copy.
 
-With some customization, it is possible to run the z/OS agent without updating the link list.
+With some customization, it is possible to run the z/OS agent without updating the link list.  This can also be used to support multiple versions of the agent for testing.
 
 - Modify all JCL that references agent programs with the appropriate JOBLIB or STEPLIB.
+ - On a SYSPLEX, set the XPSPLEX parm to use an XPSPLEX PROC with a STEPLIB matching the agent.
 - Make a copy of the IEESYSAS system procedure, adding a STEPLIB for the agent library.
   - Modify the XPSDYNAM entry in XPSPRMxx to identify the copy.
 - Load XPSASCRE into LPA.
