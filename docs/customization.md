@@ -77,6 +77,7 @@ MLWTO=Y                       Multi-line WTO Triggers
 SPFAUDIT=N                    Log ISPF User Chgs          
 LOG-UNIT=                     LSAMLOG allocation unit     
 LOG-VOLUME=                   LSAMLOG allocation volume   
+TRIGGER-RETPD=45              Trigger retention days 
 RECOVERY=PROMPT               Recovery Option             
 SUBSYS=JES2                   JES Subsystem               
 TRACE=N                       Trace Status                
@@ -127,6 +128,7 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |TRACMASK|*Blank*|Defines a job name mask of eight characters (e.g., **PROD\*\*\*\***) for SMA Opcon external job tracking.<br/><br/>Note: The continuation character C, in column 72 of the job card, bypasses this option.|
 |TRACSCHD|AdHoc|Defines the default schedule name for external job tracking.|
 |TRACE|N|Defines the trace level for the LSAM.<br/>Valid values include: <ul><li>Up to nine digits 1 – 9.</li><li>Y sets tracing for all levels.</li><li>N or 0 disables tracing.</li></ul> Note: This parameter is used for debugging purposes only.|
+|TRIGGER_RETPD|45|Sets the number of days to retain unreferenced "passive" triggers.<br/><ul><li>Must be between 7 and 365, or 0.</li><li>If set to '0', no triggers will be expired.</li></ul>|
 |USEJMR|NO|Controls the use of the JMRUSEID field by the LSAM tracking exits.<br/>If YES, the LSAM uses the entire field.<br/>If NO, the LSAM does not use the field at all.<br/>A number from 0 – 63 can be used to specify the offset within the field that is used for a single bit flag.<br/><br/>Note: USEJMR=NO is normally required to coexist with TWS. Enabling USEJMR may improve performance in some cases.|
 |USERID|*Blank*|Defines the installation default RACF USER= to be used on any batch Job Start request from the SAM that does NOT already have an owning User assigned.<br/>This value is inserted in the USER= parameter of the JOB Card at submission.<br/><br/>Specify NONE to disable|
 |RUNMODE|Prod|When set to RUNMODE=TEST, batch jobs will be submitted with TYPRUN=SCAN and success or failure will be determined by the JCL scanner.|
