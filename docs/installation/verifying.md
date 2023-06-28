@@ -315,7 +315,7 @@ Enter the "Daily Schedule Maintenance" display on the OpCon/xps User Interface. 
 
 Example of IVPMVS1
 
-![Example of IVPMVS1](/img/Example-of-IVPMVS1.png "Example of IVPMVS1")
+![Example of IVPMVS1](../static/img/Example-of-IVPMVS1.png "Example of IVPMVS1")
 
 Before releasing the schedule, become familiar with exactly *what* an IVP process is designed to do. It is designed to ensure all features and functions are operating as designed. Thus, most of the jobs on the IVP schedule are designed to capture failures and exceptions to processing. Most jobs end in error or display exceptional conditions. This is by design. Once the IVP schedule is completed, 90% of all commonly used functions in the z/OS environment have been tested for accuracy and function. It is strongly suggested that the IVP Schedule(s) be retained for use as functional verification after any future upgrade or major maintenance release installation.
 
