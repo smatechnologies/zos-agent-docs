@@ -396,6 +396,6 @@ Next, select STEP2 as the restart step, then select STEP4 and press the Restart 
 
 The final OpCon/xps IVPMVS1 status (alphabetically) should resemble the following:
 
-![Completed IVPMVS1](/img/4_1.png "Completed IVPMVS1")
+![Completed IVPMVS1](../static/img/4_1.png "Completed IVPMVS1")
 
 If any errors are received or results that are significantly different from those above, and the cause cannot be determined, contact SMA z/OS support. Have a copy of the MVS system log for the IVP period handy when making the call.
