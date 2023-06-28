@@ -77,6 +77,7 @@ MLWTO=Y                       Multi-line WTO Triggers
 SPFAUDIT=N                    Log ISPF User Chgs          
 LOG-UNIT=                     LSAMLOG allocation unit     
 LOG-VOLUME=                   LSAMLOG allocation volume   
+TRIGGER-RETPD=45              Trigger retention days 
 RECOVERY=PROMPT               Recovery Option             
 SUBSYS=JES2                   JES Subsystem               
 TRACE=N                       Trace Status                
@@ -117,6 +118,7 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |SETQUES|Automatic calculations using PROCESS=|Overrides default queue limits. Refer to CSA Storage Allocation prior to setting these values.<br/>Extended CSA (ECSA) is consumed in proportion to these values.<br/>Valid queues include: (JOB=nnn [;MSG=nnn] [;DSN=nnn] [;WTO=nnn] [;EVT=nnn]) <br/><br/>Note: These must be defined in the XPSPARMxx since they are not dynamic. Using the MODIFY command to change these values has no effect on the LSAM.|
 |SPINOFF|Y|Determines if the LSAM automatically spins off a new LSAM LOG dataset each day at midnight.<br/>If set to N, a SPINLOG command (F lsamname,SPINLOG) should be scheduled each day to ensure the log does not exceed allocated space.<br/>If set to Y, the LSAM automatically manages the log.<br/>Valid values are Y (yes) and N (no).|
 |SYSPLEX|N|Determines if the LSAM is running in a SYSPLEX environment.<br/>If Y, the XPSPLEX task is automatically started when the LSAM is started.<br/>Valid values are Y (yes) and N (no).|
+|XPSPLEX|XPSPLEX|The name of the started task PROC for SYSPLEX communication.|
 |SMF15|K|Determines if the dataset trigger records are deleted or left in the SMF Data Sets.<br/>SMF must be recording record type 15 for JOB, STC and TSU SUBSYS for all dataset triggers.<br/>If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
 |SMF64|K|Determines if the VSAM trigger records are deleted or left in the SMF Data Sets.<br/>SMF must be recording record type 64 for JOB, STC and TSU SUBSYS for all VSAM triggers.<br/>If D, the XPS390 SMF exit XPSU83 deletes the records after DSN trigger filtering.|
 |SPFAUDIT|N|Determines if the LSAM issues XPS083I messages for ISPF Users that update or delete DSN Table entries.<br/>Valid values are Y (yes) and N (no).|
@@ -126,6 +128,7 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |TRACMASK|*Blank*|Defines a job name mask of eight characters (e.g., **PROD\*\*\*\***) for SMA Opcon external job tracking.<br/><br/>Note: The continuation character C, in column 72 of the job card, bypasses this option.|
 |TRACSCHD|AdHoc|Defines the default schedule name for external job tracking.|
 |TRACE|N|Defines the trace level for the LSAM.<br/>Valid values include: <ul><li>Up to nine digits 1 – 9.</li><li>Y sets tracing for all levels.</li><li>N or 0 disables tracing.</li></ul> Note: This parameter is used for debugging purposes only.|
+|TRIGGER_RETPD|45|Sets the number of days to retain unreferenced "passive" triggers.<br/><ul><li>Must be between 7 and 365, or 0.</li><li>If set to '0', no triggers will be expired.</li></ul>|
 |USEJMR|NO|Controls the use of the JMRUSEID field by the LSAM tracking exits.<br/>If YES, the LSAM uses the entire field.<br/>If NO, the LSAM does not use the field at all.<br/>A number from 0 – 63 can be used to specify the offset within the field that is used for a single bit flag.<br/><br/>Note: USEJMR=NO is normally required to coexist with TWS. Enabling USEJMR may improve performance in some cases.|
 |USERID|*Blank*|Defines the installation default RACF USER= to be used on any batch Job Start request from the SAM that does NOT already have an owning User assigned.<br/>This value is inserted in the USER= parameter of the JOB Card at submission.<br/><br/>Specify NONE to disable|
 |RUNMODE|Prod|When set to RUNMODE=TEST, batch jobs will be submitted with TYPRUN=SCAN and success or failure will be determined by the JCL scanner.|
@@ -320,9 +323,10 @@ In the default configuration, the following members require LINKLST access:
 
 If your installation standards do not allow the addition of libraries to APF list or LINKLST concatenations, you have to copy the contents of the SMA Opcon LINKLIB to defined libraries with the proper APF and LINKLST characteristics (e.g., SYS1.LINKLIB). However, your installation and maintenance procedures for XPS390 need to reflect the changes so subsequent maintenance releases applies properly. SMA supplies an IEBCOPY job in highlevel.midlevel.INSTLIB(LINKLST) to perform a link list copy.
 
-With some customization, it is possible to run the z/OS agent without updating the link list.
+With some customization, it is possible to run the z/OS agent without updating the link list.  This can also be used to support multiple versions of the agent for testing.
 
 - Modify all JCL that references agent programs with the appropriate JOBLIB or STEPLIB.
+ - On a SYSPLEX, set the XPSPLEX parm to use an XPSPLEX PROC with a STEPLIB matching the agent.
 - Make a copy of the IEESYSAS system procedure, adding a STEPLIB for the agent library.
   - Modify the XPSDYNAM entry in XPSPRMxx to identify the copy.
 - Load XPSASCRE into LPA.
