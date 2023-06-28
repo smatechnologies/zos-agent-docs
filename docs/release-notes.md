@@ -4,6 +4,29 @@ sidebar_label: 'Release notes'
 
 # z/OS LSAM Release notes
 
+## z/OS LSAM 21.01.05
+
+2021 November
+
+**New Features**
+
+- **ZOS-305**: XPSPF enhancements
+    - Allow search argument with FAT and FAN commands
+    - Allow MSGIN processing from **T**rigger command
+    - Fix FIND set and clear logic on main menu
+    - Add XPSID *x* command to change target system
+    - Open event editor if the Event token changes on trigger entry
+    - Allow XPSPF001 to run read only when XPSPAUTH is not in linklist or steplib
+
+**Fixes**
+
+- **ZOS-300**: Fix BLDL list length
+- **ZOS-301**: Clear trailing comma from long userids
+- **ZOS-302**: prevent UCB table underrun
+- **ZOS-304**: Use A2E translation for the square brackets in XPSMACH
+- **ZOS-312**: Do ENDREQ if RPLRBAR doesn't contain JOBNUM (JES3)
+- **ZOS-313**: Skip move on zero length records (JORS)
+
 ## z/OS LSAM 21.00.03
 
 2021 June
