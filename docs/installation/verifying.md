@@ -315,7 +315,7 @@ Enter the "Daily Schedule Maintenance" display on the OpCon/xps User Interface. 
 
 Example of IVPMVS1
 
-![Example of IVPMVS1](/img/Example-of-IVPMVS1.png "Example of IVPMVS1")
+![Example of IVPMVS1](../static/img/Example-of-IVPMVS1.png "Example of IVPMVS1")
 
 Before releasing the schedule, become familiar with exactly *what* an IVP process is designed to do. It is designed to ensure all features and functions are operating as designed. Thus, most of the jobs on the IVP schedule are designed to capture failures and exceptions to processing. Most jobs end in error or display exceptional conditions. This is by design. Once the IVP schedule is completed, 90% of all commonly used functions in the z/OS environment have been tested for accuracy and function. It is strongly suggested that the IVP Schedule(s) be retained for use as functional verification after any future upgrade or major maintenance release installation.
 
@@ -396,6 +396,6 @@ Next, select STEP2 as the restart step, then select STEP4 and press the Restart 
 
 The final OpCon/xps IVPMVS1 status (alphabetically) should resemble the following:
 
-![Completed IVPMVS1](/img/4_1.png "Completed IVPMVS1")
+![Completed IVPMVS1](../static/img/4_1.png "Completed IVPMVS1")
 
 If any errors are received or results that are significantly different from those above, and the cause cannot be determined, contact SMA z/OS support. Have a copy of the MVS system log for the IVP period handy when making the call.

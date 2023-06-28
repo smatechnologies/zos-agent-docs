@@ -69,7 +69,7 @@ The LSAM on the Gateway machine is the message manager for the entire SYSPLEX en
 
 Component Architecture Diagram
 
-![Component Architecture Diagram](/img/Component-Architecture-Diagram.png "Component Architecture Diagram")
+![Component Architecture Diagram](../static/img/Component-Architecture-Diagram.png "Component Architecture Diagram")
 
 The SMF and console exits on each system provide all tracking and triggering data to the Gateway LSAM.
 
