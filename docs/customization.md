@@ -357,7 +357,7 @@ When you are not running a Sysplex, the selection of a configuration for XPS390 
 
 Configuration #1 - Independent LPAR Scheduling
 
-![Configuration #1 - Independent LPAR Scheduling](/img/Configuration-1-Independent-LPAR-Scheduling.png "Configuration #1 - Independent LPAR Scheduling")
+![Configuration #1 - Independent LPAR Scheduling](../static/img/Configuration-1-Independent-LPAR-Scheduling.png "Configuration #1 - Independent LPAR Scheduling")
 
 Each machine has all SMF Exits Installed, XPSPRMxx defined, etc. -- just as with a single machine installation. Each XPSPRMxx has the LSAM=Y and SYSPLEX=N options set. The SMA Opcon SAM HOST file, DNS, or SMA Opcon machine definitions contains the IP addresses for all three machines and their respective MACHINEIDs.
 
@@ -367,7 +367,7 @@ When configuring a Sysplex, the selection of a configuration for XPS390 depends 
 
 Configuration #2 - Sysplex Scheduling
 
-![Configuration #2 - Sysplex Scheduling](/img/Configuration--2-Sysplex-Scheduling.png "Configuration #2 - Sysplex Scheduling")
+![Configuration #2 - Sysplex Scheduling](../static/img/Configuration--2-Sysplex-Scheduling.png "Configuration #2 - Sysplex Scheduling")
 
 When Scheduling a Multi-Access Spool (MAS) environment, the machine that submits the batch JCL, the machine that converts the JCL (loads the Procs defined in the job), and the machine that runs the resulting job may all be different. JES2 MAS and JES3 Local processor support is only available in a Sysplex environment (any CF level). In the above example, we define the Primary LSAM as a "Gateway" for both SYSA and SYSB in the SAM Server. The Machine ID is the target system for the jobs within the MAS/Sysplex and the Gateway is always the Primary LSAM machine.
 
