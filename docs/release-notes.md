@@ -4,6 +4,47 @@ sidebar_label: 'Release notes'
 
 # z/OS LSAM Release notes
 
+## z/OS LSAM 23.01.01
+
+2023 October
+
+**New Features**
+
+- **ZOS-329**: Added DETACH, ATTACH logic to the down detection routine for XPSAGENT.
+- **ZOS-332**: Changed the load library for XPSPLEX to support multiple versions of the Agent.
+- **ZOS-337**: Added new XPSPARM field for TRIGGER_RETPD, defaulting to 45 days. The range is between 7 and 365 days.
+- **ZOS-342**: The z/OS agent will no longer attempt dataset cleanup for steps that will be skipped due to conditional JCL execution.
+
+## z/OS LSAM 21.01.08
+
+2022 August
+
+**New Features**
+
+- **ZOS-2**: Implement TLS 1.2 for SMAFT Server (z/OS)
+- **ZOS-71**: Remove dependency on LINKLIST
+- **ZOS-73**: Add TRACK/QUEUE support for JES3
+- **ZOS-78**: Rename XPSAGENT to XPSJORS for consistency with other platforms
+
+**Fixes**
+
+- **ZOS-296**: MSGQ display and delete were not working through XPSPF001.
+- **ZOS-297**: Automation table editor (XPSPF) failed silently in ISPF split sessions.
+- **ZOS-300**: Rexx and command events were not starting correctly.
+- **ZOS-301**: If the JCL for a job has an eight character userid on the job card AND the OpCon job definition has a userid override with an eight character userid, a trailing comma is left on the job card, resulting in a JCL error.
+- **ZOS-312**: z/OS jobs hung in "Prerun active" state.
+- **ZOS-314**: AM2TDPFL received Job Not Found, but then somehow restarted itself.
+- **ZOS-316**: Prevent cleanup of entries with active event name and reset reference date field for all updates from XPSPF001 (prevents cleanup).
+- **ZOS-341**: In some cases when XPSUBMIT needs to requeue a job, this leads to a memory access error (S0C4-11).
+
+## z/OS LSAM 21.01.06
+
+2022 June
+
+**Fixes**
+
+- **ZOS-315**: Fix confusing JORS and start data on pre-run jobs
+
 ## z/OS LSAM 21.01.05
 
 2021 November
@@ -22,7 +63,7 @@ sidebar_label: 'Release notes'
 
 - **ZOS-300**: Fix BLDL list length
 - **ZOS-301**: Clear trailing comma from long userids
-- **ZOS-302**: prevent UCB table underrun
+- **ZOS-302**: Prevent UCB table underrun
 - **ZOS-304**: Use A2E translation for the square brackets in XPSMACH
 - **ZOS-312**: Do ENDREQ if RPLRBAR doesn't contain JOBNUM (JES3)
 - **ZOS-313**: Skip move on zero length records (JORS)

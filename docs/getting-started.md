@@ -1,5 +1,5 @@
 ---
-slug: '/'
+slug: "/"
 sidebar_position: 1
 sidebar_label: z/OS Agent
 ---
@@ -8,4 +8,4 @@ sidebar_label: z/OS Agent
 
 The z/OS LSAM is an OpCon agent that allows OpCon to schedule z/OS jobs within a z/OS environment.
 
-The current version is **21.01.05**.
+The current version is **23.01.01**.
