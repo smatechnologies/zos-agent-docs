@@ -1,8 +1,16 @@
 ---
-sidebar_label: 'Release notes'
+sidebar_label: "Release notes"
 ---
 
 # z/OS LSAM Release notes
+
+## z/OS LSAM 23.01.01
+
+2023 October
+
+**New Features**
+
+- **ZOS-342**: The z/OS agent will no longer attempt dataset cleanup for steps that will be skipped due to conditional JCL execution.
 
 ## z/OS LSAM 21.01.05
 
@@ -11,12 +19,12 @@ sidebar_label: 'Release notes'
 **New Features**
 
 - **ZOS-305**: XPSPF enhancements
-    - Allow search argument with FAT and FAN commands
-    - Allow MSGIN processing from **T**rigger command
-    - Fix FIND set and clear logic on main menu
-    - Add XPSID *x* command to change target system
-    - Open event editor if the Event token changes on trigger entry
-    - Allow XPSPF001 to run read only when XPSPAUTH is not in linklist or steplib
+  - Allow search argument with FAT and FAN commands
+  - Allow MSGIN processing from **T**rigger command
+  - Fix FIND set and clear logic on main menu
+  - Add XPSID _x_ command to change target system
+  - Open event editor if the Event token changes on trigger entry
+  - Allow XPSPF001 to run read only when XPSPAUTH is not in linklist or steplib
 
 **Fixes**
 
@@ -107,7 +115,7 @@ sidebar_label: 'Release notes'
 
 **Fixes**
 
-- If TEMP* DD allocations are concatenated, no member rename will be done.
+- If TEMP\* DD allocations are concatenated, no member rename will be done.
 
 ## z/OS LSAM 16.07.01
 
