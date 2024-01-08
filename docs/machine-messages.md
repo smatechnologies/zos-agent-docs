@@ -196,8 +196,8 @@ X0PS024A - Parameter Invalid: [parm]|Issued if a parameter error occurs during t
 |<li>XPS120E - Save Error: Enqueue Failure</li>|The JCL update failed because member is locked.|
 |<li>XPS120E - Save Error: Temp Alloc Error</li><li>XPS120E - Save Error: Temp Open Error</li>|The JCL update failed because a temporary file could not be created.|
 |<li>XPS120E - Edit Error: Error in Userid</li>|The OpCon userid was not received by the z/OS agent.|
-|<li>XPS120E - Edit Error: OpCon user not known to host security</li>|A z/OS userid could not be found for the OpCon user.<br>See [OpCon Userid in the z/OS LSAM](customization.md#opcon-userid-in-the-zos-lsam)|
-|<li>XPS120E - Edit Error: User not permitted to update library</li>|The user does not have UPDATE permission for the target libary.<br>See the z/OS Security Administrator|
+|<li>XPS120E - Edit Error: OpCon user not known to host security</li>|A z/OS userid could not be found for the OpCon user.<br/>See [OpCon Userid in the z/OS LSAM](customization.md#opcon-userid-in-the-zos-lsam)|
+|<li>XPS120E - Edit Error: User not permitted to update library</li>|The user does not have UPDATE permission for the target libary.<br/>See the z/OS Security Administrator|
 |<li>XPS120E - Edit Error: Edit Lib Alloc Err</li><li>XPS120E - Edit Error: Edit Open Error</li><li>XPS120E - Edit Error: Reopen Temp Error</li><li>XPS120E - Edit Error: Write Error</li>|The JCL update failed to copy the temporary file to the target member.|
 |<li>XPS120E - Edit Error: Stow Lib Open</li><li>XPS120E - Edit Error: Stow Status Failed</li>|The JCL was saved, but the library statistics were not updated.|
 |XPS121E - TCP/IP Error|Indicates a communication error has occurred.<br/>This message is displayed in a Enterprise Manager Message Box only on the user workstation.<br/>Additional information is available in the MVS SYSLOG.<br/>Retry the request.<br/>If the reason for this error cannot be determined, contact SMA support.|
