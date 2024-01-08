@@ -194,7 +194,7 @@ X0PS024A - Parameter Invalid: [parm]|Issued if a parameter error occurs during t
 |<li/>XPS120E - Read Error: TCP/IP Error|The JCL update failed to upload.|
 |<li/>XPS120E - Save Error: DD=XXXXXXXX Not Located|The JCL update DD is not allocated to the z/OS agent.|
 |<li/>XPS120E - Save Error: Enqueue Failure|The JCL update failed because member is locked.|
-|<li/>XPS120E - Save Error: Temp Alloc Error<li/>XPS120E - Save Error: Temp Open Error</li>|The JCL update failed because a temporary file could not be created.|
+|<li/>XPS120E - Save Error: Temp Alloc Error<li/>XPS120E - Save Error: Temp Open Error|The JCL update failed because a temporary file could not be created.|
 |<li/>XPS120E - Edit Error: Error in Userid|The OpCon userid was not received by the z/OS agent.|
 |<li/>XPS120E - Edit Error: OpCon user not known to host security|A z/OS userid could not be found for the OpCon user.<br>See [OpCon Userid in the z/OS LSAM](customization.md#opcon-userid-in-the-zos-lsam)|
 |<li/>XPS120E - Edit Error: User not permitted to update library|The user does not have UPDATE permission for the target libary.<br>See the z/OS Security Administrator|
