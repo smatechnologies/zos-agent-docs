@@ -89,7 +89,7 @@ SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)
 - Lines that begin with 
 '*', '#' or ';' are treated as comments and ignored. 
 - All characters after the first space following an entry on the line are considered comments. 
-- Commas may be used for continuation, but they are optional between lines. As before, multiple parameters on a single line must be separated by commas.
+- Multiple parameters on a single line must be separated by commas.  Commas may be used for continuation, but they are optional between lines.
 
 ### Syntax
 
