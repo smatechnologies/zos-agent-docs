@@ -30,8 +30,6 @@ module.exports = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/smatechnologies/zos-agent-docs/blob/develop',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -43,11 +41,11 @@ module.exports = {
       },
     ],
   ],
-  plugins: [
-    [
-      require.resolve('@cmfcmf/docusaurus-search-local'), 
-      {
-      }
-    ],
-  ],
+//  plugins: [
+//    [
+//      require.resolve('@cmfcmf/docusaurus-search-local'), 
+//      {
+//      }
+//    ],
+//  ],
 };
