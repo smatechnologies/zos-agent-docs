@@ -6,6 +6,12 @@ sidebar_label: 'Release notes'
 
 ## z/OS LSAM 23.01.01
 
+:::info Note
+
+z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
+
+:::
+
 2023 October
 
 **New Features**
