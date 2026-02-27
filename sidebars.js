@@ -35,6 +35,7 @@ module.exports = {
       label: 'Reference',
       collapsed: true,
       items: [
+        'reference/saf-resources',
         'reference/multiple-lsams',
         'reference/standalone-file-transfer',
         'reference/djf',
@@ -42,7 +43,7 @@ module.exports = {
         'reference/tls',
         'reference/faq',
         'reference/known-issues',
-      ], 
+      ],
     },
   ],
 };
