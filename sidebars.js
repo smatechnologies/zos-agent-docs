@@ -26,6 +26,8 @@ module.exports = {
         'advanced-features/mapping',
         'advanced-features/xpstimer',
         'advanced-features/xpstrack',
+        'advanced-features/xpswto',
+        'advanced-features/xpswtor',
         'advanced-features/restarting-jobs',
       ], 
     },
