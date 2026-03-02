@@ -138,10 +138,10 @@ If you start the LSAM with an optional task name the lsamname in the commands be
 |F lsamname,SHUTDOWN|Shuts down the SMA Opcon LSAM|Cycles down LSAM and stop the XPSPLEX Task.|
 |F lsamname,REMOVEX[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the LSAM and internals|Shuts down the LSAM and removes all exits and storage queues.|
 |F lsamname,parm=value|Resets most parameters in XPSPRMxx.|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. Refer to Run-time Parameters.|
-|F lsamname,XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|None.|
-|F lsamname,XPRLIST,ADD,[I&#124;X]\[DSN&#124;VOL]=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
-|F lsamname,XPRLIST,DELETE,[I&#124;X]\[DSN&#124;VOL]=pattern|Removes an entry from the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx.|
-|F lsamname,XPRLIST=xx|Reloads the dataset filter table from member XPRLSTxx.|This action completely replaces the filter table in memory.|
+|F lsamname,XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|Refer to [Dataset Cleanup Filter Table](advanced-features/xprlist.md).|
+|F lsamname,XPRLIST,ADD,[I&#124;X]DSN=pattern<br/>F lsamname,XPRLIST,ADD,[I&#124;X]VOL=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx. Refer to [Dataset Cleanup Filter Table](advanced-features/xprlist.md).|
+|F lsamname,XPRLIST,DELETE,[I&#124;X]DSN=pattern<br/>F lsamname,XPRLIST,DELETE,[I&#124;X]VOL=pattern|Removes an entry from the dataset cleanup filter table.|The entry must match exactly. The change persists until the next IPL only.|
+|F lsamname,XPRLIST=xx|Reloads the dataset filter table from member XPRLSTxx.|This completely replaces the in-memory table. Refer to [Dataset Cleanup Filter Table](advanced-features/xprlist.md).|
 |F lsamname,XPSPARM=xx|Resets parms from the settings in XPSPRMxx.|Persists until the next IPL. The xx value is not remembered.|
 |P lsamname|Stops the LSAM.|Cycles down LSAM but XPSPLEX remains.|
 

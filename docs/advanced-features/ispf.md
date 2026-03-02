@@ -216,9 +216,9 @@ The following special values have defined actions and will not use the Event tab
 - $JOBLOG - If the action was triggered by an OpCon job, display the trigger information in the Detailed Job Messages in the UI.
   - Messages: The message text
   - Datasets: DSNx|DSNAME
-- $JOBTRIG - If the action was triggered by an OpCon job, write to LSAM feedback. This allows the message to be used for triggering from the job definition.
+- $JOBTRIG - If the action was triggered by an OpCon job, write the trigger information to the **Trigger Messages** section of LSAM Feedback. This makes the text available for OpCon job event triggering — the trigger message can be matched by string criteria in the job definition's Events tab, allowing the z/OS message to drive OpCon job-level events.
   - The formats are the same as for $JOBLOG
-  - This can be used with XPSWTO to create very flexible triggers, invoked from the context of the running job.
+  - This can be used with XPSWTO to create very flexible triggers, invoked from the context of the running job. A job step issues a WTO via XPSWTO, the LSAM's WTO trigger table matches it with a $JOBTRIG action, and the message text appears in LSAM Feedback as a Trigger Message that OpCon can act on.
 
 ## Event Table Administration
 
