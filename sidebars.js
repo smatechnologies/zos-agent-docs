@@ -28,6 +28,7 @@ module.exports = {
         'advanced-features/xpstrack',
         'advanced-features/xpswto',
         'advanced-features/xpswtor',
+        'advanced-features/xprlist',
         'advanced-features/restarting-jobs',
       ], 
     },
