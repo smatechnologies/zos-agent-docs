@@ -65,7 +65,17 @@ An alternative form of the arguments is available that is compatible with the Wi
 |-tN|10|N is the delay time, in seconds, between 0 and 359999.|
 |-eN|0|N is the desired return code between 0 and 4095.|
 
-In addition to running as a batch program, XPSTIMER, or GENERICP, can be run as a TSO command, using the same arguments. This means that it can be scheduled through OpCon as a REXX job type.
+In addition to running as a batch program, XPSTIMER, or GENERICP, can be run as a TSO command, using the same arguments. When run under TSO, the completion message is written to the terminal. This means that it can be scheduled through OpCon as a REXX job type.
+
+No special authorization is required. XPSTIMER does not need to be APF-authorized.
+
+## Return Codes
+
+| RC | Meaning |
+|----|---------|
+| 0 | Normal completion (default, or when WTOR is specified). |
+| *nnnn* | The return code specified in positions 9-12 of the PARM, or by `-eN`. |
+| 4 | Invalid PARM. |
 
 :::tip Example
 
