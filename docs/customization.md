@@ -175,11 +175,11 @@ In addition to SURROGAT authority, your LSAM task also needs an OMVS Segment def
 
 ## OpCon Userid in the z/OS LSAM
 
-The JCL editor in the z/OS Job Details allows the OpCon user to save JCL to the mainframe file system. To enforce z/OS security, the OpCon userid is mapped to a z/OS userid for access testing. There are two basic strategies for defining the userids depending on the versions of the z/OS LSAM and OpCon user interface.
+The JCL editor in the z/OS Job Details allows the OpCon user to save JCL to the mainframe file system. To enforce z/OS security, the OpCon userid is mapped to a z/OS userid for access testing. There are two basic strategies for defining the userids.
 
 ### Matching Userids
 
-The matching userids strategy works with all versions of the LSAM and user interface. If the OpCon userid matches a z/OS userid exactly, then the mapping is trivial.
+If the OpCon userid matches a z/OS userid exactly, then the mapping is trivial.
 
 ### Partial Matching without Windows Domain
 
@@ -187,29 +187,13 @@ If the OpCon userid is longer than eight characters, the first eight characters 
 
 ### Partial Matching with Windows Domain
 
-If the OpCon userid is in the form domain\user, as when Windows authentication is used, the results vary with releases:
-
-#### LSAM versions below 15.07
-
-In this case, the first eight characters of the userid, including the domain and separator, will be used, which will normally not be useful.
-
-For example, if the OpCon user is "CORP\johndoe", the z/OS userid will be "CORP\JOH".
-
-#### LSAM versions 15.07 and higher and UI versions below 16
-
-In this case, only the characters following the separator will be used, but the UI only sends eight characters, so the result may not be correct.
-
-For example, if the OpCon user is "CORP\johndoe", the z/OS userid will be "JOH".
-
-#### LSAM versions 15.07 and higher and UI versions 16 or higher
-
-In this case, only the first eight characters following the separator will be used.
+If the OpCon userid is in the form domain\user, as when Windows authentication is used, the first eight characters following the separator will be used as the z/OS userid.
 
 For example, if the OpCon user is "CORP\johndoe", the z/OS userid will be "JOHNDOE".
 
 ### Distributed Identity Mapping
 
-Starting with version 16 of the z/OS LSAM, an attempt will be made to map the OpCon userid to a z/OS userid through distributed identity mapping, with registry name "OPCON", using a standard SAF call. If the identity mapping fails, then the z/OS userid will be obtained using the previous rules.
+The LSAM will attempt to map the full OpCon userid to a z/OS userid through distributed identity mapping, with registry name "OPCON", using a standard SAF call. If the identity mapping fails, then the z/OS userid will be obtained using the previous rules.
 
 Distributed identity mapping is defined and enabled by the z/OS security administrator.
 
