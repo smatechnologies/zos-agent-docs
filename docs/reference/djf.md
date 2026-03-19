@@ -9,13 +9,13 @@ DJF statements are identified by hyphens in the first two columns ('--') of the 
 
 ## Variables
 
-JCL variable tokens are normally defined in the job definition in OpCon, preceded by '@'. In versions of the z/OS LSAM prior to 5.04.04, the value of the variable is substituted in the JCL without moving any other data. Beginning with 5.04, if the first character of the variable name (so the definition begins with '@%'), the remaining data is moved right or left to fit the replacement value. In addition, to simplify variable identification, an option dot can be added to the name in the JCL, to separate it from the remaining data, and the dot will be removed after substitution.
+JCL variable tokens are normally defined in the job definition in OpCon, preceded by '@'. The value of the variable is substituted in the JCL without moving any other data. If the first character of the variable name is '%' (so the definition begins with '@%'), the remaining data is moved right or left to fit the replacement value. In addition, to simplify variable identification, an optional dot can be added to the name in the JCL, to separate it from the remaining data, and the dot will be removed after substitution.
 
 Variable length substitution will always take place if the JCLSCAN character is not '@'.
 
 ### Built-in Variables
 
-Beginning with 5.04.03, the following built-in variables are supported in DJF:
+The following built-in variables are supported in DJF:
 
 |Variable |Value |
 |--- |--- |
