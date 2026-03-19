@@ -93,7 +93,7 @@ SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)
 
 ### Syntax
 
-[@systemname ]parameter=[option]{,parameter=[option]}...
+[@systemname ]parameter=[option][,parameter=[option]]...
 
 The optional *@systemname* prefix can be used to filter the input records. Any records beginning with an **@systemname** will be skipped, unless **systemname** matches the current system name, as defined in the     static system symbol SYSNAME.
 
