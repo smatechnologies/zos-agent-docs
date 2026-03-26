@@ -86,6 +86,25 @@ The tables in OpCon/xps for z/OS are Sysplex Global. In other words, all systems
 
 DSN table triggering allows specification of exact dataset names or name masks with wild cards.  A '%' will match any single character in the dataset name at that position.  A trailing asterisk (*) will match any remaining characters in the dataset name.  A dataset name ending in **G0000V00** will match any member of a generation data group (GDG) that matches the preceding mask or name.
 
+The following trigger conditions are available:
+
+| Condition | Description |
+|-----------|-------------|
+| CRE | Triggers when a new dataset is created (DISP=NEW). |
+| UPD | Triggers when an existing dataset is updated (DISP=OLD or MOD). Does not trigger for newly created datasets. |
+| DEL | Triggers when a dataset is deleted (DISP=DELETE) or scratched. |
+| SCR | Triggers when a dataset is scratched (Type 17 SMF record). |
+| REF | Triggers on any reference to the dataset (open for input or output). |
+| CAT | Triggers when a dataset is cataloged (Type 61 SMF record). |
+| UNC | Triggers when a dataset is uncataloged (Type 65 SMF record). |
+
+:::note
+The following dataset activity is excluded from trigger processing:
+- Datasets accessed by an abending task are not evaluated for triggers.
+- Temporary datasets, VIO (Virtual I/O) datasets, and end-of-volume (EOV) records are ignored.
+- VSAM dataset triggers (Type 64) only fire when the dataset is closed, not when it is opened. A VSAM dataset is considered "updated" only if records were added, deleted, or changed during the access.
+:::
+
 DSN Table View
 
 ```
@@ -119,6 +138,12 @@ Altering a PASSIVE entry that is referenced by a scheduled job may invalidate th
 ## WTO Table Administration
 
 WTO table (Console Message) triggering allows two keys per message: one FIXED and one VARIABLE. The **Msg Off** column represents the number of character positions (bytes) from the beginning of the message text to the start of the FIXED key. The **Msg Len** column represents the length of the FIXED key w/spaces. ALL WTO triggers MUST have a FIXED key. The variable portion is optional. A variable key is defined within brackets {}. Once the fixed key is located in a record, a variable key is scanned for AFTER the end of the fixed key. If MLWTO=Y is set in XPSPARMS, then the variable key will also be searched in any minor lines of the message. The variable text can be used to exclude matches by preceding it with a minus (-) sign.
+
+The variable text between the `{}` delimiters can be up to 42 characters long. If the variable text exceeds this limit, the trigger entry is skipped.
+
+:::note
+For WTOR (Write-To-Operator with Reply) messages, the reply ID number at the beginning of the message is automatically excluded before matching. The **Msg Off** value should be set relative to the message text that follows the reply number, not relative to the reply number itself.
+:::
 
 Just as with datasets, message triggers can have generations, System-id and creating job criteria. The only substantial difference between the DSN table and the WTO table is the Offset and Length requirements for the FIXED portion of the message key and the ability to "scan" for text content.
 
