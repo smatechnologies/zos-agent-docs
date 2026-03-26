@@ -139,6 +139,12 @@ Altering a PASSIVE entry that is referenced by a scheduled job may invalidate th
 
 WTO table (Console Message) triggering allows two keys per message: one FIXED and one VARIABLE. The **Msg Off** column represents the number of character positions (bytes) from the beginning of the message text to the start of the FIXED key. The **Msg Len** column represents the length of the FIXED key w/spaces. ALL WTO triggers MUST have a FIXED key. The variable portion is optional. A variable key is defined within brackets {}. Once the fixed key is located in a record, a variable key is scanned for AFTER the end of the fixed key. If MLWTO=Y is set in XPSPARMS, then the variable key will also be searched in any minor lines of the message. The variable text can be used to exclude matches by preceding it with a minus (-) sign.
 
+The variable text between the `{}` delimiters can be up to 42 characters long. If the variable text exceeds this limit, the trigger entry is skipped.
+
+:::note
+For WTOR (Write-To-Operator with Reply) messages, the reply ID number at the beginning of the message is automatically excluded before matching. The **Msg Off** value should be set relative to the message text that follows the reply number, not relative to the reply number itself.
+:::
+
 Just as with datasets, message triggers can have generations, System-id and creating job criteria. The only substantial difference between the DSN table and the WTO table is the Offset and Length requirements for the FIXED portion of the message key and the ability to "scan" for text content.
 
 WTO Table Administration
