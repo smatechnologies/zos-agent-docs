@@ -265,6 +265,7 @@ You must provide the following SMF environment for the z/OS LSAM.
 
 - For dataset resource monitoring, ensure that the following SMF Types are being recorded:
   - Type 14 & 15 Records for non-VSAM datasets.
+  - Type 17 records to detect dataset scratch (delete) operations. Type 17 recording is optional and only required if you plan to use the SCR (scratch) trigger condition. Many installations choose not to record Type 17 due to the high volume of records generated.
   - Type 64 records for VSAM datasets.
   - Type 61 and 65 records to detect catalog actions.
 - Exits IEFU83, IEFU84, IEFUSI, and IEFUJV must be active for the batch (default or JESx) and STC subsystems; and IEFU83 must be active for the TSO subsystem.
@@ -292,11 +293,11 @@ STATUS (010000)                 /* WRITE SMF STATS AFTER 1 HOUR    */
 JWT (0400)                      /* 522 AFTER 30 MINUTES            */ 
 SID (SYS1) 
 LISTDSN                         /* LIST DATA SET STATUS AT IPL     */ 
-SYS (NOTYPE (16:19,66:69) , EXITS (IEFU83, IEFU84, IEFUJV, IEFUSI),
+SYS (NOTYPE (16,18:19,66:69) , EXITS (IEFU83, IEFU84, IEFUJV, IEFUSI),
     NOINTERVAL, NODETAIL)
 ```
 
-The above example shows type 61.64, 65, 30, 14 and 15 records being recorded. The type 14 and 15 SMF records can become voluminous and many shops do not wish to record them on a daily basis due to the impact on SMF Data Set (MAN1, MAN2, and so forth) capacities. Thus, you may request that XPS390 not allow the writing of these records to the SMF data sets. Use the SMF15= and SMF64= options in XPSPRMnn to control whether or not these SMF records are actually written to the SMF data sets.
+The above example shows type 14, 15, 17, 30, 61, 64, and 65 records being recorded. The type 14 and 15 SMF records can become voluminous and many shops do not wish to record them on a daily basis due to the impact on SMF Data Set (MAN1, MAN2, and so forth) capacities. Thus, you may request that XPS390 not allow the writing of these records to the SMF data sets. Use the SMF15= and SMF64= options in XPSPRMnn to control whether or not these SMF records are actually written to the SMF data sets.
 
 The IKJTSOxx Parmlib member must be updated to reflect that the XPSPAUTH program is an Authorized TSO Command.  Optionally, add the XPSCOMM program so it can be called as a TSO command.
 

@@ -86,6 +86,25 @@ The tables in OpCon/xps for z/OS are Sysplex Global. In other words, all systems
 
 DSN table triggering allows specification of exact dataset names or name masks with wild cards.  A '%' will match any single character in the dataset name at that position.  A trailing asterisk (*) will match any remaining characters in the dataset name.  A dataset name ending in **G0000V00** will match any member of a generation data group (GDG) that matches the preceding mask or name.
 
+The following trigger conditions are available:
+
+| Condition | Description |
+|-----------|-------------|
+| CRE | Triggers when a new dataset is created (DISP=NEW). |
+| UPD | Triggers when an existing dataset is updated (DISP=OLD or MOD). Does not trigger for newly created datasets. |
+| DEL | Triggers when a dataset is deleted (DISP=DELETE) or scratched. |
+| SCR | Triggers when a dataset is scratched (Type 17 SMF record). |
+| REF | Triggers on any reference to the dataset (open for input or output). |
+| CAT | Triggers when a dataset is cataloged (Type 61 SMF record). |
+| UNC | Triggers when a dataset is uncataloged (Type 65 SMF record). |
+
+:::note
+The following dataset activity is excluded from trigger processing:
+- Datasets accessed by an abending task are not evaluated for triggers.
+- Temporary datasets, VIO (Virtual I/O) datasets, and end-of-volume (EOV) records are ignored.
+- VSAM dataset triggers (Type 64) only fire when the dataset is closed, not when it is opened. A VSAM dataset is considered "updated" only if records were added, deleted, or changed during the access.
+:::
+
 DSN Table View
 
 ```
