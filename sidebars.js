@@ -30,7 +30,8 @@ module.exports = {
         'advanced-features/xpswtor',
         'advanced-features/xprlist',
         'advanced-features/restarting-jobs',
-      ], 
+        'advanced-features/xpuser01',
+      ],
     },
     'machine-messages',
     {
