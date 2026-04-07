@@ -1,6 +1,6 @@
-# XPUSER01 JCL Streaming Exit
+# XPUSER01 JCL Submit Exit
 
-XPUSER01 is a user-written exit that is called for every JCL record during job submission. It allows you to inspect, modify, insert, or cancel JCL before it reaches the z/OS internal reader.
+XPUSER01 is a user-written exit that is called for every JCL record during job submission. It allows you to inspect, modify, insert, or cancel JCL records before they reach the z/OS internal reader.
 
 The exit is optional. If the XPUSER01 load module is not found in the LSAM STEPLIB or LINKLIST, submission proceeds normally with no overhead.
 
