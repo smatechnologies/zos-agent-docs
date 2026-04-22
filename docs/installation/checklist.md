@@ -67,9 +67,9 @@ DATE:
 5. **SECURITY DEFINITIONS**:
     1. ____ LSAM task (e.g., OPCON01) must be an authorized "Started Task" with permission to write to OPCON files and read from production (e.g., JCL libraries, SYSEXEC libraries, etc.). Review OPCONxx Proc in the product INSTLIB for file access requirements.
     2. ____ The XPSPLEX Task must be in an authorized "Started Task" class.
-    3. ____ Batch job USERIDs must be defined to the LSAM ID with submit permissions. Refer to [Security setup](customization.md#Security).
-    4. ____ Ensure that the LSAM has surrogate submission authority for the IVPJOBnn jobs in INSTLIB. Refer to [Security setup](customization.md#Security).
-    5. ____ Check that the LSAM has an OMVS UID Assigned. Refer to [Security setup](customization.md#Security).
+    3. ____ Batch job USERIDs must be defined to the LSAM ID with submit permissions. Refer to [Security setup](../customization.md#security-setup).
+    4. ____ Ensure that the LSAM has surrogate submission authority for the IVPJOBnn jobs in INSTLIB. Refer to [Security setup](../customization.md#security-setup).
+    5. ____ Check that the LSAM has an OMVS UID Assigned. Refer to [Security setup](../customization.md#security-setup).
 6. **SMF PARAMETERS**:
     1. ____ For dataset resource monitoring, ensure that the
         following SMF Types are being recorded:
@@ -92,4 +92,4 @@ DATE:
     2. ____ The SMAFT programs are compiled Rexx, and require either the IBM Rexx Library for z/OS or the IBM Rexx Alternate Library for z/OS. If necessary, the alternate library can be installed from the files obtained from IBM at:
     3. ____ [http://www-1.ibm.com/support/docview.wss?rs=960&uid=swg24006107](http://www-1.ibm.com/support/docview.wss?rs=960&uid=swg24006107), or from MAKEALT_ZOS.ZIP, which should have been provided with the z/OS LSAM installation files.
 10. **IMPORT IVP SCHEDULE**:
-    1. Import IVPMVS1 schedule using ImPex.exe - for methodology, refer to [Importing IVP Schedule Job Definitions](verifying.md#Importin).
+    1. Import IVPMVS1 schedule using ImPex.exe - for methodology, refer to [Importing IVP Schedule Job Definitions](verifying.md#importing-ivp-schedule-job-definitions).
