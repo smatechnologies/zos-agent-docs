@@ -1,5 +1,7 @@
 # Restarting External Jobs through OpCon
 
+A direct restart of a Tracked or Queued job only re-reports the prior completion status. To enable a real restart from OpCon, convert the job type to **Batch** and import its JCL using the procedure below.
+
 Some features of OpCon automated restarts are limited when jobs are restarted by external submission:
 
 - GDG regression option "Absolute" will be converted to "Catalogue Resync"
