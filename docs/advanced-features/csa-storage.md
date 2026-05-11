@@ -1,6 +1,20 @@
-# CSA Storage Allocation
+---
+sidebar_label: 'CSA storage'
+title: CSA storage allocation
+description: "Reference for the z/OS Agent's CSA, ECSA, and ESQA storage allocations, including the formulas used to size each tracking queue."
+tags:
+  - Reference
+  - System Administrator
+  - Agents
+---
 
-We allocate enough storage in fixed ESQA to hold the SMF exits. Less than 100 KB is used for all resident modules.
+# CSA storage allocation
+
+## What is it?
+
+A reference for the storage the z/OS Agent reserves in CSA, ECSA, and ESQA. Use these values when sizing the system or when interpreting storage messages reported by the agent.
+
+The agent allocates enough storage in fixed ESQA to hold the SMF exits. Less than 100 KB is used for all resident modules.
 
 ECSA usage:
 
@@ -9,7 +23,7 @@ ECSA usage:
 - UCB list - 256 bytes
 - Tracking queues - depends on parameter values
 
-The tracking queues are allocated according to the PROCESS value in XPSPRMxx, unless they are overridden by the SETQUES parameter (JOB=jjj,MSG=mmm,DSN=ddd,WTO=mmm,EVT=eee). The values for each queue are the largest of the SETQUES, the default and the value calculated from the PROCESS parameter.
+The tracking queues are allocated according to the PROCESS value in XPSPRMxx, unless they are overridden by the SETQUES parameter (JOB=jjj,MSG=mmm,DSN=ddd,WTO=mmm,EVT=eee). The values for each queue are the largest of the SETQUES, the default, and the value calculated from the PROCESS parameter.
 
 - JOBQ - 16+1024*(jjj+1)
 - JOBQ index - jjj

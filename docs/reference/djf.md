@@ -1,4 +1,16 @@
+---
+sidebar_label: 'Dynamic JCL Facility'
+title: Dynamic JCL Facility (DJF)
+description: "Reference for the Dynamic JCL Facility (DJF), including variable substitution, conditional statements, and DJF statement syntax."
+tags:
+  - Reference
+  - Automation Engineer
+  - Agents
+---
+
 # Dynamic JCL Facility
+
+## What is it?
 
 The Dynamic JCL Facility (DJF) provides run-time tailoring for JCL. It supports variable substitution and conditional inclusion of JCL statements.
 
@@ -13,7 +25,7 @@ JCL variable tokens are normally defined in the job definition in OpCon, precede
 
 Variable length substitution will always take place if the JCLSCAN character is not '@'.
 
-### Built-in Variables
+### Built-in variables
 
 The following built-in variables are supported in DJF:
 
@@ -31,7 +43,7 @@ The following built-in variables are supported in DJF:
 |%FREQ|The OpCon frequency of the current job instance|
 |%RESTART|Set to TRUE if this is a step restart, otherwise FALSE|
 
-### New DJF Statements Supporting Variables
+### New DJF statements supporting variables
 
 #### --SET
 
@@ -80,7 +92,7 @@ The --SET statement has three forms:
         -   --GET var=@@$SCHEDULE DATE (+1d)@@
         -   --GET var=\#\#$SCHEDULE DATE (+1d)\#\#
 
-### New DJF Statements for Conditional JCL
+### New DJF statements for conditional JCL
 
 DJF supports IF/ELSE/ENDIF processing to include or exclude blocks of
 JCL based on logical tests.
@@ -121,7 +133,7 @@ JCL based on logical tests.
     -   If GOTO is not active, the statement is skipped.
     -   Variable substitution is *not* performed on labels.
 
-### Other DJF Statements
+### Other DJF statements
 
 These statements do not directly affect the JCL that is submitted.
 
@@ -176,8 +188,6 @@ These statements do not directly affect the JCL that is submitted.
         -   Optional.
         -   If type is **D**, then any include lines beginning with
             "//" will be skipped.
-
-:::
 
  
 

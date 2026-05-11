@@ -1,12 +1,24 @@
-# XPUSER01 JCL Submit Exit
+---
+sidebar_label: 'XPUSER01 submit exit'
+title: XPUSER01 JCL submit exit
+description: "Reference for the XPUSER01 user-written exit that the z/OS Agent calls for every JCL record during job submission."
+tags:
+  - Reference
+  - System Administrator
+  - Agents
+---
 
-XPUSER01 is a user-written exit that is called for every JCL record during job submission. It allows you to inspect, modify, insert, or cancel JCL records before they reach the z/OS internal reader.
+# XPUSER01 JCL submit exit
 
-The exit is optional. If the XPUSER01 load module is not found in the LSAM STEPLIB or LINKLIST, submission proceeds normally with no overhead.
+## What is it?
 
-## When the Exit Is Called
+XPUSER01 is a user-written exit that the z/OS Agent calls for every JCL record during job submission. It lets you inspect, modify, insert, or cancel JCL records before they reach the z/OS internal reader.
 
-During job submission, the LSAM reads JCL from the source library and streams it to the internal reader one record at a time. For each 80-byte JCL record, the LSAM calls XPUSER01 (if present) before writing the record. This gives the exit a chance to:
+The exit is optional. If the XPUSER01 load module is not found in the agent STEPLIB or LINKLIST, submission proceeds normally with no overhead.
+
+## When the exit is called
+
+During job submission, the agent reads JCL from the source library and streams it to the internal reader one record at a time. For each 80-byte JCL record, the agent calls XPUSER01 (if present) before writing the record. This gives the exit a chance to:
 
 - Examine the JCL record and the job's scheduling metadata
 - Modify the JCL record in place
@@ -15,7 +27,7 @@ During job submission, the LSAM reads JCL from the source library and streams it
 
 The exit is loaded once at the start of submission and deleted when submission completes or is cancelled.
 
-## Entry Conventions
+## Entry conventions
 
 | Register | Contents |
 |----------|----------|
@@ -24,7 +36,7 @@ The exit is loaded once at the start of submission and deleted when submission c
 | R14 | Return address |
 | R15 | Entry point address |
 
-### Parameter List (addressed by R1)
+### Parameter list (addressed by R1)
 
 | Offset | Length | Contents |
 |--------|--------|----------|
@@ -32,27 +44,27 @@ The exit is loaded once at the start of submission and deleted when submission c
 | +4 | 4 | Address of a copy of the XPJOBQ tracking record for the job being submitted. Mapped by the `@XPJOBQ` DSECT. |
 
 :::note
-The XPJOBQ record passed to the exit is a copy. Changes to it are not reflected back to the LSAM.
+The XPJOBQ record passed to the exit is a copy. Changes to it are not reflected back to the agent.
 :::
 
-## Return Codes
+## Return codes
 
 Set the return code in R15 before returning.
 
 | RC | Action |
 |----|--------|
 | 0 | **Continue** — The original JCL record is written to the internal reader unchanged. |
-| 4 | **Use altered buffer** — The exit has modified the 80-byte JCL buffer in place. The LSAM writes the modified buffer instead of the original. |
+| 4 | **Use altered buffer** — The exit has modified the 80-byte JCL buffer in place. The agent writes the modified buffer instead of the original. |
 | 8 | **Insert record** — The original JCL record is written first, then the contents of the JCL buffer (as modified by the exit) are written as an additional record. Use this to insert JCL cards after the current record. |
-| 12 | **Cancel submission** — The LSAM aborts submission of this job. A `/*DEL` purge card is written to the internal reader. |
+| 12 | **Cancel submission** — The agent aborts submission of this job. A `/*DEL` purge card is written to the internal reader. |
 
-Any return code other than 0, 4, 8, or 12 is treated as an error. The LSAM issues message `XPS801E` and forces RC=12 (cancel).
+Any return code other than 0, 4, 8, or 12 is treated as an error. The agent issues message `XPS801E` and forces RC=12 (cancel).
 
 :::warning
 RC=12 writes a `/*DEL` card to the internal reader to purge the job. If the first JOB card has already been accepted by JES, the purge may not take effect and results can be unpredictable. If you need to guarantee the job fails after partial submission, insert an invalid JCL record (RC=8) instead of cancelling (RC=12).
 :::
 
-## Programming Considerations
+## Programming considerations
 
 ### Attributes
 
@@ -74,25 +86,25 @@ Use standard OS linkage conventions. Save the caller's registers on entry and re
 
 Use `BSM 0,R14` (not `BR R14`) to preserve the caller's addressing mode.
 
-### Error Recovery
+### Error recovery
 
-The LSAM establishes an ESTAE recovery environment before calling the exit. If the exit abends:
+The agent establishes an ESTAE recovery environment before calling the exit. If the exit abends:
 
-- The LSAM issues message `XPS801E - Abend in User Exit - Submission Aborted`
+- The agent issues message `XPS801E - Abend in User Exit - Submission Aborted`
 - The exit is deactivated for subsequent submissions
 - The current job submission is aborted
 
-### Resetting the Exit
+### Resetting the exit
 
 If the exit has been deactivated due to an abend, or if you have installed a new version, use the operator command:
 
-```
+```text
 F LSAM,REPUSER1
 ```
 
 This unloads the current copy and forces a fresh BLDL/LOAD on the next submission.
 
-## XPJOBQ Fields Available to the Exit
+## XPJOBQ fields available to the exit
 
 The second parameter points to a copy of the job's tracking record mapped by the `@XPJOBQ` DSECT. Key fields include:
 
@@ -130,7 +142,7 @@ The sample XPUSER01 in `hlevel.midlevel.INSTLIB` demonstrates a simple use case:
 Use WTO messages during development to trace which JCL records the exit sees. Remove or conditionalize WTO calls before production use to avoid flooding the console.
 :::
 
-## Related Messages
+## Related messages
 
 | Message | Description |
 |---------|-------------|

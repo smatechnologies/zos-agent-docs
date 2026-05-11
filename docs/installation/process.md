@@ -1,6 +1,20 @@
+---
+sidebar_label: 'Process'
+title: z/OS Agent installation process
+description: "Step-by-step installation procedure for the z/OS Agent, from extracting the XMIT file through running STAGE1 and STAGE2."
+tags:
+  - Procedural
+  - System Administrator
+  - Agents
+---
+
 # Installation process
 
-The z/OS LSAM environment is fairly simple and straightforward. The installation libraries are created and a logging data set is defined. Library creation is carried out by a set of JCL created by an ISPF dialogue.
+## What is it?
+
+The procedure for installing the z/OS Agent. You extract the installation file, build the staging JCL, run STAGE1 and STAGE2, and add production JCL and REXX libraries to the agent.
+
+The z/OS Agent environment is straightforward. The installation libraries are created and a logging data set is defined. Library creation is carried out by a set of JCL created by an ISPF dialogue.
 
 Once the z/OS libraries are functional, we need to provide security, SMF, and z/OS customization before testing XPS390:
 
@@ -14,6 +28,6 @@ Once the z/OS libraries are functional, we need to provide security, SMF, and z/
 8. Fill in the panel options and hit enter to create the STAGE1 job and customize the installation members.
 9. Review the job card and allocation parameters in STAGE1. Run the STAGE1 job to create and load the installation datasets.
 10. After STAGE1 runs successfully, run STAGE2 to link edit the agent programs.
-11. Add production JCL and REXX libraries to the LSAM JCL
+11. Add production JCL and REXX libraries to the agent JCL.
 
-To begin using the LSAM, refer to [Customization process](../customization).
+To begin using the agent, refer to [Customization process](../customization).

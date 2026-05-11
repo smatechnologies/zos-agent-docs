@@ -1,24 +1,25 @@
 module.exports = {
   mySidebar: [
-    'getting-started',
+    'overview',
     'release-notes',
     {
-      type: 'category', 
+      type: 'category',
       label: 'Installation',
-      collapsed: false,
+      collapsed: true,
+      link: { type: 'doc', id: 'installation/overview' },
       items: [
-        'installation/introduction',
         'installation/checklist',
         'installation/process',
         'installation/verifying',
-      ], 
+      ],
     },
     'customization',
     'operations',
     {
-      type: 'category', 
+      type: 'category',
       label: 'Advanced features',
-      collapsed: false,
+      collapsed: true,
+      link: { type: 'doc', id: 'advanced-features/overview' },
       items: [
         'advanced-features/csa-storage',
         'advanced-features/xpscomm',
@@ -35,9 +36,10 @@ module.exports = {
     },
     'machine-messages',
     {
-      type: 'category', 
+      type: 'category',
       label: 'Reference',
       collapsed: true,
+      link: { type: 'doc', id: 'reference/overview' },
       items: [
         'reference/saf-resources',
         'reference/multiple-lsams',
