@@ -1,4 +1,18 @@
-# Translation Tables in SMAFT Server and Agent
+---
+sidebar_label: 'Translation tables'
+title: Translation tables in SMAFT server and agent
+description: "How the SMAFT server and agent locate translation tables on z/OS, including the search order and the TCPXLBIN override."
+tags:
+  - Reference
+  - System Administrator
+  - Agents
+---
+
+# Translation tables in SMAFT server and agent
+
+## What is it?
+
+How the SMAFT server and agent determine which translate dataset to use for character-set conversion on z/OS. The agent searches a fixed set of dataset names in order and stops at the first one it finds.
 
 The translate tables are referenced to determine the translate data sets to be used.
 

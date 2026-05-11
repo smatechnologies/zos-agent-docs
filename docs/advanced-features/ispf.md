@@ -1,4 +1,19 @@
+---
+sidebar_label: 'ISPF Automation Table'
+title: Using the ISPF Automation Table Administrator
+description: "How to use the ISPF Automation Table Administrator to maintain DSN trigger tables, WTO trigger tables, and active event definitions."
+tags:
+  - Procedural
+  - System Administrator
+  - Automation Engineer
+  - Agents
+---
+
 # Using the ISPF Automation Table Administrator
+
+## What is it?
+
+The ISPF Automation Table Administrator is an ISPF interface for maintaining the z/OS Agent's automation tables. From it, you can maintain DSN triggers, WTO (console message) triggers, and active event definitions.
 
 Three functions are supported by the ISPF Administrator:
 
@@ -8,9 +23,9 @@ Three functions are supported by the ISPF Administrator:
 
 To display a given table, you may **S**)elect any entry on the main menu. To add an entry to a table without going to a table display screen, use the **A**)dd line command.
 
-ISPF Table Administration and Selection
+ISPF table administration and selection:
 
-```
+```text
 ==================  OpCon/xps Automation Table Administration = 21.00.04 ======
      Command     =>                                                            
                                                                                
@@ -30,7 +45,7 @@ ISPF Table Administration and Selection
  ============================================================== XPS21.00 ======
 ```
 
-### Primary commands available on the main menu:
+### Primary commands available on the main menu
 - **XPSID *x*** 
     - Switches to XPSID=x and returns to the main menu
 - **FIND** commands
@@ -40,11 +55,11 @@ ISPF Table Administration and Selection
 - **MSGQ** 
     - Displays unsent entries in the "messages to SAM" queue
 
-### Line commands available on the main menu:
+### Line commands available on the main menu
 - **S** - Selects the table for display
 - **A** - Opens a dialogue to add a new entry without opening the table first
 
-### Primary Commands available on table displays:
+### Primary commands available on table displays
 - **XPSID *x*** 
     - Switches to XPSID=x and returns to the main menu
 - **FIND** commands
@@ -54,7 +69,7 @@ ISPF Table Administration and Selection
 - **-** (minus)
     - Switches table displays to short format
 
-### Line commands on table displays:
+### Line commands on table displays
 - **S** - Opens the selected entry for display or edit
 - **E** - Edit the event linked from the selected event
     - If no event is linked from the entry, same as **S**
@@ -82,7 +97,7 @@ The **FIND**, **FAN** and **FAT** primary commands are available to limit the ta
 The tables in OpCon/xps for z/OS are Sysplex Global. In other words, all systems in the SYSPLEX mirror all trigger entries, but triggers may be restricted by Machine Id.  Setting MachineID to ANY allows the trigger to occur on any system in the SYSPLEX.
 :::
 
-## DSN Table Administration
+## DSN table administration
 
 DSN table triggering allows specification of exact dataset names or name masks with wild cards.  A '%' will match any single character in the dataset name at that position.  A trailing asterisk (*) will match any remaining characters in the dataset name.  A dataset name ending in **G0000V00** will match any member of a generation data group (GDG) that matches the preceding mask or name.
 
@@ -105,9 +120,9 @@ The following dataset activity is excluded from trigger processing:
 - VSAM dataset triggers (Type 64) only fire when the dataset is closed, not when it is opened. A VSAM dataset is considered "updated" only if records were added, deleted, or changed during the access.
 :::
 
-DSN Table View
+DSN table view:
 
-```
+```text
 ===========================  OpCon/xps DSN Table  =============================
 Command ==>                                                   Scroll ==> CSR
                                                                               
@@ -135,7 +150,7 @@ If an "ACTIVE" resource trigger is defined, the Event Key contains the event nam
 Altering a PASSIVE entry that is referenced by a scheduled job may invalidate the entry if the SAM schedule record for the referencing job(s) is not also altered to reflect the change. Each entry in the dataset table must have a unique combination of Resource name, Type, DSN Key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a file prerun on a job definition).
 :::
 
-## WTO Table Administration
+## WTO table administration
 
 WTO table (Console Message) triggering allows two keys per message: one FIXED and one VARIABLE. The **Msg Off** column represents the number of character positions (bytes) from the beginning of the message text to the start of the FIXED key. The **Msg Len** column represents the length of the FIXED key w/spaces. ALL WTO triggers MUST have a FIXED key. The variable portion is optional. A variable key is defined within brackets {}. Once the fixed key is located in a record, a variable key is scanned for AFTER the end of the fixed key. If MLWTO=Y is set in XPSPARMS, then the variable key will also be searched in any minor lines of the message. The variable text can be used to exclude matches by preceding it with a minus (-) sign.
 
@@ -147,9 +162,9 @@ For WTOR (Write-To-Operator with Reply) messages, the reply ID number at the beg
 
 Just as with datasets, message triggers can have generations, System-id and creating job criteria. The only substantial difference between the DSN table and the WTO table is the Offset and Length requirements for the FIXED portion of the message key and the ability to "scan" for text content.
 
-WTO Table Administration
+WTO table administration:
 
-```
+```text
 ===========================  OpCon/xps WTO Queues  ============================
 Command ==>                                                   Scroll ==> PAGE
                                                                               
@@ -184,13 +199,13 @@ Command ==>                                                   Scroll ==> PAGE
 >Each entry in the message table must have a unique combination of Resource name, Message key, generation count, jobname, and system. Avoid creating an ACTIVE entry that duplicates a PASSIVE entry (i.e., a message prerun on a job definition).
 :::
 
-### Automated Response Feature
+### Automated response feature
 
-The WTO Table and ISPF interface can be used to set up automated WTOR replies. This feature is LSAM resident and independent of the SAM or scheduling functions. The following example shows the syntax to be used in the Event Token field (Plus "+" Sign) to denote WTOR message reply text.
+The WTO Table and ISPF interface can be used to set up automated WTOR replies. This feature is agent resident and independent of the SAM or scheduling functions. The following example shows the syntax to be used in the Event Token field (Plus "+" Sign) to denote WTOR message reply text.
 
-Automated Response Entry in WTO Table
+Automated response entry in WTO table:
 
-```
+```text
 ┌────────────────────────────────────────────────────────────────┐
 │                                                  Enter Request │
 │          OpCon ISPF - WTO Message Table Update                 │
@@ -217,13 +232,13 @@ The above example causes a response to the message below with an **"R** **70,Y"*
 
     *70 XPSTIMER - Test WTOR - Enter any Character.
 
-### Automated Command Feature
+### Automated command feature
 
-The WTO Table and ISPF interface can be used to set up automatic commands in response to messages. This feature is LSAM resident and independent of the SAM or scheduling functions. Automatic commands are defined by beginning the Event token field with a hyphen (-). 
+The WTO Table and ISPF interface can be used to set up automatic commands in response to messages. This feature is agent resident and independent of the SAM or scheduling functions. Automatic commands are defined by beginning the Event token field with a hyphen (-). 
 
 Replies or commands can be up to 27 characters long.
 
-## Special Event Token Values
+## Special event token values
 
 The following special values have defined actions and will not use the Event table.
 
@@ -243,15 +258,15 @@ The following special values have defined actions and will not use the Event tab
   - Datasets: DSNx|DSNAME
 - $JOBTRIG - If the action was triggered by an OpCon job, write the trigger information to the **Trigger Messages** section of LSAM Feedback. This makes the text available for OpCon job event triggering — the trigger message can be matched by string criteria in the job definition's Events tab, allowing the z/OS message to drive OpCon job-level events.
   - The formats are the same as for $JOBLOG
-  - This can be used with XPSWTO to create very flexible triggers, invoked from the context of the running job. A job step issues a WTO via XPSWTO, the LSAM's WTO trigger table matches it with a $JOBTRIG action, and the message text appears in LSAM Feedback as a Trigger Message that OpCon can act on.
+  - This can be used with XPSWTO to create very flexible triggers, invoked from the context of the running job. A job step issues a WTO via XPSWTO, the agent's WTO trigger table matches it with a $JOBTRIG action, and the message text appears in LSAM Feedback as a Trigger Message that OpCon can act on.
 
-## Event Table Administration
+## Event table administration
 
 Created to support ACTIVE triggers, the Event table simplifies the definition of common MSGIN commands. Events in the table can be used from DSN or WTO triggers, step control conditions, or XPSCOMM.
 
-Event Trigger Table
+Event trigger table:
 
-```
+```text
 ===========================  OpCon/xps Event Table  ===========================
 Command ==>                                                   Scroll ==> PAGE
                                                                               
@@ -275,9 +290,9 @@ Both DSN and WTO resources can be defined as ACTIVE triggers just by defining an
 
 The Event Table is simply an ISPF front end to define MSGIN events. For more information, refer to [External Events](https://help.smatechnologies.com/opcon/core/latest/OpCon-Events/Defining-Events.md#External) in the **OpCon Events** online help.
 
-Event Table Addition and Alteration
+Event table addition and alteration:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │       OpCon ISPF - Active Action Trigger Definition             │
 │                                                                 │
@@ -310,13 +325,13 @@ The "Security" field identifies a z/OS userid to use on the triggered event, in 
 >If an event with a userid override is triggered with **$EVENT=*event*** from XPSCOMM, the override will be ignored unless the triggering user is authorized.  The user must have READ permission to either the ***override*.SUBMIT** or ***override*.OPCON** profile in the SURROGATE SAF class.  
 >>For backward compatibility, READ access is assumed for ***override*.OPCON** if the profile is not defined.
  
-Event errors are recorded in the SAM Log on the SAM Server. No feedback for event processing is returned to the LSAM.
+Event errors are recorded in the SAM Log on the SAM Server. No feedback for event processing is returned to the agent.
 
 :::note
 The Schedule and Frequency names in the Event table are each limited to 12 characters.
 :::
 
-#### Special Trigger Handling
+#### Special trigger handling
 
 When the events are triggered from the DSN or WTO tables, some special
 values are allowed:
@@ -339,12 +354,12 @@ values are allowed:
 Commas in the WTO message text will be translated to spaces in the event text. 
 :::
 
-### Triggering Events
+### Triggering events
 
 In the Event table, or on an entry in the DSN or WTO tables with a linked event token, the **T** (trigger) line command can be used to send the defined event to OpCon.
-A pop-up dialogue allows the user to review or edit the MSGIN event and choose the destination LSAM.
+A pop-up dialogue allows the user to review or edit the MSGIN event and choose the destination agent.
 
-```
+```text
 ┌────────────────────── ISPF Settings ──────────────────────┐
 │          OpCon ISPF - Confirm Event trigger               │
 │                                                           │
@@ -366,7 +381,7 @@ The XPSID field and the event text can be changed before sending the event.
 Erasing the event text will restore it to the original value.
 The event text field can be scrolled left and right with the **F10** and **F11** keys.
 
-### Securing Automation table updates.
+### Securing automation table updates
 
 It is possible to secure the Automation table updates through SAF definitions.
 Automation table updates require UPDATE permission to the SAF profile **OPCON.XPS$*x*.XPSPF** profile in the FACILITY class, where ‘x’ is the XPSID of the
@@ -374,10 +389,10 @@ Automation table updates require UPDATE permission to the SAF profile **OPCON.XP
 
 >Note: For backward compatibility, if no profile is defined for the resource, the user will be allowed to update the tables.
  
-**RACF Examples**
+**RACF examples**
 
 - To prevent ordinary users from updating the automation tables for the
- LSAM with XPSID=S, but allow members of group SCHED:
+ agent with XPSID=S, but allow members of group SCHED:
 
       RDEFINE FACILITY OPCON.XPS$S.XPSPF UACC(READ)
       PERMIT OPCON.XPS$S.XPSPF CLASS(FACILITY) ID(SCHED) ACC(UPDATE)

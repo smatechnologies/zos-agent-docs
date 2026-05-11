@@ -1,6 +1,19 @@
-# SAF Resource Reference
+---
+sidebar_label: 'SAF resources'
+title: SAF resource reference
+description: "Consolidated reference for the SAF resource checks the z/OS Agent performs, including SURROGAT, FACILITY, DATASET classes, and EXTRACT calls."
+tags:
+  - Reference
+  - System Administrator
+  - Compliance Team
+  - Agents
+---
 
-The z/OS LSAM uses the System Authorization Facility (SAF) to enforce security in several areas. This page consolidates all SAF resource checks performed by the LSAM.
+# SAF resource reference
+
+## What is it?
+
+The z/OS Agent uses the System Authorization Facility (SAF) to enforce security in several areas. This page consolidates all SAF resource checks the agent performs.
 
 ## Summary
 
@@ -12,15 +25,15 @@ The z/OS LSAM uses the System Authorization Facility (SAF) to enforce security i
 | SURROGAT | *userid*`.SUBMIT` or *userid*`.OPCON` | READ | XPSCOMM userid override for event submission |
 | *(EXTRACT)* | CSDATA fields `XPSUSER` / `XPSTOKEN` | N/A | z/OS-to-OpCon userid and token mapping |
 
-## SURROGAT Class — Job Submission
+## SURROGAT class — job submission
 
-The LSAM submits batch jobs on behalf of z/OS users. SAF SURROGAT class authorization is required so the LSAM started task can submit jobs with another user's identity on the job card.
+The agent submits batch jobs on behalf of z/OS users. SAF SURROGAT class authorization is required so the agent started task can submit jobs with another user's identity on the job card.
 
-This must be defined for each execution userid that the LSAM will submit jobs for.
+This must be defined for each execution userid that the agent will submit jobs for.
 
-See [Security Setup](../customization.md#security-setup) for setup instructions and example RACF commands.
+See [Security setup](../customization.md#security-setup) for setup instructions and example RACF commands.
 
-## FACILITY Class — ISPF Automation Table Updates
+## FACILITY class — ISPF automation table updates
 
 Automation table updates through the ISPF interface (XPSPF001) can be secured through the FACILITY class.
 
@@ -30,19 +43,19 @@ Automation table updates through the ISPF interface (XPSPF001) can be secured th
 
 Generic and discrete profiles are supported.
 
-See [ISPF Table Security](../advanced-features/ispf.md) for setup examples.
+See [ISPF table security](../advanced-features/ispf.md) for setup examples.
 
-## DATASET Class — JCL Save Authorization
+## DATASET class — JCL save authorization
 
-When an OpCon user saves JCL to a mainframe dataset through the JCL editor, the LSAM maps the OpCon userid to a z/OS userid and checks that user's authority to the target dataset before allowing the save.
+When an OpCon user saves JCL to a mainframe dataset through the JCL editor, the agent maps the OpCon userid to a z/OS userid and checks that user's authority to the target dataset before allowing the save.
 
 **Access required:** Varies by operation (READ, UPDATE, CONTROL, or ALTER).
 
-The userid mapping process is described in [OpCon Userid in the z/OS LSAM](../customization.md#opcon-userid-in-the-zos-lsam).
+The userid mapping process is described in [OpCon userid in the z/OS Agent](../customization.md#opcon-userid-in-the-zos-agent).
 
-## SURROGAT Class — XPSCOMM Event Userid Override
+## SURROGAT class — XPSCOMM event userid override
 
-When a `$EVENT=` reference in XPSCOMM resolves to an event with a Security ID override, the LSAM checks SURROGAT class authorization. The calling user must have READ access to one of:
+When a `$EVENT=` reference in XPSCOMM resolves to an event with a Security ID override, the agent checks SURROGAT class authorization. The calling user must have READ access to one of:
 
 - *override-userid*`.SUBMIT` in the SURROGAT class
 - *override-userid*`.OPCON` in the SURROGAT class
@@ -51,11 +64,11 @@ If authorization fails, message XPS051W is issued and the override is ignored �
 
 For backward compatibility, READ access is assumed for *override-userid*`.OPCON` if the profile is not defined.
 
-See [XPSCOMM Security](../advanced-features/xpscomm.md#security) for details.
+See [XPSCOMM security](../advanced-features/xpscomm.md#security) for details.
 
-## SAF EXTRACT — OpCon Userid and Token Mapping
+## SAF EXTRACT — OpCon userid and token mapping
 
-The LSAM can extract custom fields from a user's SAF profile to map z/OS userids to OpCon event userids and tokens.
+The agent can extract custom fields from a user's SAF profile to map z/OS userids to OpCon event userids and tokens.
 
 | Field | Default Name | Max Length | Purpose |
 |---|---|---|---|
@@ -64,4 +77,4 @@ The LSAM can extract custom fields from a user's SAF profile to map z/OS userids
 
 These values are extracted using a standard SAF EXTRACT call against the CSDATA (custom segment data) section of the user profile.
 
-See [Mapping z/OS Users to OpCon User and Token Definitions](../advanced-features/mapping.md) for custom field definitions and setup instructions.
+See [Mapping z/OS users to OpCon user and token definitions](../advanced-features/mapping.md) for custom field definitions and setup instructions.

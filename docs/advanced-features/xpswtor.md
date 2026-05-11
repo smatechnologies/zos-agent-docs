@@ -1,6 +1,19 @@
+---
+sidebar_label: 'XPSWTOR'
+title: Using XPSWTOR
+description: "How to use the XPSWTOR utility to issue a WTOR (Write To Operator with Reply) and use the operator's response as a return code in JCL."
+tags:
+  - Procedural
+  - Automation Engineer
+  - Operations Staff
+  - Agents
+---
+
 # Using XPSWTOR
 
-The XPSWTOR utility issues a WTOR (Write To Operator with Reply) and waits for an operator response. The reply is validated against a list of acceptable characters, and the character's position in the list determines the return code. This allows operator-controlled decision points in JCL via COND= or IF/THEN/ELSE testing.
+## What is it?
+
+XPSWTOR is a utility that issues a WTOR (Write To Operator with Reply) and waits for an operator response. The reply is validated against a list of acceptable characters, and the character's position in the list determines the return code. Use XPSWTOR to add operator-controlled decision points in JCL via COND= or IF/THEN/ELSE testing.
 
 ## Invocation
 
@@ -13,7 +26,7 @@ If no PARM is provided, XPSWTOR issues the default message:
 
     *nn XPSWTOR - Reply U to continue or N to stop
 
-## How It Works
+## How it works
 
 1. XPSWTOR issues the PARM text as a WTOR with ROUTCDE=14.
 2. The operator sees the message and must reply with a single character.
@@ -21,7 +34,7 @@ If no PARM is provided, XPSWTOR issues the default message:
 4. If the reply is not in the list, the message `Invalid Reply` is issued and the WTOR is redisplayed.
 5. Once a valid reply is entered, XPSWTOR exits with a return code equal to the 0-based position of the reply character in the list.
 
-## Default Reply List
+## Default reply list
 
 The default acceptable replies are `U`, `N`, `Y`, producing the following return codes:
 
@@ -35,7 +48,7 @@ The default acceptable replies are `U`, `N`, `Y`, producing the following return
 
 - No special authorization is required.
 - An operator (or automation product) must be available to reply to the WTOR.
-- If the LSAM has a WTO trigger with an auto-reply matching the XPSWTOR message, the reply can be automated. See [Automated Response Feature](ispf.md#automated-response-feature) for details on setting up auto-replies.
+- If the agent has a WTO trigger with an auto-reply matching the XPSWTOR message, the reply can be automated. See [Automated response feature](ispf.md#automated-response-feature) for details on setting up auto-replies.
 
 :::tip Example
 
@@ -47,12 +60,12 @@ Use XPSWTOR to let an operator decide whether to continue processing:
 //REBUILD  EXEC PGM=MYPROG,COND=(1,LE,ASK)
 ```
 
-In this example, if the operator replies `U` (RC=0) or `N` (RC=1), the REBUILD step is skipped because `1 LE 0` is false but `1 LE 1` is true. Only a reply of `Y` (RC=2) allows REBUILD to execute.
+In this example, if the operator replies `U` (RC=0) or `N` (RC=1), the REBUILD step is skipped because `1 LE 0` is false but `1 LE 1` is true. Only a reply of `Y` (RC=2) allows REBUILD to run.
 
 :::
 
 :::tip Example
 
-Automate the reply using a WTO trigger with the auto-reply feature. Define a WTO trigger entry where the message key matches `XPSWTOR` and the action is set to `+Y`. When XPSWTOR issues its WTOR, the LSAM will automatically reply `Y`, resulting in RC=2.
+Automate the reply using a WTO trigger with the auto-reply feature. Define a WTO trigger entry where the message key matches `XPSWTOR` and the action is set to `+Y`. When XPSWTOR issues its WTOR, the agent will automatically reply `Y`, resulting in RC=2.
 
 :::

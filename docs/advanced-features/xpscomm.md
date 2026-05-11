@@ -1,10 +1,22 @@
-# Using the XPSCOMM Interface Routine
+---
+sidebar_label: 'XPSCOMM'
+title: Using the XPSCOMM interface routine
+description: "How to use the XPSCOMM utility to send MSGIN requests to OpCon from JCL, TSO, or REXX, including PARM input, named events, security, and return codes."
+tags:
+  - Procedural
+  - Automation Engineer
+  - Agents
+---
 
-The XPSCOMM routine is an OpCon/xps API interface to the MSGIN service available to all platform LSAMs. Via XPSCOMM you may add, release, reschedule, delete or mark complete, any OpCon/xps job on the Schedule server. You may also hold, release or start OpCon/xps jobs and schedules, set properties and thresholds, display console messages, and send notifications to event logs.
+# Using the XPSCOMM interface routine
 
-XPSCOMM may be executed via batch job, started task, internal called routine, TSO command or REXX procedure. The only requirement is that the LSAM must be active (XPCB must be initiated).
+## What is it?
 
-## PARM Input
+XPSCOMM is the OpCon API interface to the MSGIN service available to all platform agents. With XPSCOMM you can add, release, reschedule, delete, or mark complete any OpCon job on the schedule server. You can also hold, release, or start OpCon jobs and schedules, set properties and thresholds, display console messages, and send notifications to event logs.
+
+XPSCOMM can be run via batch job, started task, internal called routine, TSO command, or REXX procedure. The only requirement is that the agent must be active (XPCB must be initiated).
+
+## PARM input
 
 The PARM field of the execute statement can contain any valid MSGIN string, or `$EVENT=eventname` where eventname is an entry in the OpCon/xps ISPF Event Table.
 
@@ -15,9 +27,9 @@ The PARM field of the execute statement can contain any valid MSGIN string, or `
 
 In the above example, a sample job step executes a request to add a job named "IVPJOB17" to the schedule named "IVPMVS1" with frequency code "ONDEMAND".
 
-### Named Events
+### Named events
 
-The `$EVENT=` syntax looks up the named event in the LSAM's Event Table and builds the complete MSGIN string from the event definition:
+The `$EVENT=` syntax looks up the named event in the agent's Event Table and builds the complete MSGIN string from the event definition:
 
 ```jcl
 //STEP01   EXEC PGM=XPSCOMM,
@@ -35,12 +47,12 @@ An optional comma-delimited data value may follow the event name. If the event d
 The `$EVENT=` syntax is not supported for file input via the MSGIN DD.
 :::
 
-### Non-Event Text
+### Non-event text
 
 PARM values that do not start with `$` will be returned to OpCon/xps in one of two ways, depending on the job's status:
 
-- If the job is being executed by the same OpCon/xps instance, the string will be sent as a job status description for the job. Descriptions up to 4000 characters are supported when running authorized.
-- If the job is not being executed by the same OpCon/xps instance, the string will be displayed in the SAM log via a `$CONSOLE:DISPLAY` event.
+- If the job is being run by the same OpCon/xps instance, the string will be sent as a job status description for the job. Descriptions up to 4000 characters are supported when running authorized.
+- If the job is not being run by the same OpCon/xps instance, the string will be displayed in the SAM log via a `$CONSOLE:DISPLAY` event.
 
 :::tip Example
 ```jcl
@@ -53,7 +65,7 @@ PARM values that do not start with `$` will be returned to OpCon/xps in one of t
 Commas in non-event text are translated to pipes (`|`) to avoid conflict with MSGIN field delimiters.
 :::
 
-## MSGIN DD File Input
+## MSGIN DD file input
 
 If the PARM is omitted or empty, XPSCOMM will attempt to read the events from the MSGIN DD. This file may be instream data, a PDS member, or a sequential file. Both fixed and variable length records are supported.
 
@@ -73,11 +85,11 @@ Processing rules for the MSGIN file:
 - Leading and trailing sequence numbers (8-digit numeric fields) are automatically stripped from both fixed-length and variable-length records.
 - Trailing blanks are trimmed from each record.
 
-## Selecting the Target LSAM
+## Selecting the target agent
 
-In a multiple LSAM environment, the destination LSAM can be selected by:
+In a multiple agent environment, the destination agent can be selected by:
 
-### @x PARM Prefix
+### @x PARM prefix
 
 Prefix the PARM with `@x,` where *x* is the single-character XPSID. The remaining parms will be processed as if the `@x,` were not present.
 
@@ -86,26 +98,26 @@ Prefix the PARM with `@x,` where *x* is the single-character XPSID. The remainin
 // PARM='@A,$JOB:ADD,[[$NOW]],IVPMVS1,IVPJOB17,ONDEMAND'
 ```
 
-This directs the event to the LSAM instance identified by XPSID `A` (control block name `XPA`).
+This directs the event to the agent instance identified by XPSID `A` (control block name `XPA`).
 
-### XPS$x DD Statement
+### XPS$x DD statement
 
 Allocate a DD with the name `XPS$x` where *x* is the XPSID character. This is particularly useful when invoking XPSCOMM from TSO or REXX:
 
-```
+```text
 ALLOC DD(XPS$A) DUMMY
 CALL 'hlq.LINKLIB(XPSCOMM)' '$JOB:ADD,...'
 ```
 
 ### Default
 
-If neither method is specified, XPSCOMM uses the default LSAM instance located by the XPSFETCH routine.
+If neither method is specified, XPSCOMM uses the default agent instance located by the XPSFETCH routine.
 
-## TSO Invocation
+## TSO invocation
 
 XPSCOMM can also be called as a TSO command. The TSO command arguments will be treated as PARM input.
 
-```
+```text
 XPSCOMM $JOB:ADD,[[$NOW]],IVPMVS1,IVPJOB17,ONDEMAND
 ```
 
@@ -119,17 +131,17 @@ Security is provided by the source of the `USER=` on the job card or the securit
 
 See [Mapping z/OS users to OpCon user and token definitions](mapping.md) for details about defining OpCon userids and external event tokens for each user.
 
-### Authorized vs. Unauthorized Execution
+### Authorized vs. unauthorized run
 
 XPSCOMM operates in one of two modes depending on APF authorization:
 
-| Mode | Message Delivery | Message Length |
+| Mode | Message delivery | Message length |
 |------|-----------------|----------------|
 | **Authorized** (APF) | Writes directly to the ECSA message queue | No practical limit |
-| **Unauthorized** | Sends via WTO, which the LSAM intercepts | Maximum 117 characters |
+| **Unauthorized** | Sends via WTO, which the agent intercepts | Maximum 117 characters |
 
 
-### Event Table Security Overrides
+### Event table security overrides
 
 If a `$EVENT=` reference resolves to an event with a Security ID override, XPSCOMM enforces RACF SURROGAT class authorization. The calling user must have READ access to one of:
 
@@ -142,17 +154,17 @@ If authorization fails, message XPS051W is issued and the override is ignored â€
 
 ## OpCon MSGIN
 
-XPSCOMM and other functions in the z/OS LSAM (such as step condition code messaging) use what is known as the OpCon/xps "MSGIN" service. This service is available to all LSAM agents, regardless of platform. For more information, refer to [External Events](https://help.smatechnologies.com/opcon/core/latest/OpCon-Events/Defining-Events.md#External) in the **OpCon Events** online help.
+XPSCOMM and other functions in the z/OS Agent (such as step condition code messaging) use what is known as the OpCon/xps "MSGIN" service. This service is available to all LSAM agents, regardless of platform. For more information, refer to [External Events](https://help.smatechnologies.com/opcon/core/latest/OpCon-Events/Defining-Events.md#External) in the **OpCon Events** online help.
 
-The z/OS LSAM provides additional usability to the MSGIN service by allowing the definition of pre-defined MSGIN events in the ISPF Event Table.
+The z/OS Agent provides additional usability to the MSGIN service by allowing the definition of pre-defined MSGIN events in the ISPF Event Table.
 
-### Supported Event Types
+### Supported event types
 
 Any valid OpCon MSGIN event string may be passed to XPSCOMM. The supported event types and their syntax are:
 
-#### $JOB Events
+#### $JOB events
 
-```
+```text
 $JOB:ADD,schedule-date,schedule-name,job-name,frequency
 $JOB:DELETE,schedule-date,schedule-name,job-name
 $JOB:HOLD,schedule-date,schedule-name,job-name
@@ -165,50 +177,50 @@ $JOB:GOOD,schedule-date,schedule-name,job-name
 $JOB:BAD,schedule-date,schedule-name,job-name
 ```
 
-#### $SCHEDULE Events
+#### $SCHEDULE events
 
-```
+```text
 $SCHEDULE:BUILD,schedule-date,schedule-name
 $SCHEDULE:HOLD,schedule-date,schedule-name
 $SCHEDULE:RELEASE,schedule-date,schedule-name
 $SCHEDULE:START,schedule-date,schedule-name
 ```
 
-#### $MACHINE Events
+#### $MACHINE events
 
-```
+```text
 $MACHINE:STATUS,machine-id,U|D|LIMITED
 ```
 
-#### $PROPERTY Events
+#### $PROPERTY events
 
-```
+```text
 $PROPERTY:SET,property-name,property-value
 $PROPERTY:ADD,property-name,property-value
 $PROPERTY:DELETE,property-name
 ```
 
-#### $THRESHOLD Events
+#### $THRESHOLD events
 
-```
+```text
 $THRESHOLD:SET,threshold-name,threshold-value
 ```
 
-#### $CONSOLE Events
+#### $CONSOLE events
 
-```
+```text
 $CONSOLE:DISPLAY,message
 ```
 
-#### $NOTIFY Events
+#### $NOTIFY events
 
-```
+```text
 $NOTIFY:LOG,severity,event-number,message
 ```
 
 Where severity is `I` (Information), `W` (Warning), or `E` (Error), and event-number is a 5-digit number (00001-99999).
 
-### Schedule Date Values
+### Schedule date values
 
 The schedule-date field accepts:
 
@@ -222,7 +234,7 @@ The schedule-date field accepts:
 | *MM/DD/YYYY* | Explicit date |
 | *(blank)* | Equivalent to `CURRENT` |
 
-## Return Codes
+## Return codes
 
 | RC | Message | Description |
 |----|---------|-------------|

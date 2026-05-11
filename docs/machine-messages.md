@@ -1,16 +1,31 @@
 ---
 sidebar_label: 'Machine Messages'
+title: z/OS Agent machine messages
+description: "Reference for z/OS Agent machine messages, including syntax, IBM message types, and XPR390 and XPS390 message catalogs."
+tags:
+  - Reference
+  - Operations Staff
+  - System Administrator
+  - Agents
 ---
 
-# z/OS LSAM Machine Messages
+# z/OS Agent machine messages
 
-Certain conditions on the z/OS LSAM may prevent SAM from completing a task and a message is produced indicating the source or cause of the error. The SAM is designed so that errors or invalid resource conditions do not cause a total halt of schedule processing. After reporting the error, the SAM may retry processing and may again encounter the same error and report it.
+## What is it?
 
-To prevent the SAM from encountering the same error repeatedly, the job(s) involved may be placed "ON HOLD", or the SAM may be placed "ON HOLD", until the error is resolved. Some errors may be resolved without operator intervention, such as a job exclusion or inclusion that cannot be satisfied. When the proper condition is satisfied, the SAM is notified by XPS390 and this resolves the error. If a condition is assigned to a DEMAND run, there may be a long time before the condition is satisfied; the SAM encounters the error repeatedly until resolution. Some messages require operator analysis or resolution; others are informational only.
+Machine messages are diagnostic messages the z/OS Agent issues to indicate the source or cause of an error or condition. Use this reference to identify a message, understand its severity, and determine the appropriate response.
 
-## Message Syntax
+Certain conditions on the z/OS Agent may prevent SAM from completing a task. When that happens, the agent produces a message indicating the source or cause of the error. SAM is designed so that errors or invalid resource conditions do not halt schedule processing — after reporting the error, SAM may retry and may encounter the same error again.
 
-Al: OpCon/xps for z/OS messages are formatted with IBM standard message notation:
+To prevent SAM from encountering the same error repeatedly:
+
+- Place the affected job(s) on hold, or place SAM itself on hold, until the error is resolved.
+- Allow the agent to resolve the condition. Some errors clear without operator intervention — for example, a job exclusion or inclusion that cannot yet be satisfied. When the proper condition is satisfied, the agent notifies SAM and the error is resolved.
+- For DEMAND runs, expect the error to repeat until the condition is met. Some messages require operator analysis or resolution; others are informational only.
+
+## Message syntax
+
+OpCon/xps for z/OS messages are formatted with IBM standard message notation:
 
 XPS*nnnc*
 
@@ -26,11 +41,11 @@ XPS*nnnc*
 | E 	| -   The message indicates an Error condition.<br/>-   Corrective action is probable.	|
 | None        	| -   If type is none of the above the message is Informational and the type indicator represents the MODULE that issued the message.<br/>-   B=XPSUBMIT<br/>-   T=XPSTATUS<br/>-   X=XPSPLEX<br/>-   V=XPSSUPV<br/>-   O=XPSYSOUT<br/>-   S=XPSERVER	|
 
-## IBM Message Type Explanations
+## IBM message type explanations
 
-### XPR390 Messages
+### XPR390 messages
 
-#### Messages Displayed on the MVS SYSLOG by XPR390
+#### Messages displayed on the MVS SYSLOG by XPR390
 
 | Message| Description|
 | --- | --- |
@@ -48,9 +63,9 @@ XPS*nnnc*
 | XPR200I - No Filter Table  | An XPRLIST DISPLAY was requested, but there is no filter table.|
 | XPR200I - Filter table contents  | An XPRLIST DISPLAY was requested. This message is followed by the table contents.|
 
-### XPS390 Messages
+### XPS390 messages
 
-#### Messages Displayed on the MVS SYSLOG by XPS390
+#### Messages displayed on the MVS SYSLOG by XPS390
 
 |Message|Description|
 |--- |--- |
@@ -189,7 +204,7 @@ XPS*nnnc*
 |<li>XPS120E - Save Error: Enqueue Failure</li>|The JCL update failed because member is locked.|
 |<li>XPS120E - Save Error: Temp Alloc Error</li><li>XPS120E - Save Error: Temp Open Error</li>|The JCL update failed because a temporary file could not be created.|
 |<li>XPS120E - Edit Error: Error in Userid</li>|The OpCon userid was not received by the z/OS agent.|
-|<li>XPS120E - Edit Error: OpCon user not known to host security</li>|A z/OS userid could not be found for the OpCon user.<br/>See [OpCon Userid in the z/OS LSAM](customization.md#opcon-userid-in-the-zos-lsam)|
+|<li>XPS120E - Edit Error: OpCon user not known to host security</li>|A z/OS userid could not be found for the OpCon user.<br/>See [OpCon userid in the z/OS Agent](customization.md#opcon-userid-in-the-zos-agent)|
 |<li>XPS120E - Edit Error: User not permitted to update library</li>|The user does not have UPDATE permission for the target libary.<br/>See the z/OS Security Administrator|
 |<li>XPS120E - Edit Error: Edit Lib Alloc Err</li><li>XPS120E - Edit Error: Edit Open Error</li><li>XPS120E - Edit Error: Reopen Temp Error</li><li>XPS120E - Edit Error: Write Error</li>|The JCL update failed to copy the temporary file to the target member.|
 |<li>XPS120E - Edit Error: Stow Lib Open</li><li>XPS120E - Edit Error: Stow Status Failed</li>|The JCL was saved, but the library statistics were not updated.|

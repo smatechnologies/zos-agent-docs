@@ -1,4 +1,18 @@
-# Standalone File Transfer
+---
+sidebar_label: 'Standalone file transfer'
+title: Standalone file transfer
+description: "How to run the SMAFT agent as a standalone job step, including JCL examples and the keyword reference for the XPSIN parameters."
+tags:
+  - Reference
+  - Automation Engineer
+  - Agents
+---
+
+# Standalone file transfer
+
+## What is it?
+
+A way to run the SMAFT agent inside a regular job step (not as a started task) so a single job can perform a file transfer without a long-running SMAFT server. Use it when you need an ad hoc transfer or want the transfer to live and die with the job.
 
 The SMAFT agent can be run in a job step, using the following JCL:
 
@@ -11,17 +25,17 @@ The SMAFT agent can be run in a job step, using the following JCL:
     file Source File Name
     SAVEAS Destination File Name
 
-## Standalone File Transfer JCL
+## Standalone file transfer JCL
 
 | DD                  | Required? | Description                      |
 |---|---|---|
-| SYSEXEC             | Yes       | This must point to a library *containing* XPSFTAGTXPFTAGT and XPCRCRX. In V4.03.02 and higher, the z/OS LSAM installs these programs in *hlq.mlq.***INSTLIB**. |
+| SYSEXEC             | Yes       | This must point to a library *containing* XPSFTAGTXPFTAGT and XPCRCRX. In V4.03.02 and higher, the z/OS Agent installs these programs in *hlq.mlq.***INSTLIB**. |
 | SYSTSIN             | Yes       | Must be DUMMY.                   |
 | SYSTSPRT            | Yes       | This file will contain any messages from the agent.         |
 | XPSIN               | Yes       | <ul><li>This file contains the instructions to the agent. Each line contains a keyword, followed by one or more space, and the value. Leading and trailing spaces will be removed.</li><li>Keywords are not case sensitive.</li><li>File and Auth values are case sensitive, others are not.</li><li>Refer to below for supported keywords.</li></ul> |
 | XPSOUT or *user defined name*  | No        | This file will be used if no SaveAs keyword is supplied. It can be allocated to any sequential file, including SYSOUT or generation data sets.  |
 
-## Keywords Table for Standalone File Transfer
+## Keywords table for standalone file transfer
 
 | Keyword     | Required? | Values      | Default     | Notes       |
 |---|---|---|---|---|

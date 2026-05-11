@@ -1,4 +1,19 @@
+---
+sidebar_label: 'FAQs'
+title: z/OS Agent FAQs
+description: "Frequently asked questions about the z/OS Agent, including JCL Error troubleshooting and useful z/OS exit display commands."
+tags:
+  - Reference
+  - System Administrator
+  - Operations Staff
+  - Agents
+---
+
 # FAQs
+
+## What is it?
+
+Frequently asked questions about the z/OS Agent, focused on operational troubleshooting and z/OS exit diagnostics.
 
 1. Why do Jobs schedule, submit and execute OK, but always show "Failed - JCL Error" on the OpCon Enterprise Manager?
 
@@ -17,7 +32,7 @@
     
 2. What are some useful z/OS system commands to check OpCon exits?
 
-    The z/OS LSAM uses standard dynamic exits. The status of the exits can be checked using the D PROG commands, e.g., the LSAM uses IEFU84 to track job execution. The command to view the exit status is:
+    The z/OS Agent uses standard dynamic exits. The status of the exits can be checked using the D PROG commands, e.g., the agent uses IEFU84 to track job execution. The command to view the exit status is:
     
     - D PROG,EXIT,EXITNAME=SYS.IEFU84
     
@@ -43,7 +58,7 @@
     
             Showing that the exit is called for started tasks and batch.
     
-    The LSAM uses these exits and modules:
+    The agent uses these exits and modules:
     
     - SYS.IEFUJV and subsystem variants
       - XPxUJV
@@ -58,6 +73,6 @@
     
       - XPxWTOEX
     
-    Normally, the exits remain active when the LSAM is stopped, but they can be removed with the **REMOVEX** command when shutting down. If the exits need to be stopped and the LSAM cannot be started, the **SETPROG** command can be used, for example:
+    Normally, the exits remain active when the agent is stopped, but they can be removed with the **REMOVEX** command when shutting down. If the exits need to be stopped and the agent cannot be started, the **SETPROG** command can be used, for example:
     
     - **SETPROG EXIT,DELETE,EXITNAME=SYS.IEFUJV,MODNAME=XPSUJV**

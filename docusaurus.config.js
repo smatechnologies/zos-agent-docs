@@ -5,8 +5,12 @@ module.exports = {
   url: 'https://help.smatechnologies.com',
   baseUrl: '/opcon/agents/zos/',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   organizationName: 'smatechnologies',
   projectName: 'zos-agent-docs',
   themeConfig: {
@@ -16,6 +20,11 @@ module.exports = {
         alt: 'SMA Technologies Help Logo',
         src: 'img/logo.svg',
         href: 'https://help.smatechnologies.com',
+      },
+    },
+    docs: {
+      sidebar: {
+        autoCollapseCategories: true,
       },
     },
     footer: {
@@ -28,8 +37,10 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          breadcrumbs: true,
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
+          editUrl: 'https://github.com/smatechnologies/zos-agent-docs/blob/main',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -43,7 +54,7 @@ module.exports = {
   ],
 //  plugins: [
 //    [
-//      require.resolve('@cmfcmf/docusaurus-search-local'), 
+//      require.resolve('@cmfcmf/docusaurus-search-local'),
 //      {
 //      }
 //    ],

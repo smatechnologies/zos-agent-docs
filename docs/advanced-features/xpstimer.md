@@ -1,8 +1,20 @@
+---
+sidebar_label: 'XPSTIMER'
+title: Using XPSTIMER (GENERICP)
+description: "How to use the XPSTIMER utility to add a user-specified delay, force an exit code, abend, or issue a WTOR for testing the z/OS Agent."
+tags:
+  - Procedural
+  - Automation Engineer
+  - Agents
+---
+
 # Using XPSTIMER (GENERICP)
 
-The XPSTIMER utility is used for testing the LSAM. It adds a user-specified delay, then terminates with a user-defined exit code. For consistency with other platforms, it can also be called as GENERICP.
+## What is it?
 
-Execution is controlled by the program parm:
+XPSTIMER is a utility used for testing the z/OS Agent. It adds a user-specified delay, then ends with a user-defined exit code. For consistency with other platforms, it can also be called as GENERICP.
+
+The program PARM controls behavior:
 
 |Positions|Format|Meaning|
 |--- |--- |--- |
@@ -22,37 +34,37 @@ Positions 13-16 are only meaningful if 9-12 is **ABND.**
 
 Ten second delay:
 
-```shell
+```jcl
 //stepname EXEC PGM=XPSTIMER,PARM=’00001000’
 ```
 
 Five second delay, finish with RC=16:
 
-```shell
+```jcl
 //stepname EXEC PGM=GENERICP,PARM=’000005000016’
 ```
 
 Show WTOR, with 30 second delay:
 
-```shell
+```jcl
 //stepname EXEC PGM=XPSTIMER,PARM=’00003000WTOR’
 ```
 
 Abend U-0101 after half second delay:
 
-```shell
+```jcl
 //stepname EXEC PGM=GENERICP,PARM=’00000050ABND’
 ```
 
 Abend U-0042 after 5 minute delay:
 
-```shell
+```jcl
 //stepname EXEC PGM=XPSTIMER,PARM=’00050000ABND0042’
 ```
 
 Abend S-C66 after 15 seconds:
 
-```shell
+```jcl
 //stepname EXEC PGM=XPSTIMER,PARM=’00001500ABNDSC66’
 ```
 
@@ -69,7 +81,7 @@ In addition to running as a batch program, XPSTIMER, or GENERICP, can be run as 
 
 No special authorization is required. XPSTIMER does not need to be APF-authorized.
 
-## Return Codes
+## Return codes
 
 | RC | Meaning |
 |----|---------|
@@ -81,25 +93,25 @@ No special authorization is required. XPSTIMER does not need to be APF-authorize
 
 The following:
 
-```shell
+```jcl
 //DELAY10 EXEC PGM=XPSTIMER,PARM='00001000'
 ```
 
 is equivalent to
 
-```shell
+```jcl
 //DELAY10 EXEC PGM=XPSTIMER,PARM='-t10'
 ```
 
 and
 
-```shell
+```jcl
 //DELAY05 EXEC PGM=GENERICP,PARM='000005000004'
 ```
 
 is equivalent to
 
-```shell
+```jcl
 //DELAY05 EXEC PGM=GENERICP,PARM='-t5 -e4'
 ```
 
@@ -107,6 +119,6 @@ is equivalent to
 
 :::tip Example
 
-As a TSO command, the last example can be executed as "genericp -t5 -e4", so it can be scheduled in OpCon as a REXX job type with command genericp and parms -t5 -e4.
+As a TSO command, the last example can be run as "genericp -t5 -e4", so it can be scheduled in OpCon as a REXX job type with command genericp and parms -t5 -e4.
 
 :::
