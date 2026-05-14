@@ -21,6 +21,7 @@ module.exports = {
       collapsed: false,
       items: [
         'advanced-features/csa-storage',
+        'advanced-features/cmdlist',
         'advanced-features/xpscomm',
         'advanced-features/ispf',
         'advanced-features/mapping',
