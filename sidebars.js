@@ -22,6 +22,7 @@ module.exports = {
       link: { type: 'doc', id: 'advanced-features/overview' },
       items: [
         'advanced-features/csa-storage',
+        'advanced-features/cmdlist',
         'advanced-features/xpscomm',
         'advanced-features/ispf',
         'advanced-features/mapping',
