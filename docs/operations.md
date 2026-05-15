@@ -39,7 +39,7 @@ The following table presents z/OS Agent components including module names, compo
 |XPSPARM	|Agent task	|Runtime parameter and operator command parse routine.	|
 |XPSLOGQ	|Agent task	|Communications and message logging routine.	|
 |XPSASCRE	|IEESYSAS (Dynamic)	|Address Space Create (ASCRE) initialization routine. It is used to initialize execution tracking of Started Task (STC), operator commands and REXX jobs.	|
-|XPSEVENT	|IEESYSAS (Dynamic)	|REXX and system command task. Created by XPSUBMIT when a REXX procedure is to be run dynamically or an operator command is to be run.	|
+|XPSEVENT	|IEESYSAS (Dynamic)	|REXX and system command task. Created by XPSUBMIT when a REXX procedure is to be run dynamically or an operator command is to be run. The USERID for each dynamic address space is assigned by SAF from the STARTED class — see [STARTED class — dynamic event address space USERID](./reference/saf-resources.md#started-class-dynamic-event-userid).	|
 |XPRESTRT	|Agent task	|Interruption recovery module. Uses the RECLOG to determine jobs that were "in-process" at the time of a catastrophic machine failure and notifies SAM of job failures.	|
 |XPSTATUS	|Agent task	|JES2 Converter Status Routine (capture converter JCL errors, etc.), Pre-run Tape Unit, File Trigger and dependent non-scheduled task processor.	|
 |XPSELOAD	|Agent task	|Exit loader – establishes dynamic exits.	|
@@ -256,7 +256,7 @@ The z/OS SMAFT agent is distributed as compiled REXX, and relies on services pro
 Sample JCL:
 
 ```jcl
-//SMAFT EXEC PGM=IKJEFT1B
+//SMAFT EXEC PGM=IKJEFT1B,PARM='XPFTAGT'
 //SYSTSIN DD DUMMY
 //SYSTSPRT DD SYSOUT=*
 //XPSIN DD DUMMY
@@ -264,7 +264,7 @@ Sample JCL:
 //TCPXLBIN DD DISP=SHR,DSN=TCPIP.STANDARD.TCPXLBIN (optional)
 ```
 
-1. The SMAFT server listening port must be supplied on the command line.
+1. For File Transfer jobs scheduled through OpCon, the target SMAFT server name and port come from the OpCon job definition — XPSIN is left as `DUMMY`. To run the agent standalone (outside an OpCon schedule), populate XPSIN with `SERVER name:port` and the transfer keywords; see [Standalone file transfer](reference/standalone-file-transfer.md).
 2. Members XPFTAGT, XPFTPARM and XPRXCRC must be in the SYSEXEC library.
 3. Security is determined using normal z/OS security server rules.
 

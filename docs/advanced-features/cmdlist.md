@@ -111,32 +111,13 @@ Commands routed through `address console` are subject to standard z/OS SAF check
 | `OPERCMDS` | The specific MVS or JES command being issued (e.g., `MVS.DISPLAY.TIME`) | READ (or higher for action commands) |
 | `OPERCMDS` | `MVS.MCSOPER.`*consname* | READ (granted automatically for dynamically-named consoles in most shops) |
 
-### Which USERID Runs the Command
+### Which USERID Runs CMDLIST
 
-Each REXX event runs in its own dynamic address space created by `ASCRE`. The USERID of that address space — and therefore the USERID the `OPERCMDS` checks are evaluated against — is assigned by SAF from the **STARTED** class, keyed on the start command that XPSUBMIT issues:
+`CMDLIST` runs in a dynamic address space whose USERID is assigned by SAF from the **STARTED** class. With `XPSDYNAM=IEESYSAS` (default), the matched key is `CMDLIST.CMDLIST`; if `XPSDYNAM` names a customer proc, the key is *procname*`.CMDLIST`.
 
-| `XPSDYNAM` setting | Start command issued | STARTED-class key matched |
-|---|---|---|
-| Set to a customer proc (e.g., `XPSDYNAM`) | `XPSDYNAM,JOBNAME=CMDLIST,PROG=XPSEVENT,...` | `XPSDYNAM.CMDLIST` |
-| Unset, or set to `IEESYSAS` (default) | `IEESYSAS.CMDLIST,PROG=XPSEVENT,...` | `CMDLIST.CMDLIST` |
+To assign different USERIDs to different command categories — for example, a low-authority USERID for `DISPLAY` commands and a higher-authority USERID for action commands — deploy copies of `CMDLIST` under distinct names (such as `CMDLDISP` and `CMDLOPER`) and define a separate STARTED-class profile for each. The OpCon event definition references the chosen name as the REXX procedure.
 
-The JOBNAME portion is the REXX procedure name from the OpCon event definition — `CMDLIST` in the examples on this page.
-
-See [Customization → XPSDYNAM](../customization.md) for the parameter, and the IBM *Security Server RACF Security Administrator's Guide* for STARTED-class profile syntax.
-
-### Per-Exec USERIDs
-
-Because the STARTED-class key includes the JOBNAME, every invocation of a given exec name resolves to the same USERID. If you need different USERIDs for different command categories (e.g., a low-authority USERID for `DISPLAY` commands and a higher-authority USERID for action commands), create copies or aliases of `CMDLIST` under distinct names and define separate STARTED-class entries for each:
-
-```
-RDEFINE STARTED CMDLDISP.CMDLDISP STDATA(USER(OPCONDSP) GROUP(OPCONGRP) TRACE(YES))
-RDEFINE STARTED CMDLOPER.CMDLOPER STDATA(USER(OPCONOPR) GROUP(OPCONGRP) TRACE(YES))
-SETROPTS RACLIST(STARTED) REFRESH
-```
-
-The OpCon event definition then references the chosen alias (`CMDLDISP`, `CMDLOPER`) as the REXX procedure name.
-
-See [SAF Resource Reference](../reference/saf-resources.md) for the LSAM's overall SAF model.
+For the full mechanism — including the XPSDYNAM table — that applies to every REXX and Operator Command event, see [STARTED class — dynamic event address space USERID](../reference/saf-resources.md#started-class-dynamic-event-userid).
 
 ## Limitations
 
