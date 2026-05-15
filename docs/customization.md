@@ -154,7 +154,7 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |TRACE|N|Defines the trace level for the agent.<br/>Valid values include: <ul><li>Up to nine digits 1 – 9.</li><li>Y sets tracing for all levels.</li><li>N or 0 disables tracing.</li></ul> Note: This parameter is used for debugging purposes only.|
 |TRIGGER_RETPD|45|Sets the number of days to retain unreferenced "passive" triggers.<br/><ul><li>Must be between 7 and 365, or 0.</li><li>If set to '0', no triggers will be expired.</li></ul>|
 |USEJMR|NO|Controls the use of the JMRUSEID field by the agent tracking exits.<br/>If YES, the agent uses the entire field.<br/>If NO, the agent does not use the field at all.<br/>A number from 0 – 63 can be used to specify the offset within the field that is used for a single bit flag.<br/><br/>Note: USEJMR=NO is normally required to coexist with TWS. Enabling USEJMR may improve performance in some cases.|
-|USERID|*Blank*|Defines the installation default RACF USER= to be used on any batch Job Start request from the SAM that does NOT already have an owning User assigned.<br/>This value is inserted in the USER= parameter of the JOB Card at submission.<br/><br/>Specify NONE to disable|
+|USERID|*Blank*|Installation default for the USER= parameter on the JOB card.<br/>The agent uses this value only when the OpCon job has no **Batch User** set **and** the submitted JCL does not already specify USER=.<br/><br/>Specify NONE to disable — the agent then emits no USER= and JES applies installation defaults.<br/><br/>See [Security setup](#security-setup) for the full precedence order.|
 |RUNMODE|Prod|When set to RUNMODE=TEST, batch jobs will be submitted with TYPRUN=SCAN and success or failure will be determined by the JCL scanner.|
 |JOBRC|MAXRC|Determines how the job failure criteria are applied.<br/>Valid values are MAXRC, LASTRC, or JCL.<ul><li>MAXRC - The highest return code in the job is tested.</li><li>LASTRC - The return code from the last step that ran is tested.</li><li>JCL - On z/OS 1.13 or higher, uses the test specified by JES defaults or the jobcard JOBRC parameter.</li></ul>|
 |QUEUED-IS-RUNNING|NO|By default, z/OS batch jobs show "Pre-run" status after submission to JES, then switch to "Running" when they start running. Setting this parameter to "Yes" will make the job show that it is running as soon as it is submitted.<br/>This may effect automation triggers based on job status changes.|
@@ -171,7 +171,20 @@ The XPSPRMxx member is used only at IPL time. Changes to Parameters after IPL sh
 
 ## Security setup
 
-Security for batch job submission and file permissions is provided through the Security Access Facility (SAF) that is used by all z/OS Security Packages. Every security package has the ability to "authorize" a submitter for a given job. Once you have set up your base installation security definitions for OPCON01 (STARTED CLASS), you must provide for job submission and OMVS communications or define the agent as a "Trusted User." In the figure below, standard RACF commands are used to define the *lsamname* agent as a *surrogate* submitter for Batch Jobs. This needs to be done FOR EACH SECURITY ID in production batch JCL. The OPCON agent inserts or replace an existing USER= in each JCL using the "Security ID" field of the SAM Schedule detail or the USERID= default in XPSPRMxx.
+Security for batch job submission and file permissions is provided through the Security Access Facility (SAF) that is used by all z/OS Security Packages. Every security package has the ability to "authorize" a submitter for a given job. Once you have set up your base installation security definitions for OPCON01 (STARTED CLASS), you must provide for job submission and OMVS communications or define the agent as a "Trusted User." Standard RACF commands are used to define the *lsamname* agent as a *surrogate* submitter for batch jobs. This must be done for each userid the agent will submit jobs under.
+
+### USER= assignment on the JOB card
+
+When the agent submits a batch job, it determines the USER= value on the JOB card in this order:
+
+1. If the OpCon job specifies a **Batch User**, the agent forces that value onto the JOB card and replaces any USER= already present in the JCL.
+2. Otherwise, if the submitted JCL contains USER=, the agent keeps that value.
+3. Otherwise, if the [USERID](#run-time-parameters) parameter is set in XPSPRMxx, the agent uses that value.
+4. If none of the above apply, the agent emits no USER= and JES applies the installation defaults.
+
+:::note
+Setting the **Batch User** to `NONE` is a special case: the agent skips step 1, keeps any USER= already in the JCL, and otherwise defers to the installation defaults. Setting `USERID=NONE` in XPSPRMxx disables step 3.
+:::
 
 Example RACF commands allowing agent submission of batch jobs:
 
