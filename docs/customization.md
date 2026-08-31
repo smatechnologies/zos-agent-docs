@@ -169,6 +169,15 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 The XPSPRMxx member is used only at IPL time. Changes to Parameters after IPL should be done using the operator command [F lsamname,parm=option]. If the parameter change is to be permanent, it should also be made to XPSPRMxx so it is not rolled back at the next IPL.
 :::
 
+:::caution SMF15=D and SMF64=D delete SMF records permanently
+Setting `SMF15=D` or `SMF64=D` causes the XPSU83 exit to delete records after dataset trigger filtering, so those records never reach `SYS1.MANx` and never appear in an SMF offload. This reduces SMF volume, which is why the option exists, but the deletion is not recoverable and it affects more than triggering:
+
+- **SMF type 15** records non-VSAM dataset closes. Deleting them affects dataset-level audit trails, chargeback and capacity reporting, and any security monitoring that consumes type 15.
+- **SMF type 64** records VSAM dataset closes, with the same consequences for VSAM activity.
+
+The shipped default for both parameters is `K`, which keeps the records. Before changing either to `D`, get agreement from whoever owns SMF consumption at your site — typically the capacity planning, chargeback, or security teams — because the records cannot be recovered afterwards.
+:::
+
 ## Security setup
 
 Security for batch job submission and file permissions is provided through the Security Access Facility (SAF) that is used by all z/OS Security Packages. Every security package has the ability to "authorize" a submitter for a given job. Once you have set up your base installation security definitions for OPCON01 (STARTED CLASS), you must provide for job submission and OMVS communications or define the agent as a "Trusted User." Standard RACF commands are used to define the *lsamname* agent as a *surrogate* submitter for batch jobs. This must be done for each userid the agent will submit jobs under.
@@ -205,6 +214,8 @@ Example RACF commands allowing agent submission of batch jobs:
         SETROPTS RACLIST(SURROGAT) REFRESH
 
 In addition to SURROGAT authority, your agent task also needs an OMVS Segment defined. This is a particular requirement of RACF that authorizes the agent to use the z/OS TCP/IP API. All that is needed is a unique UID value. No other OMVS options are required. The RACF Command is **ALU OPCON01 OMVS(UID(nnnnnnnn))** where nnnnnnnn is any number from 0 to 2147483647.
+
+For what this does and does not imply about running UNIX System Services work from OpCon, refer to [UNIX System Services and zFS](reference/uss-and-zfs.md).
 
 ## OpCon userid in the z/OS Agent
 
@@ -357,6 +368,10 @@ With some customization, it is possible to run the z/OS agent without updating t
 ### JCL and REXX library
 
 JCL for batch jobs and programs for dynamic REXX jobs must be located in libraries allocated to the agent. To add, remove, or change a library allocation: change the agent JCL, then stop and restart the agent using the RESET=C command or using a STOP and a START command. There are no restrictions on the DD names or library concatenations.
+
+A job definition names a DD statement, not a dataset name. This is a deliberate design decision. The agent can read only those libraries that have been allocated to its started task, so a job definition — whether mistaken or malicious — cannot cause the agent to read a dataset that the installation has not already approved. The set of readable libraries is fixed by the started task JCL and is therefore controlled by whoever owns that JCL.
+
+The trade-off is that adding a JCL library requires a change to the agent started task and a restart, which places the owner of the started task in the path of routine job onboarding. Sites that add libraries often should plan the concatenations accordingly, since there is no limit on the number of libraries in a concatenation.
 
 A library with a DD name beginning with 'TEMP' is eligible for temporary member processing, and must be writable by the agent task.
 
