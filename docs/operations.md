@@ -56,6 +56,12 @@ The following table presents z/OS Agent components including module names, compo
 |XPSAFAPI	|XPSAGENT	|SAF Security API for JCL Edit and SYSOUT Browse.	|
 |XPSAUDIT	|Started Task	|Displays current agent usage information, storage allocations, etc.	|
 
+:::note Exit module names and the XPSID
+The module names shown for the dynamic exits (XPSUJV, XPSU83, XPSU84, XPSUSI, XPSWTOEX) are the names the exits are **registered** under with the z/OS dynamic exit facility, shown here for the default XPSID of "S". The third character of a registered exit name is the XPSID, so on an agent running with XPSID=T the same exits register as XPTUJV, XPTU83, XPTU84, XPTUSI and XPTWTOEX. Use these names with `D PROG,EXIT` and `SETPROG EXIT`.
+
+The **load module** names in the product library are not the same thing, and one of them differs. The IEFUSI exit is shipped as load module **XPRUSI**; it is that member name that must be APF-authorized and available to the agent, and that member name is what appears in the XPS073E and XPS077I messages and in XPSAUDIT storage displays. The other exits ship under the names shown in the table. For the list of modules requiring APF authorization, refer to the [Installation checklist](installation/checklist.md).
+:::
+
 In addition to the functional components of XPS390, an API Macro Library \[highlevel.midlevel.MACLIB\] is distributed with the product, allowing a skilled assembler programmer the ability to write additional customized API interfaces to SMA Opcon.
 
 ### Agent options

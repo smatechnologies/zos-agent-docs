@@ -69,9 +69,15 @@ Frequently asked questions about the z/OS Agent, focused on operational troubles
     - SYS.IEFU83 and subsystem variants
       - XPxU83
     
+    - SYS.IEFUSI and subsystem variants
+      - XPxUSI
+      - Shipped as load module **XPRUSI**; XPxUSI is the name it registers under.
+    
     - CNZ_WTOMDBEXIT
     
       - XPxWTOEX
+    
+    IEFUJV and IEFU83 are added to every SMF subsystem, including TSO. IEFUSI and IEFU84 are added to every SMF subsystem except TSO.
     
     Normally, the exits remain active when the agent is stopped, but they can be removed with the **REMOVEX** command when shutting down. If the exits need to be stopped and the agent cannot be started, the **SETPROG** command can be used, for example:
     

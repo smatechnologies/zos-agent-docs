@@ -43,3 +43,14 @@ Full restart support is available if the job type is changed to **Batch** and th
 :::note
 The restarted job will attempt to use the same z/OS userid as the original job. If the agent does not have surrogate authority to use that ID, the job start will fail. If necessary, change the **Batch User** field in the job details to an allowed value.
 :::
+
+## How many times a job can be restarted
+
+A job can be restarted as many times as needed for as long as its job instance remains in the daily schedule. The data a restart depends on — the recorded completion status of each step, and the generation data group base generations captured during the run — is held with the job instance, so it remains available for every restart of that instance.
+
+Two consequences follow:
+
+- **Runs in different schedules, or on different days, are held separately.** Each is a separate job instance with its own recorded step data, so restarting a job today has no effect on what can be restarted from a run on another day or in another schedule.
+- **Within a single instance, only the most recent run of each step is kept.** If a job has already been restarted today, the recorded step data describes the most recent run of that instance. Step data from earlier runs of the same instance is not retained and cannot be restored.
+
+When the job instance is archived out of the daily schedule, the recorded step data is archived with it and the job can no longer be restarted. Schedule the job again to run it after that point.

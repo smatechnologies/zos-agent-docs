@@ -23,6 +23,10 @@ XPSTRACK is a job step program that adds jobs to OpCon as tracked external jobs.
 
 :::
 
+:::note JES3
+XPSTRACK is the supported way to track jobs under JES3. It does not rely on the IEFUJV exit, so it works where the TRACMASK, TRACLASS, TRACLAS8 and column 72 recognition methods do not. Refer to [Known issues](../reference/known-issues.md).
+:::
+
 The parameters are separated by commas, and are similar to those used in $JOB:ADD events:
 
 | Position | Parameter | Max Length | Description |
