@@ -15,6 +15,18 @@ tags:
 
 How to secure z/OS Agent communications with TLS. The agent supports TLS through IBM's Application Transparent Transport Layer Security (AT-TLS) policies. The configuration of AT-TLS policies is described in the *z/OS Communications Server: IP Configuration Guide* and *z/OS Communications Server: IP Configuration Reference.* No configuration changes are needed in the z/OS Agent itself.
 
+## Why AT-TLS
+
+Encryption is delegated to AT-TLS for the same reason security is delegated to the Security Access Facility: z/OS already provides a complete model for it, operated by the team that already owns network security policy. The agent therefore defines no cipher policy of its own, ships no product-specific certificates, and adds nothing application-specific for an auditor to review. There is no second cipher policy to keep in step with the first, and the agent's traffic is governed by the same policy, key rings and renewal procedures as everything else on the system.
+
+The trade-off is that this model assumes the site maintains AT-TLS policy. Where that responsibility is already established, the agent inherits it at no cost. Sites without an existing AT-TLS practice have to establish one, and may find products that ship their own TLS stack quicker to encrypt initially.
+
+### FIPS 140-2
+
+Because encryption is provided by AT-TLS, **FIPS compliance is a property of the AT-TLS policy, not of the z/OS Agent**. Since z/OS 1.12, AT-TLS has supported a parameter that requires System SSL to use only FIPS 140-2 compliant algorithms and key sizes. Where a site enables it, connections to and from the agent are covered by it in the same way as any other AT-TLS protected traffic.
+
+The agent has no FIPS setting of its own to enable, and needs none.
+
 When TLS is enabled in the OpCon machine configuration, it is required for both SMANetCom connections and JORS connections. Solution Manager makes the JCL editing connection from the OpCon server over the same connection as JORS, so the AT-TLS policy that protects JORS protects JCL editing as well.
 
 To enable TLS support, enable a TTLS policy for the agent and JORS ports with TTLSEnabled set to "On" and HandshakeRole set to "Server" or "ServerWithClientAuth," depending on the site configuration and requirements.
