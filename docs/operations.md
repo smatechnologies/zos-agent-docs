@@ -40,7 +40,7 @@ The following table presents z/OS Agent components including module names, compo
 |XPSLOGQ	|Agent task	|Communications and message logging routine.	|
 |XPSASCRE	|IEESYSAS (Dynamic)	|Address Space Create (ASCRE) initialization routine. It is used to initialize execution tracking of Started Task (STC), operator commands and REXX jobs.	|
 |XPSEVENT	|IEESYSAS (Dynamic)	|REXX and system command task. Created by XPSUBMIT when a REXX procedure is to be run dynamically or an operator command is to be run. The USERID for each dynamic address space is assigned by SAF from the STARTED class — see [STARTED class — dynamic event address space USERID](./reference/saf-resources.md#started-class-dynamic-event-userid).	|
-|XPRESTRT	|Agent task	|Interruption recovery module. Uses the RECLOG to determine jobs that were "in-process" at the time of a catastrophic machine failure and notifies SAM of job failures.	|
+|XPSQLOAD	|Agent task (linked into XPSSUPV)	|Interruption recovery routine. Uses the RECLOG to determine jobs that were "in-process" at the time of a catastrophic machine failure and notifies SAM of job failures.	|
 |XPSTATUS	|Agent task	|JES2 Converter Status Routine (capture converter JCL errors, etc.), Pre-run Tape Unit, File Trigger and dependent non-scheduled task processor.	|
 |XPSELOAD	|Agent task	|Exit loader – establishes dynamic exits.	|
 |XPSU83	|SYS.IEFU83 (Dynamic)	|SMF Interface for File Trigger management.	|
@@ -147,21 +147,28 @@ If you start the agent with an optional task name the lsamname in the commands b
 | Command syntax       | Description          | Response or action   |
 |--- |--- |--- |
 |S lsamname[.*taskname*]|Starts the agent.|None.|
-|F lsamname,DISP=PARMS|Returns a list of the current stored XPS parameters.|Refer to message XPS021R.|
-|F lsamname, DISP=STOR|Displays storage usage on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=JOBS|Displays the agent job queue on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=DSNT|Displays the agent DSN trigger table on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=WTOT|Displays the agent WTO trigger table on the LPAR SYSLOG.|Refer to message XPS021R.|
-|F lsamname, DISP=ALL|Displays all internal parms and values.|Refer to message XPS021R.|
+|F lsamname,DISP=PARMS|Returns a list of the current stored XPS parameters.|Refer to message XPS021I.|
+|F lsamname,DISP=STOR|Displays storage usage on the LPAR SYSLOG.|Displayed by XPSAUDIT.|
+|F lsamname,DISP=JOBS|Displays the agent job queue on the LPAR SYSLOG.|Displayed by XPSAUDIT.|
+|F lsamname,DISP=DSNT|Displays the agent DSN trigger table on the LPAR SYSLOG.|Displayed by XPSAUDIT.|
+|F lsamname,DISP=FI|Displays the dataset cleanup filter table on the LPAR SYSLOG.|Displayed by XPSAUDIT.|
+|F lsamname,DISP=WTOT|Displays the agent WTO trigger table on the LPAR SYSLOG.|Displayed by XPSAUDIT.|
+|F lsamname,DISP=EV|Displays the agent event table on the LPAR SYSLOG.|Displayed by XPSAUDIT.|
+|F lsamname,DISP=ALL|Displays all internal parms and values.|Displayed by XPSAUDIT. XPSAUDIT checks only the first two characters of the operand (ST, JO, PR, DS, FI, WT, or EV); any other value, including ALL, displays everything.|
 |F lsamname,SPINLOG|Spins off the current generation of the RECLOG.|Allocates a new generation of the RECLOG. By default, this occurs automatically every midnight).|
 |F lsamname,REPEXIT|Exits Reinit.|Releases ECSA, re-allocates and reloads SMF exits.|
-|F lsamname,REPUSERx|User Exits Reinit.|Where 'x' is the user exit number.|
+|F lsamname,REPUSER1|User exit 1 reinit.|Resets submit user exit 1. REPUSER1 is the only user exit number the agent recognizes.|
 |F lsamname,CLEARQ|Clears agent execution queues.|Use only as directed by SMA Support.|
 |F lsamname,TRACE=Y&#124;N&#124;0&#124;9&#124;[1-8]{1,8}|Sets SYSLOG trace options.|Use only as directed by SMA Support.|
-|F lsamname,RESET=S&#124;C&#124;(sysid)[,NOPROMPT]<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the agent.|S= System RESET – completely removes agent internals and restarts all tasks.<br/>C=Cycle agent – simply shuts down the agent and restarts it.<br/>If RESET=(ssss) is coded, the agent is reset to the Machine ID in ssss and a RESET=C is performed.|
+|F lsamname,RESET=S[,NOPROMPT]<br/>F lsamname,RESET=C<br/>F lsamname,RESET=(ssss)<br/><br/>Caution: This command should only be entered during failover recovery.|Re-initializes the agent.|S= System RESET – completely removes agent internals and restarts all tasks. The agent issues message XPS105A to confirm the reset unless NOPROMPT is coded.<br/>C=Cycle agent – simply shuts down the agent and restarts it. No confirmation prompt is issued.<br/>If RESET=(ssss) is coded, the agent's Machine ID is set to ssss and, on a Sysplex, the agent is switched from LSAM to PSAM. No confirmation prompt is issued and no RESET=C is performed.|
+|F lsamname,RESET=I|Resets the server and agent tasks.|Signals the XPSERVER and XPSAGENT tasks to reset.|
 |F lsamname,SHUTDOWN|Shuts down the SMA Opcon agent.|Cycles down the agent and stop the XPSPLEX task.|
-|F lsamname,REMOVEX[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the agent and internals.|Shuts down the agent and removes all exits and storage queues.|
-|F lsamname,parm=value|Resets most parameters in XPSPRMxx.|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. Refer to run-time parameters.|
+|F lsamname,REMOVEX[,NOPROMPT]<br/><br/>Caution: Do not use this command unless directed by SMA.|Removes the agent and internals.|Shuts down the agent and removes all exits and storage queues. The agent issues message XPS105A to confirm the request unless NOPROMPT is coded.|
+|F lsamname,STOP|Stops the agent.|Same as `P lsamname`.|
+|F lsamname,CMD=command|Issues a console command.|The agent issues the text that follows CMD= as a z/OS console command.|
+|F lsamname,TRACE=?|Displays the trace levels.|Displays the available trace levels and the module each level traces.|
+|F lsamname,PROCESS=0|Stops new jobs from starting.|Sets the active process count to zero and issues message XPS023W.|
+|F lsamname,parm=value|Resets most parameters in XPSPRMxx.|The change persists until the next IPL only. Permanent changes should be made to XPSPRMxx. SETQUES= cannot be changed with this command and is rejected with message XPS024E. Refer to run-time parameters.|
 |F lsamname,XPRLIST,DISPLAY|Displays the dataset cleanup filter table.|Refer to [Dataset cleanup filter table](advanced-features/xprlist.md).|
 |F lsamname,XPRLIST,ADD,[I&#124;X]DSN=pattern<br/>F lsamname,XPRLIST,ADD,[I&#124;X]VOL=pattern|Adds an entry to the dataset cleanup filter table.|The change persists until the next IPL only. Permanent changes should be made to XPRLSTxx. Refer to [Dataset cleanup filter table](advanced-features/xprlist.md).|
 |F lsamname,XPRLIST,DELETE,[I&#124;X]DSN=pattern<br/>F lsamname,XPRLIST,DELETE,[I&#124;X]VOL=pattern|Removes an entry from the dataset cleanup filter table.|The entry must match exactly. The change persists until the next IPL only.|
@@ -177,9 +184,11 @@ When the agent task is down or independent data is needed, the XPSAUDIT task can
 | --- 	| --- 	|
 |S XPSAUDIT,PARM=STOR	|Displays the agent storage assignments on the running system.	|
 |S XPSAUDIT,PARM=JOBS	|Displays the agent job queue on the running system.	|
-|S XPSAUDIT,PARM=PARMS	|Displays the agent stored parms on the running system.	|
+|S XPSAUDIT,PARM=PRMS	|Displays the agent stored parms on the running system. XPSAUDIT checks only the first two characters of the parm, so the value must begin with PR. PARM=PARMS displays everything.	|
 |S XPSAUDIT,PARM=DSNT	|Displays the agent DSN trigger table on the running system.	|
 |S XPSAUDIT,PARM=WTOT	|Displays the agent WTO trigger table on the running system.	|
+|S XPSAUDIT,PARM=FI	|Displays the dataset cleanup filter table on the running system.	|
+|S XPSAUDIT,PARM=EV	|Displays the agent event table on the running system.	|
 |S XPSAUDIT	|Displays the all the above.	|
 
 ## z/OS Agent fail-over, reconfiguration, and recovery
@@ -195,6 +204,7 @@ The XPSPLEX task manages Adoption and Fail-Over reconfiguration. The primary LSA
 | --- | --- |
 |F XPSPLEX,STATUS|Displays LSAM/PSAM status.|
 |F XPSPLEX,\[ADOPTWKLD&#124;DROPWKLD\](ssss,nn)|Reassign/release Machine Ids.|
+|F XPSPLEX,SHUTDOWN|Forces the XPSPLEX task to stop.|
 
   : Sysplex operator commands
 
@@ -218,19 +228,19 @@ No in-flight processing on the PSAM is interrupted during this process. The SAM 
 HOST file example - Fail-Over Preparation:
 
 ```text
-209.94.231.01	SYS1	/* Normal Operation    */
-*209.94.231.02	SYS1	/* Fail-Over Operation */
+192.0.2.1	SYS1	/* Normal Operation    */
+*192.0.2.2	SYS1	/* Fail-Over Operation */
 ```
 
 It is often the practice to simply comment out the Fail-Over IP address in normal operation and swap the comment notation if z/OS Fail-Over is initiated.
 
 ### Fail-over recovery
 
-When the system on which the Primary LSAM normally resides is recovered, you need to fall back to primary mode. To do this, enter Command: `F LSAM,RESET=(ssss)` on the Fail-Over PSAM, where ssss is the normal machine id of the PSAM. When the operator enters this command, a prompt is issued to confirm the reset request. If the operator answers "Y" to the confirmation, the following process takes place on the Fail-Over PSAM automatically:
+When the system on which the Primary LSAM normally resides is recovered, you need to fall back to primary mode. To do this, enter Command: `F LSAM,RESET=(ssss)` on the Fail-Over PSAM, where ssss is the normal machine id of the PSAM. No confirmation prompt is issued. When the operator enters this command, the following process takes place on the Fail-Over PSAM automatically:
 
 1. The PSAM's machine id is changed to that of the command (ssss).
 2. The LSAM=N State is set for the PSAM (the Fail-Over LSAM returns to a PSAM state).
-3. All Workload adoptions are removed.
+3. The agent displays its current parameters (message XPS021I).
 
 Now you may start the primary LSAM OPCONxx task. The HOST file on the SAM Server must be changed back to define the IP Address of the primary LSAM in normal operation.
 
@@ -249,7 +259,7 @@ Sample JCL:
 ```
 
 1. The SMAFT server listening port must be supplied on the command line.
-2. Members XPFTSRVR, XPFTPARM and XPRXCRCC must be in the SYSEXEC library.
+2. Members XPFTSRVR and XPRXCRC must be in the SYSEXEC library.
 3. Security is determined using normal z/OS security server rules.
 4. Security is determined using normal z/OS security server rules.
 

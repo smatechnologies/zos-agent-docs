@@ -22,7 +22,7 @@ A single z/OS system can run multiple agent instances; however, it is necessary 
 
 ### The XPSID identifier
 
-Each agent on a z/OS system must have a different XPSID. The creation of unique names for the exits and for product data areas requires the XPSID. In addition, the XPSID is used to determine the default XPSPARM member for initialization. If the member is not specified in the JCL proc, the agent will attempt to load the configuration from XPSPRMOx, where **x** is the XPSID.
+Each agent on a z/OS system must have a different XPSID. The creation of unique names for the exits and for product data areas requires the XPSID. In addition, the XPSID is used to determine the default XPSPARM member for initialization. If the member is not specified in the JCL proc, the agent attempts to load the configuration from XPSPRM0x, where **x** is the XPSID.
 
 The XPSID is a single alphabetic, national, or numeric character. The default XPSID is "S". The XPSID is defined with a dummy file allocation named **XPS$x**, where **x** is the XPSID.
 

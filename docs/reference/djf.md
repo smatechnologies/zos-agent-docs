@@ -31,9 +31,11 @@ The following built-in variables are supported in DJF:
 
 |Variable |Value |
 |--- |--- |
+|%CC|Two digit century from schedule date|
 |%YY|Two digit year from schedule date|
 |%MM|Two digit month from schedule date|
 |%DD|Two digit day of the month from the schedule date|
+|%CXC|Two digit current century. The agent takes the century from the schedule date.|
 |%CYY|Two digit current year|
 |%CMM|Two digit current month|
 |%CDD|Two digit current day of the month|
@@ -42,6 +44,10 @@ The following built-in variables are supported in DJF:
 |%CHHMM|Four digital current time as hours, minutes|
 |%FREQ|The OpCon frequency of the current job instance|
 |%RESTART|Set to TRUE if this is a step restart, otherwise FALSE|
+|%JL|Seven digit current Julian date (YYYYDDD)|
+|%JS|Five digit current Julian date (YYDDD)|
+|%BLANK|A single blank|
+|%.|Concatenation. The token is removed, so the text on either side of it is joined.|
 
 ### New DJF statements supporting variables
 
@@ -139,6 +145,8 @@ These statements do not directly affect the JCL that is submitted.
 
 -   --NOP
     -   No-operation. This statement is simply skipped.
+-   --\*
+    -   No-operation. A statement that begins with `--*` followed by a space is skipped, the same as --NOP.
 -   --MSG *text*
     -   After variable substitution, sends *text* as a *User Message*
         LSAM feedback.

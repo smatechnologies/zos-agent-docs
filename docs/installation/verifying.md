@@ -161,8 +161,8 @@ An administrator (e.g., ocadm) must be logged in to the Enterprise Manager to pe
 #### Log in to the Enterprise Manager
 
 1. Use menu path: **Start > Programs > OpConxps > Enterprise Manager**.
-2. In the **Username** text box, enter a *case-sensitive User Login ID* (e.g., ocadm).
-3. In the **Password** text box, enter the *case-sensitive password* for the user.
+2. In the **Username** field, enter a *case-sensitive User Login ID* (e.g., ocadm).
+3. In the **Password** field, enter the *case-sensitive password* for the user.
 4. In the **Profile** list, select the *Database* *Profile*.
 5. Select the **Login** button to log in to the Enterprise Manager.
 
@@ -214,14 +214,14 @@ After verifying licensing and name resolution between the OpCon server and the a
 When a z/OS Agent is installed, create a machine record with a unique Machine name and Socket number in OpCon:
 
 1. Use menu path: **Start > Programs > OpConxps > Enterprise Manager**.
-2. In the **Username** text box, enter a *case-sensitive* *User Login ID* (e.g., ocadm) on the OpCon login screen.
-3. In the **Password** text box, enter the *case-sensitive password* for the user.
+2. In the **Username** field, enter a *case-sensitive* *User Login ID* (e.g., ocadm) on the OpCon login screen.
+3. In the **Password** field, enter the *case-sensitive password* for the user.
 4. In the **Profile** list, select the *Profile*.
 5. Select the **Login** button to log in to the Enterprise Manager.
 6. Double-select **Machines** in the Navigation panel under Administration. The **Machines** screen displays.
 7. Select the **Add** button on the *Machines toolbar*.
-8. In the **Name** text box, enter the *official host name* or *alias* based on the agent machine.
-9. In the **Documentation** text box, enter any relevant documentation for this agent machine.
+8. In the **Name** field, enter the *official host name* or *alias* based on the agent machine.
+9. In the **Documentation** field, enter any relevant documentation for this agent machine.
 10. In the **Machine Type** list, select **z/OS**.
 11. In the **Socket Number** box, set the value to a *unique number* (e.g., 3100).
 12. *(Optional)* In the **IP Address** field, enter the *IPv4 or IPv6 address*.
@@ -253,8 +253,8 @@ The *\<Target Directory\>*\Opconxps\Utilities directory created by the SAM insta
 4. Select the **Add** button.
 5. In the list in the Create New Data Source window, select **Microsoft Access Driver (*.mdb)**.
 6. Select the **Finish** button.
-7. In the Data Source Name text box, enter **IVPMVS** in the ODBC Microsoft Access Setup window.
-8. *(Optional)* In the **Description** text box, enter a *description*.
+7. In the Data Source Name field, enter **IVPMVS** in the ODBC Microsoft Access Setup window.
+8. *(Optional)* In the **Description** field, enter a *description*.
 9. Select the **Select** button.
 10. Go to the **Directories** frame in the Select Database window. Browse to the **IVPMVS.MDB** file (e.g., C:\Program Files\OpConxps\Utilities\IVPMVS.MDB).
 11. Select the *.mdb* file and then select the **OK** button.

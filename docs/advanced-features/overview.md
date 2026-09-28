@@ -28,3 +28,5 @@ The Advanced features section covers z/OS Agent capabilities beyond the base ins
 - [Dataset cleanup filter](./xprlist.md) — XPRLIST table that controls which datasets are protected from automatic cleanup.
 - [Restarting jobs](./restarting-jobs.md) — enable full OpCon restart support for external z/OS jobs.
 - [XPUSER01 submit exit](./xpuser01.md) — user-written exit called for every JCL record during job submission.
+- [CMDLIST](./cmdlist.md) — capture the output of a z/OS operator command by running it as a REXX-type event.
+- [Driving CICS, IMS, Db2 and MQ workload](./subsystem-workload.md) — how the agent controls CICS, IMS, Db2 and MQ subsystems, and where that control ends.

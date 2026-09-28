@@ -22,6 +22,7 @@ The Reference section consolidates technical reference material you turn to when
 - [Standalone file transfer](./standalone-file-transfer.md) — run the SMAFT agent as a standalone job step, including JCL and keyword reference.
 - [Dynamic JCL Facility](./djf.md) — DJF variable substitution, conditional statements, and statement syntax.
 - [Translation tables](./translation-tables.md) — how the SMAFT server and agent locate translation datasets on z/OS.
+- [UNIX System Services and zFS](./uss-and-zfs.md) — what the agent does and does not do with UNIX System Services and zFS, including the OMVS requirement and running shell work through BPXBATCH and OSHELL.
 - [TLS](./tls.md) — enable TLS communications for the z/OS Agent and JORS through IBM AT-TLS policies.
 - [FAQs](./faq.md) — frequently asked questions, focused on JCL Error troubleshooting and z/OS exit diagnostics.
 - [Known issues](./known-issues.md) — known limitations and unsupported configurations in the current release.
