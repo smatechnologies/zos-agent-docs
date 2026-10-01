@@ -1,6 +1,13 @@
 ---
 slug: '/'
 sidebar_label: 'z/OS Agent'
+title: z/OS Agent
+description: "OpCon agent for scheduling and tracking z/OS jobs. Covers installation, customization and operations, machine messages, advanced features, and reference."
+tags:
+  - Conceptual
+  - System Administrator
+  - Automation Engineer
+  - Agents
 hide_table_of_contents: true
 displayed_sidebar: null
 ---

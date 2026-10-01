@@ -37,7 +37,7 @@ The parameters are separated by commas, and are similar to those used in $JOB:AD
 | 4 | Frequency | 20 | OpCon frequency code |
 | 5 | Job instance properties | 100 | Name=value pairs separated by semicolons |
 
-All parameters are optional, but if later parameters are needed, any skipped parameters must be added by commas (e.g.: To specify job instance variables but accept the defaults for everything else, specify: **PARM=',,,,,MyParm=MyValue'**)
+All parameters are optional, but if later parameters are needed, any skipped parameters must be added by commas (e.g.: To specify job instance variables but accept the defaults for everything else, specify: **PARM=',,,,MyParm=MyValue'**)
 
 :::tip Example
 
@@ -50,7 +50,7 @@ Track the current job with only job instance properties:
 
 :::
 
-If XPSTRACK is run in a job already being tracked, it will be ignored (RC=0 with message "exists").
+If XPSTRACK runs in a job that is already being tracked, it takes no action and ends with RC 0 and message `XPS100I - jobname: Tracking record exists.`
 
 ## Prerequisites
 
@@ -61,7 +61,6 @@ If XPSTRACK is run in a job already being tracked, it will be ignored (RC=0 with
 
 | RC | Message | Description |
 |----|---------|-------------|
-| 0 | XPS100I - *jobname*: Tracking record added. | Job tracking record was created and the `$JOB:TRACK` event was sent |
-| 0 | XPS100I - *jobname*: exists. | Job is already being tracked — no action taken |
-| 4 | XPS050E - XPSTRACK PARM or MSGIN Error | Parameter processing error |
-| 8 | XPS051E - XPSTRACK Tracking Error. | Agent is not active or the PCB could not be located |
+| 0 | `XPS100I - jobname: Tracking record added.` | Job tracking record was created and the `$JOB:TRACK` event was sent |
+| 0 | `XPS100I - jobname: Tracking record exists.` | Job is already being tracked — no action taken |
+| 8 | `XPS051E - XPSTRACK Tracking Error.` | Agent is not active or the PCB could not be located |

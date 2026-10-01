@@ -1,3 +1,13 @@
+---
+title: Capturing Operator Command Output with CMDLIST
+description: "Use the CMDLIST sample REXX exec to capture the output of a z/OS operator command and retrieve it through JORS."
+tags:
+  - Procedural
+  - System Administrator
+  - Automation Engineer
+  - Agents
+---
+
 # Capturing Operator Command Output with CMDLIST
 
 OpCon **Command-type** events issue a z/OS operator command via the LSAM's internal `MGCRE` interface but do not capture the response — the only feedback the user sees is "Command Issued" or "Command Failed" on the event. When you need to see what the command actually produced (for example, the output of `D T`, `D A,L`, or `$D Q`), schedule the command as a **REXX-type** event that runs the `CMDLIST` sample exec instead. `CMDLIST` activates an Extended MCS console, issues the command, harvests the responses, and writes them to SYSTSPRT — which is retrievable through the standard JORS interface alongside the event.

@@ -244,14 +244,15 @@ The limit that applies depends on the input source, the authorization mode, and 
 | MSGIN event, authorized | 32,000 characters, including the appended OpCon user ID and token | Truncated |
 | MSGIN event, unauthorized | 117 characters | Discarded |
 | User message, OpCon job | 4000 characters | Truncated |
-| User message, external job | 117 characters total, including the `$CONSOLE:DISPLAY` prefix and the `,SYSTEM` suffix | Discarded |
+| User message, external job, unauthorized | 117 characters total, including the `$CONSOLE:DISPLAY` prefix and the `,SYSTEM` suffix | Discarded |
+| User message, external job, authorized | Not subject to the 117-character limit; the message is added to the agent's ECSA message queue, and `,MESSAGE` is appended after the `,SYSTEM` suffix | Not applicable |
 
 The 4000-character limit for a user message on an OpCon job matches the size of the OpCon Agent Feedback value, so the full message is preserved.
 
 The **Job Status Description** Agent Feedback value carries the message text in full, but the job's exit description holds only the first 20 characters. Keep a user message to 20 characters or fewer if you need the text to appear in the exit description as well.
 
 :::note
-The external job limit of 117 characters covers the whole `$CONSOLE:DISPLAY` string. The prefix consumes 20 characters plus the lengths of the machine name, job name, and user ID, and the suffix consumes 7 more. With eight-character names throughout, the usable message text is 66 characters.
+The external job limit of 117 characters applies only to unauthorized runs, and it covers the whole `$CONSOLE:DISPLAY` string. The prefix consumes 20 characters plus the lengths of the machine name, job name, and user ID, and the suffix consumes 7 more. With eight-character names throughout, the usable message text is 66 characters. An authorized run sends the message through the ECSA message queue instead of a WTO, so this limit does not apply.
 :::
 
 ## When the agent is not active

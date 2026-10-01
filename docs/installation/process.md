@@ -23,11 +23,11 @@ Once the z/OS libraries are functional, we need to provide security, SMF, and z/
 3. Enter TSO command RECEIVE INDATASET(your.dataset.name).
 4. When prompted, enter DATASET('OPCON.V210004.INSTLIB') to restore the initial INSTLIB.
 5. You can substitute another name, but the low level qualifier must be INSTLIB.
-6. If you simply hit Enter, the dataset will be created with the current TSO user's ID. Rename it to your desired installation name.
+6. If you press **Enter** without entering a name, the dataset is created with the current TSO user's ID. Rename it to your desired installation name.
 7. From an ISPF session, enter the TSO command EXEC  'OPCON.V210004.INSTLIB(BUILDJOB)'.
-8. Fill in the panel options and hit enter to create the STAGE1 job and customize the installation members.
+8. Fill in the panel options and press **Enter** to create the STAGE1 job and customize the installation members.
 9. Review the job card and allocation parameters in STAGE1. Run the STAGE1 job to create and load the installation datasets.
 10. After STAGE1 runs successfully, run STAGE2 to link edit the agent programs.
 11. Add production JCL and REXX libraries to the agent JCL.
 
-To begin using the agent, refer to [Customization process](../customization).
+To begin using the agent, refer to [Customization process](../customization.md).
