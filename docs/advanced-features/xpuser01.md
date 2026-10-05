@@ -14,7 +14,7 @@ tags:
 
 XPUSER01 is a user-written exit that the z/OS Agent calls for every JCL record during job submission. It lets you inspect, modify, insert, or cancel JCL records before they reach the z/OS internal reader.
 
-The exit is optional. If the XPUSER01 load module is not found in the agent STEPLIB or LINKLIST, submission proceeds normally with no overhead.
+The exit is optional. If the XPUSER01 load module is not found in the agent STEPLIB or LINKLIST, submission proceeds normally without the exit.
 
 ## When the exit is called
 
@@ -25,7 +25,7 @@ During job submission, the agent reads JCL from the source library and streams i
 - Insert an additional JCL record after the current one
 - Cancel the entire job submission
 
-The exit is loaded once at the start of submission and deleted when submission completes or is cancelled.
+The agent loads the exit the first time it is called and keeps it loaded for subsequent records and submissions. The exit is deleted only when you reset it with `F LSAM,REPUSER1` or when it abends.
 
 ## Entry conventions
 
@@ -69,7 +69,7 @@ RC=12 writes a `/*DEL` card to the internal reader to purge the job. If the firs
 ### Attributes
 
 - **AMODE 31, RMODE 24** — The exit must be AMODE 31 and RMODE 24.
-- **Reusable, not reentrant** — The exit is loaded once per submission and called repeatedly. Because it is not required to be reentrant, you can use static storage areas within the module to maintain counters, flags, or accumulated state across JCL records within a single job and across multiple jobs.
+- **Reusable, not reentrant** — The exit is loaded once and stays loaded across submissions until it is reset, so it is called repeatedly. Because it is not required to be reentrant, you can use static storage areas within the module to maintain counters, flags, or accumulated state across JCL records within a single job and across multiple jobs.
 
 ### Linkage
 
@@ -115,11 +115,11 @@ The second parameter points to a copy of the job's tracking record mapped by the
 | JOBNAME | +27 | 8 | z/OS job name |
 | JOBNUM | +35 | 8 | JES job number (blank until submitted) |
 | JOBFLG1 | +51 | 1 | Primary job status flags |
-| JOBETYPE | +148 | 1 | Event type: `B`=batch, `S`=STC, `C`=command, `R`=REXX, `T`=tracked, `F`=file transfer |
-| JOBSECID | +161 | 8 | Security user ID for the job |
-| JOBJCLDD | +169 | 8 | DDNAME used for JCL source |
-| JOBJSCHD | +190 | 20 | Schedule name |
-| JOBJLONG | +210 | 20 | Long job name |
+| JOBETYPE | +210 | 1 | Event type: `B`=batch job, `S`=started task, `C`=console command, `R`=dynamic REXX event, `T`=dynamic tracked job, `Q`=dynamic queued job, `W`=dynamic WTOR, `O`=dynamic WTO, `F`=file transfer job, `E`=MSGIN event job, `D`=dummy job |
+| JOBSECID | +211 | 8 | Security user ID for the job |
+| JOBJCLDD | +219 | 8 | DDNAME used for JCL source |
+| JOBJSCHD | +276 | 20 | Schedule name |
+| JOBJLONG | +296 | 20 | Long job name |
 
 For the complete field map, refer to the `@XPJOBQ` DSECT in `hlevel.midlevel.MACLIB`.
 
@@ -146,9 +146,9 @@ Use WTO messages during development to trace which JCL records the exit sees. Re
 
 | Message | Description |
 |---------|-------------|
-| XPS801I - Submit Exit XPUSER01 Active | The exit was found and loaded successfully. |
-| XPS801I - User Exit XPUSER01 Reset | The exit was reset via operator command or internal recovery. |
-| XPS801A - [jobname] Submission Cancelled by User Exit | The exit returned RC=12, cancelling submission. |
-| XPS801E - Abend in User Exit - Submission Aborted | The exit abended. It is deactivated and submission is aborted. |
-| XPS801E - Load Failed For XPUSER01 | BLDL succeeded but LOAD failed. Check STEPLIB. |
-| XPS801E - Invalid Return Code From User Exit | The exit returned a value other than 0, 4, 8, or 12. |
+| `XPS801I - Submit Exit XPUSER01 Active` | The exit was found and loaded successfully. |
+| `XPS801I - User Exit XPUSER01 Reset` | The exit was reset via operator command or internal recovery. |
+| `XPS801A - jobname Submission Cancelled by User Exit` | The exit returned RC=12, cancelling submission. |
+| `XPS801E - Abend in User Exit - Submission Aborted` | The exit abended. It is deactivated and submission is aborted. |
+| `XPS801E - Load Failed For XPUSER01` | BLDL succeeded but LOAD failed. Check STEPLIB. |
+| `XPS801E - Invalid Return Code From User Exit` | The exit returned a value other than 0, 4, 8, or 12. The agent treats it as RC 12 and cancels the submission. |

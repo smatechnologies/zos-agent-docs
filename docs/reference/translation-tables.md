@@ -18,21 +18,13 @@ The translate tables are referenced to determine the translate data sets to be u
 
 The search order used to access this configuration file is as follows. The search order ends at the first file found:
 
-1. *userid/jobname*.STANDARD.TCPXLBIN
+1. The dataset allocated to the TCPXLBIN DD statement in the server or agent JCL, for example `//TCPXLBIN DD DISP=SHR,DSN=your.translat.table`.
+2. *prefix*.STANDARD.TCPXLBIN
 
   :::note
-   *userid* is the user ID that is associated with the current security environment (address space or task/thread).
-   *jobname* is the name specified on the JOB JCL statement for batch jobs or the procedure name for a started procedure.
+   *prefix* is the TSO data set name prefix of the security environment the server or agent runs under. The name is specified without quotes, so TSO adds the prefix.
   :::
-2. *hlq*.STANDARD.TCPXLBIN
-  
-  :::note
-   *hlq* represents the value of the DATASETPREFIX statement specified in the base resolver configuration file (if found; otherwise, *hlq* is TCPIP by default.
-  :::
-3. If no table is found, the server uses a hard coded default table that is identical to the STANDARD member in the **SEZATCPX** data set.
-
-The defaults can be overridden, by supplying a TCPXLBIN DDNAME in the server JCL:
-
-//TCPXLBIN DD DISP=SHR,DSN=*your.translat.table*
+3. TCPIP.STANDARD.TCPXLBIN. This name is fixed. The DATASETPREFIX statement in the resolver configuration is not read.
+4. If no table is found, the server and agent use a hard coded default table that is identical to the STANDARD member in the **SEZATCPX** data set.
 
 The dataset **must** be in the format created by the IBM CONVXLAT program. Only SBCS translations are supported.

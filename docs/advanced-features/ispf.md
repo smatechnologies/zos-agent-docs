@@ -68,6 +68,8 @@ ISPF table administration and selection:
     - Switches table displays to expanded format
 - **-** (minus)
     - Switches table displays to short format
+- **REF**
+    - Refreshes the current table display by rebuilding it from the agent's current table contents
 
 ### Line commands on table displays
 - **S** - Opens the selected entry for display or edit
@@ -250,6 +252,7 @@ The following special values have defined actions and will not use the Event tab
       - C = CREATED
       - U = UPDATED
       - D = DELETED
+      - S = SCRATCHED
       - R = REFERENCED
       - L = CATALOGED
       - N = UNCATALOGED

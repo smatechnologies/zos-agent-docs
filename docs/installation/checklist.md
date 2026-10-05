@@ -48,7 +48,6 @@ DATE:
         |Library|Member|Requirements|
         |--- |--- |--- |
         |OPCON.V210004.LINKLIB|XPSFETCH|APF Auth Required|
-        ||XPSQMGR|APF Auth Required|
         ||XPSASCRE|APF Auth Required, LINKLST Resident|
         ||XPSCOMM|APF Auth Required|
         ||XPSPARM|APF Auth Required|
@@ -56,28 +55,35 @@ DATE:
         ||XPSAUDIT|APF Auth Required|
         ||XPSLOGQ|APF Auth Required|
         ||XPSPLEX|APF Auth Required|
-        ||XPRESTRT|APF Auth Required|
         ||XPSTATUS|APF Auth Required|
         ||XPSEVENT|APF Auth Required, LINKLIST Resident|
         ||XPSERVER|APF Auth Required|
         ||XPSAGENT|APF Auth Required|
-        ||XPSELOAD|APF Auth Required|
         ||XPSWTOEX|APF Auth Required|
         ||XPSU83|APF Auth Required|
         ||XPSU84|APF Auth Required|
         ||XPSUJV|APF Auth Required|
         ||XPRUSI|APF Auth Required|
-        ||XPSISPF|LINKLST Resident or TSO Steplib|
         ||XPSPAUTH|APF Auth Required, LINKLST Resident|
         ||XPSPF001|LINKLST Resident or TSO Steplib|
-        ||XPSAFAPI|APF Auth Required, LINKLST Resident|
         ||XPSSUPV|APF Auth Required|
         ||XPRLIST|APF Auth Required|
+        ||XPRSTEP|Substituted as PGM= for steps skipped on restart|
+        ||XPSTRACK||
+        ||XPSSUPP||
+        ||XPSUPDTE||
+        ||XPSWTO||
+        ||XPSWTOR||
+        ||XPSTIMER|Alias GENERICP|
+        ||XPSJORS|Alias of XPSAGENT|
         |SYS1.PROCLIB|OPCONxx|XPS390 Started Task(s)|
         ||IVPPROC1|IVP STC Tests|
         ||XPSAUDIT|IVP and Status|
         ||XPSPLEX|Sysplex Communications Task|
         ||XPFTSRVR|SMAFT server task|
+        ||XPFTAGT|SMAFT agent task|
+
+        XPSQMGR, XPSELOAD, XPSISPF, and XPSAFAPI are not separate LINKLIB members. XPSQMGR and XPSELOAD are linked into XPSSUPV (XPSQMGR is also linked into most other agent modules), XPSISPF is linked into XPSPF001, and XPSAFAPI is linked into XPSAGENT. They are covered by the requirements of the modules that contain them.
 5. **SECURITY DEFINITIONS**:
     1. ____ Agent task (e.g., OPCON01) must be an authorized "Started Task" with permission to write to OPCON files and read from production (e.g., JCL libraries, SYSEXEC libraries, etc.). Review OPCONxx Proc in the product INSTLIB for file access requirements.
     2. ____ The XPSPLEX Task must be in an authorized "Started Task" class.
@@ -90,12 +96,13 @@ DATE:
         1. ____ Type 14 & 15 Records for non-VSAM datasets.
         2. ____ Type 64 Records for VSAM datasets.
         3. ____ Type 61 and 65 Records to detect catalog actions.
-    2. ____ Exits IEFU83, IEFU84, IEFUSI and IEFUJV must be active for the batch (default or JESx) and STC subsystems. IEFU83 must be active for the TSO subsystem.
+    2. ____ For job tracking, ensure that SMF type 30 records (subtypes 1 and 4) are being recorded.
+    3. ____ Exits IEFU83, IEFU84, IEFUSI and IEFUJV must be active for the batch (default or JESx) and STC subsystems. IEFU83 must be active for the TSO subsystem.
 7. **PERFORMANCE GROUP**:
     1. ____ Ensure that the agent started task is assigned to a medium to a high performing service class. This enables the agent to communicate quickly with the OpCon/xps SAM component. The IBM default classes STCMED or SYSSTC are normally sufficient.
 8. **TSO ISPF SETUP**:
     1. ____ Add XPSPAUTH to the IKJTSOxx PARMLIB member as an authorized command: \[AUTHCMD NAMES(XPSPAUTH)\].
-    2. ____ Copy the XPSF Rexx program in INSTLIB to the TSO SYSPROC or SYSEXEC libraries.
+    2. ____ Copy the XPSPF Rexx program in INSTLIB to the TSO SYSPROC or SYSEXEC libraries.
     3. ____ *(Optional)* Create an ISPF menu entry for CMD(XPSPF).
     4. ____ Alternatively:
         1. ____ Add XPSPF001 to any ISPF Menu entry as PGM(XPSPF001) -- Optional for testing (can use 'TSO XPSPF001' command to run).

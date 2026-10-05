@@ -21,7 +21,7 @@ The z/OS Agent uses the System Authorization Facility (SAF) to enforce security 
 |---|---|---|---|
 | SURROGAT | *userid*`.SUBMIT` | READ | LSAM job submission on behalf of a user |
 | FACILITY | `OPCON.XPS$`*x*`.XPSPF` | UPDATE | ISPF automation table maintenance |
-| DATASET | *(user-specified DSN)* | READ/UPDATE/CONTROL/ALTER | User authority to dataset before saving JCL |
+| DATASET | *(user-specified DSN)* | UPDATE | User authority to dataset before saving JCL |
 | STARTED | *procname*`.`*evname* or *evname*`.`*evname* | N/A (STDATA assignment) | USERID for dynamic REXX and Operator Command event address spaces |
 | SURROGAT | *userid*`.SUBMIT` or *userid*`.OPCON` | READ | XPSCOMM userid override for event submission |
 | *(EXTRACT)* | CSDATA fields `XPSUSER` / `XPSTOKEN` | N/A | z/OS-to-OpCon userid and token mapping |
@@ -53,7 +53,7 @@ Automation table updates through the ISPF interface (XPSPF001) can be secured th
 
 **Resource name:** `OPCON.XPS$`*x*`.XPSPF`, where *x* is the XPSID of the system being accessed.
 
-**Access required:** UPDATE to modify tables; READ access (or no profile defined) allows read-only access.
+**Access required:** UPDATE to modify tables. The agent accepts a SAF return code of 4 or lower, and SAF returns 4 when no profile covers the resource. If no profile is defined, every user has full update access. Only a return code higher than 4, such as a profile that denies UPDATE, restricts access. To restrict table updates, you must define the profile.
 
 Generic and discrete profiles are supported.
 
@@ -63,7 +63,7 @@ See [ISPF table security](../advanced-features/ispf.md) for setup examples.
 
 When an OpCon user saves JCL to a mainframe dataset through the JCL editor, the agent maps the OpCon userid to a z/OS userid and checks that user's authority to the target dataset before allowing the save.
 
-**Access required:** Varies by operation (READ, UPDATE, CONTROL, or ALTER).
+**Access required:** UPDATE. The agent checks the mapped z/OS userid for UPDATE access to the target dataset before it saves the JCL.
 
 The userid mapping process is described in [OpCon userid in the z/OS Agent](../customization.md#opcon-userid-in-the-zos-agent).
 
@@ -80,7 +80,7 @@ These events run under module `XPSEVENT`. The proc portion of the start command 
 | Set to a customer proc (for example, `XPSDYNAM`) | `XPSDYNAM,JOBNAME=`*evname*`,PROG=XPSEVENT,...` | `XPSDYNAM.`*evname* |
 | Unset, or set to `IEESYSAS` (default) | `IEESYSAS.`*evname*`,PROG=XPSEVENT,...` | *evname*`.`*evname* |
 
-In both cases, *evname* is the REXX procedure name (for REXX events) or the command name (for Operator Command events) taken from the OpCon event definition.
+In both cases, *evname* is the job name of the OpCon job. For a REXX pre-run, *evname* is the REXX member name of the pre-run instead.
 
 ### File Transfer events
 
@@ -92,7 +92,7 @@ OpCon File Transfer events follow the same ASCRE-based pattern but run under mod
 
 ### Per-event USERIDs
 
-Because the STARTED-class key includes the JOBNAME portion, every run with the same event name (or, for File Transfer, the same OpCon job name) resolves to the same USERID. To assign different USERIDs to different events — for example, a low-authority USERID for `DISPLAY` commands and a higher-authority USERID for action commands — define separate STARTED-class profiles for each event name:
+Because the STARTED-class key includes the JOBNAME portion, every run with the same job name (or, for a REXX pre-run, the same REXX member name) resolves to the same USERID. To assign different USERIDs to different events — for example, a low-authority USERID for `DISPLAY` commands and a higher-authority USERID for action commands — define separate STARTED-class profiles for each job name:
 
 ```
 RDEFINE STARTED DSPCMD.DSPCMD STDATA(USER(OPCONDSP) GROUP(OPCONGRP) TRACE(YES))
@@ -100,7 +100,7 @@ RDEFINE STARTED OPRCMD.OPRCMD STDATA(USER(OPCONOPR) GROUP(OPCONGRP) TRACE(YES))
 SETROPTS RACLIST(STARTED) REFRESH
 ```
 
-The OpCon event definition then references the matching name (`DSPCMD`, `OPRCMD`) as the REXX procedure or command name. For File Transfer, vary the USERID by varying the OpCon job name and defining a matching `XPFTAGT.`*jobname* profile.
+The OpCon jobs then use the matching names (`DSPCMD`, `OPRCMD`) as their job names. For File Transfer, vary the USERID by varying the OpCon job name and defining a matching `XPFTAGT.`*jobname* profile.
 
 For STARTED-class profile syntax, see the IBM *Security Server RACF Security Administrator's Guide*. The CA-Top Secret and CA-ACF2 STC equivalents apply the same model — refer to the appropriate product manuals.
 

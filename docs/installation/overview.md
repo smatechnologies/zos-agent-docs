@@ -35,4 +35,4 @@ This is a deliberate choice, made on feedback from the earliest z/OS Agent custo
 
 Sites with a standard that requires all products to be installed under SMP/E should take this into account when planning the installation.
 
-For information on installing and configuring multiple agents on a single z/OS system, refer to [Customization process](../customization).
+For information on installing and configuring multiple agents on a single z/OS system, refer to [Customization process](../customization.md).

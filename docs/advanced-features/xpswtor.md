@@ -57,10 +57,10 @@ Use XPSWTOR to let an operator decide whether to continue processing:
 ```jcl
 //ASK      EXEC PGM=XPSWTOR,
 // PARM='Reply Y to rebuild or N to skip'
-//REBUILD  EXEC PGM=MYPROG,COND=(1,LE,ASK)
+//REBUILD  EXEC PGM=MYPROG,COND=(2,NE,ASK)
 ```
 
-In this example, if the operator replies `U` (RC=0) or `N` (RC=1), the REBUILD step is skipped because `1 LE 0` is false but `1 LE 1` is true. Only a reply of `Y` (RC=2) allows REBUILD to run.
+In this example, z/OS bypasses the REBUILD step when 2 is not equal to the ASK step's return code. A reply of `U` (RC=0) or `N` (RC=1) makes the test true, so REBUILD is skipped. Only a reply of `Y` (RC=2) makes the test false and allows REBUILD to run.
 
 :::
 

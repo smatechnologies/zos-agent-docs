@@ -10,6 +10,11 @@ tags:
 
 # z/OS Agent release notes
 
+This page lists changes for each z/OS Agent release. Each entry is prefixed with one of the following indicators:
+
+- :eight_spoked_asterisk: — New feature or enhancement
+- :white_check_mark: — Bug fix
+
 ## 23
 
 ### 23.01.01
@@ -32,6 +37,10 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 :eight_spoked_asterisk: **ZOS-342**: The z/OS agent will no longer attempt dataset cleanup for steps that will be skipped due to conditional JCL execution.
 
+:eight_spoked_asterisk: **ZOS-323**: Added REXX helper functions for the z/OS agent: XPRXEVT, which translates an event name to an event string, and XPRXFTCH, a REXX interface to XPSFETCH.
+
+:eight_spoked_asterisk: **ZOS-338**: Added informative text to the JCL menu entries.
+
 ## 21
 
 ### 21.01.08
@@ -50,21 +59,21 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 #### Fixes
 
-:eight_spoked_asterisk: **ZOS-296**: MSGQ display and delete were not working through XPSPF001.
+:white_check_mark: **ZOS-296**: MSGQ display and delete were not working through XPSPF001.
 
-:eight_spoked_asterisk: **ZOS-297**: Automation table editor (XPSPF) failed silently in ISPF split sessions.
+:white_check_mark: **ZOS-297**: Automation table editor (XPSPF) failed silently in ISPF split sessions.
 
-:eight_spoked_asterisk: **ZOS-300**: Rexx and command events were not starting correctly.
+:white_check_mark: **ZOS-300**: Rexx and command events were not starting correctly.
 
-:eight_spoked_asterisk: **ZOS-301**: If the JCL for a job has an eight character userid on the job card AND the OpCon job definition has a userid override with an eight character userid, a trailing comma is left on the job card, resulting in a JCL error.
+:white_check_mark: **ZOS-301**: If the JCL for a job has an eight character userid on the job card AND the OpCon job definition has a userid override with an eight character userid, a trailing comma is left on the job card, resulting in a JCL error.
 
-:eight_spoked_asterisk: **ZOS-312**: z/OS jobs hung in "Prerun active" state.
+:white_check_mark: **ZOS-312**: z/OS jobs hung in "Prerun active" state.
 
-:eight_spoked_asterisk: **ZOS-314**: AM2TDPFL received Job Not Found, but then somehow restarted itself.
+:white_check_mark: **ZOS-314**: AM2TDPFL received Job Not Found, but then somehow restarted itself.
 
-:eight_spoked_asterisk: **ZOS-316**: Prevent cleanup of entries with active event name and reset reference date field for all updates from XPSPF001 (prevents cleanup).
+:white_check_mark: **ZOS-316**: Prevent cleanup of entries with active event name and reset reference date field for all updates from XPSPF001 (prevents cleanup).
 
-:eight_spoked_asterisk: **ZOS-341**: In some cases when XPSUBMIT needs to requeue a job, this leads to a memory access error (S0C4-11).
+:white_check_mark: **ZOS-341**: In some cases when XPSUBMIT needs to requeue a job, this leads to a memory access error (S0C4-11).
 
 ### 21.01.06
 
@@ -72,7 +81,7 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 #### Fixes
 
-:eight_spoked_asterisk: **ZOS-315**: Fix confusing JORS and start data on pre-run jobs
+:white_check_mark: **ZOS-315**: Fix confusing JORS and start data on pre-run jobs
 
 ### 21.01.05
 
@@ -91,17 +100,17 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 #### Fixes
 
-:eight_spoked_asterisk: **ZOS-300**: Fix BLDL list length
+:white_check_mark: **ZOS-300**: Fix BLDL list length
 
-:eight_spoked_asterisk: **ZOS-301**: Clear trailing comma from long userids
+:white_check_mark: **ZOS-301**: Clear trailing comma from long userids
 
-:eight_spoked_asterisk: **ZOS-302**: Prevent UCB table underrun
+:white_check_mark: **ZOS-302**: Prevent UCB table underrun
 
-:eight_spoked_asterisk: **ZOS-304**: Use A2E translation for the square brackets in XPSMACH
+:white_check_mark: **ZOS-304**: Use A2E translation for the square brackets in XPSMACH
 
-:eight_spoked_asterisk: **ZOS-312**: Do ENDREQ if RPLRBAR doesn't contain JOBNUM (JES3)
+:white_check_mark: **ZOS-312**: Do ENDREQ if RPLRBAR doesn't contain JOBNUM (JES3)
 
-:eight_spoked_asterisk: **ZOS-313**: Skip move on zero length records (JORS)
+:white_check_mark: **ZOS-313**: Skip move on zero length records (JORS)
 
 ### 21.00.03
 
@@ -119,13 +128,13 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 #### Fixes
 
-:eight_spoked_asterisk: **ZOS-280**: Sysplex fixes and performance improvements
+:white_check_mark: **ZOS-280**: Sysplex fixes and performance improvements
 
-:eight_spoked_asterisk: **ZOS-295**: Issue console commands from MODIFY LSAM with requester's authority, not LSAM's.
+:white_check_mark: **ZOS-295**: Issue console commands from MODIFY LSAM with requester's authority, not LSAM's.
 
-:eight_spoked_asterisk: **ZOS-296**: Fixed MSGQ display in XPSPF001, hide passwords and allow delete
+:white_check_mark: **ZOS-296**: Fixed MSGQ display in XPSPF001, hide passwords and allow delete
 
-:eight_spoked_asterisk: **ZOS-297**: Allow XPSPF001 in split screen mode
+:white_check_mark: **ZOS-297**: Allow XPSPF001 in split screen mode
 
 ## 20
 
@@ -149,13 +158,13 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 #### Fixes
 
-:eight_spoked_asterisk: **ZOS-269**: Fixed missing mount notifications.
+:white_check_mark: **ZOS-269**: Fixed missing mount notifications.
 
-:eight_spoked_asterisk: **ZOS-266**: Fixed intermittent tracking problem when running with USEJMR=NO.
+:white_check_mark: **ZOS-266**: Fixed intermittent tracking problem when running with USEJMR=NO.
 
-:eight_spoked_asterisk: **ZOS-261**: Fixed GENERICP parsing errors. The GENERICP parser should accept either "-t5" or "-t 5" as valid parameters, but previously treated the value "-t 5" as if no value was provided.
+:white_check_mark: **ZOS-261**: Fixed GENERICP parsing errors. The GENERICP parser should accept either "-t5" or "-t 5" as valid parameters, but previously treated the value "-t 5" as if no value was provided.
 
-:eight_spoked_asterisk: **ZOS-241**: Improved performance of pre-run processing for tape device requirements.
+:white_check_mark: **ZOS-241**: Improved performance of pre-run processing for tape device requirements.
 
 ## 19
 
@@ -218,7 +227,7 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 #### Fixes
 
-:eight_spoked_asterisk: If TEMP* DD allocations are concatenated, no member rename will be done.
+:white_check_mark: If TEMP* DD allocations are concatenated, no member rename will be done.
 
 ## 16
 
@@ -254,12 +263,12 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 #### Fixes
 
-:eight_spoked_asterisk: Fixed an issue where a "Target Schedule definition no longer matches saved definition'' error appeared, indicating that a schedule mismatch was encountered during the second deployment of an already deployed schedule.
+:white_check_mark: Fixed an issue where a "Target Schedule definition no longer matches saved definition'' error appeared, indicating that a schedule mismatch was encountered during the second deployment of an already deployed schedule.
 
-:eight_spoked_asterisk: Error messages would be displayed during a warm start of the LSAM if it was started with PARM=xx.
+:white_check_mark: Error messages would be displayed during a warm start of the LSAM if it was started with PARM=xx.
 
-:eight_spoked_asterisk: "Mount pending" status was not being cleared before the end of the job step.
+:white_check_mark: "Mount pending" status was not being cleared before the end of the job step.
 
-:eight_spoked_asterisk: JORS agent could stop functioning after a security error.
+:white_check_mark: JORS agent could stop functioning after a security error.
 
-:eight_spoked_asterisk: Sometimes the ENQ was not obtained before the deletion of a dataset during restart.
+:white_check_mark: Sometimes the ENQ was not obtained before the deletion of a dataset during restart.
