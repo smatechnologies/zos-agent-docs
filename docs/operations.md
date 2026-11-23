@@ -108,7 +108,7 @@ The log also takes "checkpoints" each hour to record changes to trigger tables a
 :::note
 A new generation of the XPSLOG is dynamically allocated at agent startup and after each SPINLOG command. The new dataset is allocated with the equivalent of SPACE=(CYL,(80,16),RLSE) and will be allocated on an available STORAGE volume using the default dynamic allocation UNITNAME specified by the system programmer.
  
-SMA recommends using DFSMS or a third-party DASD management system to override the default allocation, if necessary, but the UNIT and/or VOLUME can be specified with the LOG_UNIT and LOG_VOLUME parameters in the XPSPRMxx member, if desired.
+SMA recommends using DFSMS or a third-party DASD management system to override the default allocation, if necessary, but the UNIT and/or VOLUME can be specified with the LOG-UNIT and LOG-VOLUME parameters in the XPSPRMxx member, if desired.
  
 If the dynamic allocation fails with the specified UNIT or VOLUME, it will be retried using the system defaults to avoid stopping the agent.
 :::

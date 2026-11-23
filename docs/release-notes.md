@@ -33,7 +33,7 @@ z/OS Agent Version 23.01 is compatible with z/OS versions 1.11 - 3.1.
 
 :eight_spoked_asterisk: **ZOS-332**: Changed the load library for XPSPLEX to support multiple versions of the Agent.
 
-:eight_spoked_asterisk: **ZOS-337**: Added new XPSPARM field for TRIGGER_RETPD, defaulting to 45 days. The range is between 7 and 365 days.
+:eight_spoked_asterisk: **ZOS-337**: Added new XPSPARM field for TRIGGER-RETPD, defaulting to 45 days. The range is between 7 and 365 days.
 
 :eight_spoked_asterisk: **ZOS-342**: The z/OS agent will no longer attempt dataset cleanup for steps that will be skipped due to conditional JCL execution.
 

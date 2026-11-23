@@ -55,7 +55,9 @@ The **XPSPARMS** DD statement, if present, specifies the library containing the 
 
 Next, you should review your installation agent run-time options in XPSPRM00.
 
-The following is an example of a typical agent Parmlib XPSPRMxx member implementation:
+The sample XPSPRMxx member in INSTLIB lists every parameter with its default value, but every line is commented out. The agent uses the built-in default for any parameter that is not specified, so a new installation runs with the defaults shown in [Run-time parameters](#run-time-parameters). To override a default, uncomment that parameter's line and change its value. Uncomment only the parameters you need to change.
+
+The following example shows the current parameter settings that the agent displays in message XPS021I:
 
 :::note
 If you are planning to use the step restart capability of SMA Opcon, you should change the RESTART parameter to RESTART=Y and review the defaults assigned to the parameters in the Restart section.
@@ -70,6 +72,7 @@ PROCESS=30                    PROCESS COUNT
 USEJMR=NO                     JMR USER FIELD              
 INTV=00.00.20                 WAKE UP INTERVAL            
 SPINOFF=Y                     Spin Log Each Night         
+TRIGGER-RETPD=045             Trigger retention days
 JCLDD=XPSJCL                  DEFAULT JCL LIBRARY         
 OVERRIDE-DD=TEMPJCL           DEFAULT OVERRIDE LIBRARY    
 JOBRC=MAXRC                   RC for failure check        
@@ -97,7 +100,6 @@ MLWTO=Y                       Multi-line WTO Triggers
 SPFAUDIT=N                    Log ISPF User Chgs          
 LOG-UNIT=                     LSAMLOG allocation unit     
 LOG-VOLUME=                   LSAMLOG allocation volume   
-TRIGGER-RETPD=45              Trigger retention days 
 RECOVERY=PROMPT               Recovery Option             
 SUBSYS=JES2                   JES Subsystem               
 TRACE=N                       Trace Status                
@@ -105,11 +107,13 @@ SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)
 ```
 
 :::note
-- Leading spaces are ignored. 
-- Lines that begin with 
-'*', '#' or ';' are treated as comments and ignored. 
-- All characters after the first space following an entry on the line are considered comments. 
-- Multiple parameters on a single line must be separated by commas.  Commas may be used for continuation, but they are optional between lines.
+- Leading spaces are ignored
+- Lines that begin with `*`, `#`, or `;` are treated as comments and ignored
+- All characters after the first space following an entry on the line are considered comments
+- Multiple parameters on a single line must be separated by commas. Commas may be used for continuation, but they are optional between lines
+- Parameter names are not case sensitive. The agent translates parameter names to uppercase, so `machineid=ZOS1` and `MACHINEID=ZOS1` are equivalent
+- Hyphens and underscores in parameter names are equivalent. For example, `TRIGGER-RETPD=45` and `TRIGGER_RETPD=45` set the same parameter. This documentation uses hyphens
+:::
 
 ### Syntax
 
@@ -123,8 +127,8 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |--- |--- |--- |
 |ADOPT|*Blank*|Determines if the agent can become the primary LSAM authority during failover.<ul><li>Valid values are Y (yes) and N (no) or a system name.</li><li>The named system will be eligible to become the primary LSAM.</li></ul>|
 |EVENTPASS|20 asterisks ********************|Sets the event control password to be used for all external messages to the SAM, regardless of Userid.|
-|Force-SYS-AFF|No|If Yes, the jobs will be submitted with affinity for submitting system.<ul><li>This is useful in a test environment with a MAS, but with OpCon on only one system.</li></ul>|
-|INTV|00.00.20|This value determines the maximum delay for external resource recognition (batch triggers, Pre-run Data Triggers, and so forth).<br /><br/>A valid value must use the following syntax: `hh.mm.ss`.<br/><br/>The INTV line is supplied commented out in the sample XPSPRMxx member, so a new installation runs at the default of 00.00.20 until that line is uncommented and changed.|
+|FORCE-SYS-AFF|No|If Yes, the jobs will be submitted with affinity for submitting system.<ul><li>This is useful in a test environment with a MAS, but with OpCon on only one system.</li></ul>|
+|INTV|00.00.20|This value determines the maximum delay for external resource recognition (batch triggers, Pre-run Data Triggers, and so forth).<br /><br/>A valid value must use the following syntax: `hh.mm.ss`.|
 |JCLDD|XPSJCL|Sets the default DDNAME in the agent JCL Proc. It is used to locate JCL for any batch Job Start request from the SAM that does NOT have a DDNAME assigned.|
 |LSAM|Y|In a Sysplex environment, determines which agent is running as the primary LSAM.<ul><li>This parameter has no affect if SYSPLEX=N is coded. For information on the SYSPLEX parameter, refer to SYSPLEX.</li><li>Valid values are Y (yes), N (no) or a system name.</li></ul>|
 |LOG-UNIT|*Blank*|Specifies a generic or esoteric name for a group of DASD devices for LSAMLOG allocation.<br /><br />1 - 8 character name or blank.|
@@ -132,7 +136,7 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |MACHINEID|*|Defines the name of the agent.<ul><li>If set to an asterisk (*), the agent uses the system name from SYSNAME.</li></ul>The name may be up to 8 characters long and must match the name entered for the Machine in the SMA Opcon Enterprise Manager.|
 |MSGCLASS|A|Defines the MSGCLASS allocated to dynamic REXX tasks.<br/>The class is one character, A through Z or 0 through 9, and must be a valid output class specified at JES initialization.|
 |MLWTO|YES|Determines if the agent should process minor lines of multi-line console messages.<br/>Valid values are YES and NO.|
-|Override-DD|TEMPJCL|The name of a DD statement in the agent JCL to use as the default override DD, if one is not specified in the job definition.<br/>A blank value means that there is no default.|
+|OVERRIDE-DD|TEMPJCL|The name of a DD statement in the agent JCL to use as the default override DD, if one is not specified in the job definition.<br/>A blank value means that there is no default.|
 |XPSDYNAM|IEESYSAS|Identifies the cataloged procedure to use for dynamic tasks (REXX and Operator Command events).<br/><br/>The value also forms the procedure portion of the STARTED-class key SAF uses to assign a USERID to each dynamic address space. See [STARTED class — dynamic event address space USERID](reference/saf-resources.md#started-class-dynamic-event-userid).|
 |PORT|3100|The port for the TCPIP HOST IP address.<br/>This value must be a valid TCP/IP port number and cannot be used by any other process.|
 |JORSPORT|+1|Port number for JORS, expressed as an offset from PORT or as an absolute port number.<br/>This is always stored as a relative offset, so it changes when PORT changes.<br/>JORSPORT=+0 disables the JORS server. JORSPORT=0 does not disable JORS; the agent keeps the previous offset.|
@@ -154,7 +158,7 @@ The optional *@systemname* prefix can be used to filter the input records. Any r
 |TRACMASK|*Blank*|Defines a job name mask of eight characters (e.g., **PROD\*\*\*\***) for SMA Opcon external job tracking.<br/><br/>Note: The continuation character C, in column 72 of the job card, bypasses this option.|
 |TRACSCHD|AdHoc|Defines the default schedule name for external job tracking.|
 |TRACE|N|Defines the trace level for the agent.<br/>Valid values include: <ul><li>Up to nine digits 1 – 9.</li><li>Y sets tracing for all levels.</li><li>N or 0 disables tracing.</li></ul> Note: This parameter is used for debugging purposes only.|
-|TRIGGER_RETPD|45|Sets the number of days to retain unreferenced "passive" triggers.<br/><ul><li>Must be between 7 and 365, or 0.</li><li>If set to '0', no triggers will be expired.</li></ul>|
+|TRIGGER-RETPD|45|Sets the number of days to retain unreferenced "passive" triggers.<br/><ul><li>Must be between 7 and 365, or 0.</li><li>If set to '0', no triggers will be expired.</li></ul>|
 |USEJMR|NO|Controls the use of the JMRUSEID field by the agent tracking exits.<br/>If YES, the agent uses the entire field.<br/>If NO, the agent does not use the field at all.<br/>A number from 0 – 63 can be used to specify the offset within the field that is used for a single bit flag.<br/><br/>Note: USEJMR=NO is normally required to coexist with TWS. Enabling USEJMR may improve performance in some cases.|
 |USERID|*Blank*|Installation default for the USER= parameter on the JOB card.<br/>The agent uses this value only when the OpCon job has no **Batch User** set **and** the submitted JCL does not already specify USER=.<br/><br/>Specify NONE to disable — the agent then emits no USER= and JES applies installation defaults.<br/><br/>See [Security setup](#security-setup) for the full precedence order.|
 |VERBOSE|N|If `VERBOSE` or `VERBOSE=Y` is coded, the agent displays the current parameters (message XPS021I) after it processes the parameter input.|
