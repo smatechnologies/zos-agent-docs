@@ -60,7 +60,7 @@ Next, ensure that storage allocations and XPSPRMxx are properly installed.
 Enter the command: **F** lsamname**,DISP=ALL** on the operations console to view the display on the MVS Console or SYSLOG that resembles the figure below.
 
 ```text
-XPSAUDIT: XPCB Located at 11949038:8000 Analyzing LSAM: XPS14.03 On SYSID: machine
+XPSAUDIT: XPCB Located at 11949038:8000 Analyzing LSAM: XPS14.03 On SYSID: ZOS1
 -------------------------------------------
 XPSU83=82344908: Len=000046F8 Key=11949038
 XPSU84=821E3620: Len=000069E0 Key=11949038
@@ -74,7 +74,7 @@ Free=00121, Used=00000, Term=00001, Total=00121
 -------------------------------------------
 XPSAUDIT: MSGQ Located at 100E7200
 Last Entry: 10122300 Queue Size: 267K
-Free=01920, Used=00000, Term=00000, Total=01920
+Free=03840, Used=00000, Term=00000, Total=03840
 -------------------------------------------
 XPSAUDIT: DSNT Located at 100D8340
 Last Entry: 100E6F80 Queue Size: 59K
@@ -94,44 +94,46 @@ Free=00010, Used=00002, Term=00003, Total=00012
 -------------------------------------------
 XPSAUDIT: PARMS Located at 11949B58
 -------------------------------------------
-XPS021I - CURRENT STORED PARMS FOR ADCD113 882
-MACHINEID=machine	OPCON/XPS MACHINE NAME
-PROCESS=30	PROCESS COUNT
-INTV=00.00.10	WAKE UP INTERVAL
-JCLDD=XPSJCL	DEFAULT JCL LIBRARY
-OVERRIDE_DD=	DEFAULT OVERRIDE LIBRARY
-XPSDYNAM=IEESYSAS	Dynamic task proc
-LSAM=ADCD113	PRIMARY LSAM?
-ADOPT=N	LSAM Adoption?
-SYSPLEX=N	Exploit SYSPLEX?
-PLEXGRP=	SYSPLEX Group Name
-TCPIP=	TCP/IP Task Name
-PORT=3100	LSAM PORT
-JORSPORT=+1 (3101)	JORS PORT
-RECOVERY=PROMPT	Recovery Option
-SMF15=DELETE	SMF Type 15 Disposition
-SMF64=DELETE	SMF Type 64 Disposition
-SPFAUDIT=N	Log ISPF User Chgs
-JOBRC=MAXRC	RC for failure check
-SPINOFF=Y	Spin Log Each Night
-SUBSYS=JES2	JES Subsystem
-TRACLASS=TQ	Dynamic Tracking Classes
-TRACMASK=	Dynamic Tracking Mask
-TRACSCHD=	Dynamic Tracking Schedule
-USERID=	Default USER
-MSGCLASS=A	REXX SYSOUT CLASS
-USEJMR=YES	JMR USER FIELD
-MLWTO=Y	Multi-line WTO Triggers
-RESTART=Y	Step restart active?
-GDGOPT=A	GDG option
-DUPDSNACT=S	Dup Dataset Action
-RESDSNACT=S	Dup Dataset Action on restart
-XPRLIST=DV	Dataset exclude list
-AUTOSTEP=Y	Automatic step selection
-JOB_CARD_RESTART=Y	Restart from job card?
-TRACE=N	Trace Status
-FORCE_SYS_AFF=N	Force System affinity
-SETQUES=(JOB=120;MSG=1920;DSN=480;WTO=480;EVT=240)
+XPS021I - CURRENT STORED PARMS FOR ZOS1 882
+MACHINEID=ZOS1                OPCON/XPS MACHINE NAME
+PORT=3100                     LSAM PORT
+JORSPORT=+1 (3101)            JORS PORT
+PROCESS=30                    PROCESS COUNT
+USEJMR=YES                    JMR USER FIELD
+INTV=00.00.10                 WAKE UP INTERVAL
+SPINOFF=Y                     Spin Log Each Night
+TRIGGER-RETPD=045             Trigger retention days
+JCLDD=XPSJCL                  DEFAULT JCL LIBRARY
+OVERRIDE-DD=TEMPJCL           DEFAULT OVERRIDE LIBRARY
+JOBRC=MAXRC                   RC for failure check
+QUEUED-IS-RUNNING=N           Show queued jobs as running
+FORCE-SYS-AFF=N               Force System affinity
+RESTART=Y                     Step restart active?
+RESTORE-COND-CODES=Y          Return codes for skipped steps
+GDGOPT=A                      GDG option
+DUPDSNACT=S                   Dup Dataset Action
+RESDSNACT=S                   Dup Dataset Action on restart
+XPRLIST=DV                    Dataset exclude list
+AUTOSTEP=Y                    Automatic step selection
+SYSPLEX=N                     LSAM on SYSPLEX?
+TCPIP=                        TCP/IP Task Name
+SMF15=D                       SMF Type 15 Disposition
+SMF64=D                       SMF Type 64 Disposition
+TRACLASS=TQ                   Dynamic Tracking Classes
+TRACLAS8=                     Dynamic Tracking Class Mask
+TRACMASK=                     Dynamic Tracking Mask
+TRACSCHD=                     Dynamic Tracking Schedule
+USERID=                       Default USER
+XPSDYNAM=IEESYSAS             Dynamic task proc
+MSGCLASS=A                    REXX SYSOUT CLASS
+MLWTO=Y                       Multi-line WTO Triggers
+SPFAUDIT=N                    Log ISPF User Chgs
+LOG-UNIT=                     LSAMLOG allocation unit
+LOG-VOLUME=                   LSAMLOG allocation volume
+RECOVERY=PROMPT               Recovery Option
+SUBSYS=JES2                   JES Subsystem
+TRACE=N                       Trace Status
+SETQUES=(JOB=120;MSG=3840;DSN=480;WTO=480;EVT=240)
 -------------------------------------------
 Current JOBQ: JOBQ - All Entries Displayed(0000)
 -------------------------------------------
@@ -142,6 +144,12 @@ DSNT - All Entries Displayed(0000)
 WTO Trigger Table Entries:------------------------
 WTOT - All Entries Displayed(0000)Prepare IVP Jobs
 ```
+
+The XPS021I display includes some lines only when the related feature is active:
+
+- The restart lines, from `RESTORE-COND-CODES` through `AUTOSTEP`, appear only when `RESTART=Y`
+- The Sysplex lines `LSAM`, `ADOPT`, `XPSPLEX`, and `PLEXGRP` appear after `SYSPLEX` only when `SYSPLEX=Y`
+- The line `Running in TEST mode - TYPRUN=SCAN` appears after the header only when `RUNMODE=TEST`
 
 At this point, the IVP jobs loaded to the OpCon/xps INSTLIB should be reviewed for JCL syntax and standards conformity. Each of the examples in this topic uses the IVP jobs and their characteristics as training aids.
 
